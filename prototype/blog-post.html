@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2ede2"><title>在 2 核 2G 的小机器上跑起个人站 · 智识花园</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="blog">
+  <div class="reading-progress" data-reading-progress aria-hidden="true"></div><a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header"><div class="site-header__inner"><a class="masthead" href="index.html"><span class="masthead__issue">NO. 06 / 2026</span><span class="masthead__name">智识花园</span></a><nav class="desktop-nav" aria-label="主导航"><a data-nav-link="home" href="index.html">01 首页</a><a data-nav-link="blog" href="blog.html">02 博客</a><a data-nav-link="notes" href="notes.html">03 私密档案</a></nav><div class="header-actions"><button class="icon-button" data-theme-toggle type="button">主题</button><button class="icon-button menu-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-navigation">菜单</button></div></div></header>
+  <div class="mobile-nav-overlay" data-drawer-overlay></div><aside class="mobile-nav" id="mobile-navigation" data-drawer aria-label="移动端导航" aria-hidden="true" tabindex="-1"><div class="mobile-nav__header"><span class="masthead__name">目录</span><button class="icon-button" data-drawer-close type="button">关闭</button></div><nav class="mobile-nav__links"><a data-nav-link="home" href="index.html">01 / 首页</a><a data-nav-link="blog" href="blog.html">02 / 博客</a><a data-nav-link="notes" href="notes.html">03 / 私密档案</a><a href="login.html">04 / 登录</a></nav><p class="mobile-nav__note">PUBLIC JOURNAL · FEATURE 01</p></aside>
+
+  <main id="main-content" class="page-shell article-page">
+    <a class="back-link" href="blog.html">返回博客目录</a>
+    <article data-article>
+      <header class="article-header">
+        <p class="eyebrow">FEATURE 01 / 架构与部署</p>
+        <h1>在 2 核 2G 的小机器上，跑起一个完整的个人站</h1>
+        <p class="article-header__dek">从零开始的极简部署笔记：SQLite、PM2、Nginx、CDN，把所有成本压到几杯咖啡以内。</p>
+        <div class="article-meta"><span>2026.06.12</span><span>8 分钟阅读</span><span>最后更新 2026.06.18</span></div>
+      </header>
+      <div class="article-layout">
+        <div class="article-body" data-article-body>
+          <p>两年前我第一次认真搭个人站，用的是一台阿里云 2 核 2G 的 ECS。朋友听完第一反应是：“2G 内存够吗？”事实证明，够——而且余量比想象中大得多。</p>
+          <p>这篇文章记录最终跑通的方案，以及在性能、复杂度和维护成本之间做出的取舍。</p>
+          <h2 id="why-small">为什么坚持用小机器</h2>
+          <p>个人站的大部分时间没有并发，真正稀缺的不是算力，而是维护它的注意力。更小的机器会迫使架构保持克制：单进程、单数据库、明确的缓存边界。</p>
+          <blockquote>最好的个人基础设施，不是最强的那套，而是半年以后你仍然敢升级的那套。</blockquote>
+          <h2 id="architecture">最终架构</h2>
+          <p>公开页面由 Nuxt 预渲染，访问者主要命中 CDN；私密页面和后台保留 SSR。Node 进程只负责真正需要动态执行的部分。</p>
+          <h3 id="sqlite">SQLite：把数据留在一处</h3>
+          <p>SQLite 对单用户内容系统非常合适。配合 WAL 模式和定时备份，它把数据库维护降到文件级别。数据模型简单，迁移和恢复也容易演练。</p>
+          <h3 id="process">PM2 与内存边界</h3>
+          <p>Node 使用单实例运行，设置内存重启阈值。与其在小机器上制造伪高可用，不如保证服务能被可靠拉起，并让静态流量尽量不进入 Node。</p>
+          <h2 id="cache">缓存策略</h2>
+          <p>图片进 OSS，公开页面和前端资源进 CDN；私密内容明确设置为不可缓存。缓存规则围绕内容身份设计，而不是只围绕文件后缀。</p>
+          <h2 id="backup">备份比高可用重要</h2>
+          <p>每天使用 SQLite 在线备份生成一致快照，上传 OSS 并保留滚动版本。每个月至少执行一次恢复演练，确认备份真的能够使用。</p>
+          <h2 id="ending">写在最后</h2>
+          <p>2 核 2G 不是限制，而是一条清晰的设计边界。它让我删掉了大量并不需要的复杂度，最终留下了一套真正愿意长期维护的系统。</p>
+        </div>
+        <aside class="article-toc" data-toc aria-label="文章目录">
+          <h2>CONTENTS / 目录</h2><ol><li><a href="#why-small">为什么坚持用小机器</a></li><li><a href="#architecture">最终架构</a></li><li><a href="#sqlite">SQLite</a></li><li><a href="#process">PM2 与内存边界</a></li><li><a href="#cache">缓存策略</a></li><li><a href="#backup">备份比高可用重要</a></li><li><a href="#ending">写在最后</a></li></ol>
+        </aside>
+      </div>
+      <nav class="adjacent-posts" aria-label="相邻文章"><a href="blog-post.html"><small>PREVIOUS / 02</small><strong>Nuxt 3 混合渲染</strong></a><a href="blog-post.html"><small>NEXT / 03</small><strong>SQLite FTS5 + jieba</strong></a></nav>
+    </article>
+  </main>
+
+  <div class="mobile-toc-bar"><span>阅读进度 <b data-reading-percent>0%</b></span><button class="button" data-toc-toggle type="button" aria-expanded="false" aria-controls="mobile-toc">目录</button></div>
+  <div class="mobile-nav-overlay" data-toc-overlay></div><aside class="toc-drawer" id="mobile-toc" data-toc-drawer aria-label="移动文章目录" aria-hidden="true" tabindex="-1"><div class="toc-drawer__header"><strong>文章目录</strong><button class="icon-button" data-toc-close type="button">关闭</button></div><ol><li><a href="#why-small">为什么坚持用小机器</a></li><li><a href="#architecture">最终架构</a></li><li><a href="#sqlite">SQLite</a></li><li><a href="#process">PM2 与内存边界</a></li><li><a href="#cache">缓存策略</a></li><li><a href="#backup">备份比高可用重要</a></li><li><a href="#ending">写在最后</a></li></ol></aside>
+  <footer class="site-footer"><div class="site-footer__inner"><span>© 2026 智识花园 · FEATURE 01</span><nav class="site-footer__links"><a href="index.html">首页</a><a href="blog.html">博客目录</a><a href="notes.html">私密档案</a></nav></div></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>

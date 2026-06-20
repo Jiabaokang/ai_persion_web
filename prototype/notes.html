@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2ede2"><title>私密档案 · 智识花园</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="notes">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header"><div class="site-header__inner">
+    <a class="masthead" href="index.html"><span class="masthead__issue">PRIVATE / JBK</span><span class="masthead__name">智识花园</span></a>
+    <nav class="desktop-nav" aria-label="主导航"><a data-nav-link="home" href="index.html">01 首页</a><a data-nav-link="blog" href="blog.html">02 博客</a><a data-nav-link="notes" href="notes.html">03 私密档案</a></nav>
+    <div class="header-actions"><button class="icon-button" data-theme-toggle type="button">主题</button><button class="icon-button menu-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-navigation">菜单</button></div>
+  </div></header>
+  <div class="mobile-nav-overlay" data-drawer-overlay></div>
+  <aside class="mobile-nav" id="mobile-navigation" data-drawer aria-label="移动端导航" aria-hidden="true" tabindex="-1">
+    <div class="mobile-nav__header"><span class="masthead__name">目录</span><button class="icon-button" data-drawer-close type="button">关闭</button></div>
+    <nav class="mobile-nav__links"><a data-nav-link="home" href="index.html">01 / 首页</a><a data-nav-link="blog" href="blog.html">02 / 博客</a><a data-nav-link="notes" href="notes.html">03 / 私密档案</a><a href="login.html">04 / 登录</a></nav>
+    <p class="mobile-nav__note">ACCESS LEVEL · OWNER ONLY</p>
+  </aside>
+
+  <main id="main-content" class="page-shell">
+    <div class="private-banner"><span class="record-stamp">CLASSIFIED / 私密</span><strong>仅 Jiabaokang 可访问</strong><a href="login.html">切换身份</a></div>
+    <header class="page-intro" style="padding-top: 3rem;">
+      <p class="kicker">PERSONAL<br>ARCHIVE</p>
+      <div><p class="edition-rule">03 / PRIVATE RECORDS</p><h1>私人笔记</h1><p class="page-intro__dek">未完成的想法、读书摘录、项目草稿与生活记录。它们不必成熟，只需要被可靠地留下。</p></div>
+    </header>
+
+    <form class="filter-panel" data-filter-form role="search" onsubmit="return false">
+      <div class="filter-row"><label class="search-wrap"><span class="search-label">SEARCH / 搜索档案</span><input class="search-input" data-search type="search" placeholder="标题、摘要或标签" autocomplete="off"></label><output class="filter-status" data-result-count aria-live="polite">共 6 篇</output></div>
+      <div class="tag-filter" data-tag-filter aria-label="按标签筛选">
+        <button class="tag-button" data-tag="草稿" type="button" aria-pressed="false">草稿</button><button class="tag-button" data-tag="灵感" type="button" aria-pressed="false">灵感</button><button class="tag-button" data-tag="读书" type="button" aria-pressed="false">读书</button><button class="tag-button" data-tag="生活" type="button" aria-pressed="false">生活</button><button class="tag-button" data-tag="项目" type="button" aria-pressed="false">项目</button><button class="tag-button filter-clear" data-filter-clear type="button">清除条件</button>
+      </div>
+    </form>
+
+    <section aria-label="私密笔记">
+      <div class="archive-list" data-cards>
+        <a class="archive-entry" data-card data-tags="草稿,反思,项目" href="note-post.html"><span class="archive-entry__number">A-0615</span><div><h2>关于“主动权”的几点想法</h2><p class="archive-entry__summary">决定成长速度的，也许不是技术深度，而是主动抓住机会的数量。</p><div class="archive-entry__tags"><span class="tag">草稿</span><span class="tag">反思</span><span class="tag">项目</span></div></div><div class="archive-entry__meta">2026.06.15<br>UPDATED 23:47</div></a>
+        <a class="archive-entry" data-card data-tags="灵感,项目" href="note-post.html"><span class="archive-entry__number">A-0610</span><div><h2>如果做一个 AI 周报生成器</h2><p class="archive-entry__summary">抓取本周 commit、PR 和文档变更，生成结构化周报。</p><div class="archive-entry__tags"><span class="tag">灵感</span><span class="tag">项目</span></div></div><div class="archive-entry__meta">2026.06.10<br>IDEA</div></a>
+        <a class="archive-entry" data-card data-tags="读书,摘录" href="note-post.html"><span class="archive-entry__number">A-0528</span><div><h2>《系统之美》读书笔记</h2><p class="archive-entry__summary">要素、连接与目标：看见系统，不再只盯着局部事件。</p><div class="archive-entry__tags"><span class="tag">读书</span><span class="tag">摘录</span></div></div><div class="archive-entry__meta">2026.05.28<br>EXCERPT</div></a>
+        <a class="archive-entry" data-card data-tags="生活,日记" href="note-post.html"><span class="archive-entry__number">A-0520</span><div><h2>五月：搬家、加班、新猫</h2><p class="archive-entry__summary">新房入住，连续加班，以及一只叫“豆花”的橘猫。</p><div class="archive-entry__tags"><span class="tag">生活</span><span class="tag">日记</span></div></div><div class="archive-entry__meta">2026.05.20<br>DIARY</div></a>
+        <a class="archive-entry" data-card data-tags="项目,待办" href="note-post.html"><span class="archive-entry__number">A-0512</span><div><h2>个人站 TODO 清单</h2><p class="archive-entry__summary">从脚手架到鉴权，持续记录个人站实施进度。</p><div class="archive-entry__tags"><span class="tag">项目</span><span class="tag">待办</span></div></div><div class="archive-entry__meta">2026.05.12<br>CHECKLIST</div></a>
+        <a class="archive-entry" data-card data-tags="反思,灵感" href="note-post.html"><span class="archive-entry__number">A-0504</span><div><h2>写作与编程：两种思维的反差</h2><p class="archive-entry__summary">一个要求先确定边界，一个允许在表达中逐渐发现边界。</p><div class="archive-entry__tags"><span class="tag">反思</span><span class="tag">灵感</span></div></div><div class="archive-entry__meta">2026.05.04<br>REFLECTION</div></a>
+      </div>
+      <div class="empty-state" data-empty hidden><strong>档案中没有匹配记录</strong><p>尝试更短的关键词，或清除当前筛选。</p><button class="button" data-filter-clear type="button">清除条件</button></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="site-footer__inner"><span>PRIVATE ARCHIVE · OWNER ACCESS</span><nav class="site-footer__links"><a href="index.html">首页</a><a href="blog.html">公开博客</a><a href="login.html">退出</a></nav></div></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>

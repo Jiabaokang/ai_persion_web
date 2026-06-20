@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2ede2">
+  <title>智识花园 · 记录、沉淀、生长</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="masthead" href="index.html" aria-label="智识花园首页">
+        <span class="masthead__issue">NO. 06 / 2026</span>
+        <span class="masthead__name">智识花园</span>
+      </a>
+      <nav class="desktop-nav" aria-label="主导航">
+        <a data-nav-link="home" href="index.html">01 首页</a>
+        <a data-nav-link="blog" href="blog.html">02 博客</a>
+        <a data-nav-link="notes" href="notes.html">03 私密档案</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" data-theme-toggle type="button" aria-label="切换到深色主题"><span class="theme-label">主题</span></button>
+        <button class="icon-button menu-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-navigation">菜单</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" data-drawer-overlay></div>
+  <aside class="mobile-nav" id="mobile-navigation" data-drawer aria-label="移动端导航" aria-hidden="true" tabindex="-1">
+    <div class="mobile-nav__header">
+      <span class="masthead__name">目录</span>
+      <button class="icon-button" data-drawer-close type="button">关闭</button>
+    </div>
+    <nav class="mobile-nav__links">
+      <a data-nav-link="home" href="index.html">01 / 首页</a>
+      <a data-nav-link="blog" href="blog.html">02 / 博客</a>
+      <a data-nav-link="notes" href="notes.html">03 / 私密档案</a>
+      <a href="login.html">04 / 登录</a>
+    </nav>
+    <p class="mobile-nav__note">PRIVATE EDITION · UPDATED WEEKLY</p>
+  </aside>
+
+  <main id="main-content" class="page-shell home-page">
+    <p class="edition-rule">THE PERSONAL ARCHIVE · VOL. 01</p>
+    <section class="cover-story" aria-labelledby="cover-title">
+      <div class="cover-story__main">
+        <div>
+          <p class="eyebrow">FEATURED / 本期主稿</p>
+          <h1 id="cover-title">在代码与思考之间，<em>记录 · 沉淀 · 生长</em></h1>
+          <p class="cover-story__dek">一个软件工程师的公开写作与私密知识档案。这里收集做过的事、想明白的问题，以及仍在生长的念头。</p>
+        </div>
+        <a class="text-link" href="blog-post.html">阅读本期主稿</a>
+      </div>
+      <aside class="cover-story__aside" aria-label="本期信息">
+        <div>
+          <p class="section-index">EDITOR'S NOTE / 01</p>
+          <strong>把知识留下来</strong>
+          <p>博客面向世界，笔记留给自己。两者不必分开，它们只是同一套思考在不同阶段的样子。</p>
+        </div>
+        <div>
+          <p class="meta">LAST UPDATE</p>
+          <p>2026.06.20<br>SHANGHAI · 23:47</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="contents-section" aria-labelledby="latest-title">
+      <div class="section-heading">
+        <h2 id="latest-title">最新内容</h2>
+        <p>CONTENTS / 03 ARTICLES</p>
+      </div>
+      <ol class="contents-list">
+        <li>
+          <a class="contents-item" href="blog-post.html">
+            <span class="contents-item__number">01</span>
+            <div>
+              <h3>在 2 核 2G 的小机器上，跑起一个完整的个人站</h3>
+              <p>SQLite、PM2、Nginx、CDN，把全年成本压到几杯咖啡以内。</p>
+            </div>
+            <div class="contents-item__meta">2026.06.12<br>8 MIN READ</div>
+          </a>
+        </li>
+        <li>
+          <a class="contents-item" href="blog-post.html">
+            <span class="contents-item__number">02</span>
+            <div>
+              <h3>Nuxt 3 混合渲染：让公开页静态、私密页动态</h3>
+              <p>用一套清晰的路由边界，在性能与开发体验之间取得平衡。</p>
+            </div>
+            <div class="contents-item__meta">2026.05.30<br>12 MIN READ</div>
+          </a>
+        </li>
+        <li>
+          <a class="contents-item" href="blog-post.html">
+            <span class="contents-item__number">03</span>
+            <div>
+              <h3>SQLite FTS5 + jieba：给中文做全文搜索</h3>
+              <p>不引入重型搜索服务，也能让个人知识库真正可检索。</p>
+            </div>
+            <div class="contents-item__meta">2026.05.18<br>6 MIN READ</div>
+          </a>
+        </li>
+      </ol>
+    </section>
+
+    <section class="author-file" aria-labelledby="author-title">
+      <div>
+        <p class="section-index">AUTHOR FILE / JBK</p>
+        <h2 id="author-title">关于这座<br>智识花园</h2>
+      </div>
+      <div class="author-file__bio">
+        <p>我是 Jiabaokang，一名软件工程师。这个站点用于记录工作、写作、思考和灵感：公开的内容成为博客，尚未成熟的内容留在私密档案。</p>
+        <div class="tag-list" aria-label="关注领域">
+          <span class="tag">架构设计</span><span class="tag">Vue / Nuxt</span><span class="tag">TypeScript</span>
+          <span class="tag">AI 工具链</span><span class="tag">工程效率</span><span class="tag">写作</span>
+        </div>
+        <div class="tag-list" aria-label="联系方式" style="margin-top: 1rem;">
+          <a class="tag" href="#">GitHub</a><a class="tag" href="#">微信公众号</a><a class="tag" href="mailto:hi@example.com">Email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>© 2026 智识花园 · BUILT WITH CURIOSITY</span>
+      <nav class="site-footer__links" aria-label="页脚导航">
+        <a href="index.html">首页</a><a href="blog.html">博客</a><a href="notes.html">私密档案</a><a href="login.html">登录</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

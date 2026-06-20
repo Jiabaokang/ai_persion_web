@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2ede2"><title>登录 · 智识花园</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="login">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header"><div class="site-header__inner"><a class="masthead" href="index.html"><span class="masthead__issue">PRIVATE ACCESS</span><span class="masthead__name">智识花园</span></a><nav class="desktop-nav" aria-label="主导航"><a data-nav-link="home" href="index.html">01 首页</a><a data-nav-link="blog" href="blog.html">02 博客</a><a data-nav-link="notes" href="notes.html">03 私密档案</a></nav><div class="header-actions"><button class="icon-button" data-theme-toggle type="button">主题</button><a class="icon-button" href="index.html">返回</a></div></div></header>
+  <div class="mobile-nav" id="mobile-navigation" data-drawer aria-hidden="true" tabindex="-1"><button data-drawer-close type="button">关闭</button></div>
+
+  <main id="main-content" class="login-page">
+    <section class="login-editorial" aria-labelledby="login-cover-title">
+      <div><p class="eyebrow">OWNER'S EDITION / 仅限本人</p><h1 id="login-cover-title">进入你的<em>私人档案</em></h1></div>
+      <p class="login-editorial__foot">公开文章属于所有读者，未完成的念头只属于你。登录后继续整理草稿、灵感与生活记录。</p>
+    </section>
+    <section class="login-form-panel" aria-labelledby="login-title">
+      <form class="login-form" data-login-form novalidate>
+        <p class="section-index">AUTHENTICATION / 04</p><h2 id="login-title">欢迎回来</h2><p class="login-form__intro">使用站点管理员账号继续。</p>
+        <div class="field"><label for="username">用户名</label><input id="username" name="username" type="text" autocomplete="username" required aria-describedby="login-error"></div>
+        <div class="field"><label for="password">密码</label><div class="field-control"><input id="password" name="password" type="password" autocomplete="current-password" required aria-describedby="login-error"><button class="password-toggle" data-password-toggle type="button" aria-pressed="false">显示密码</button></div></div>
+        <div class="login-options"><label class="checkbox"><input type="checkbox" name="remember"><span>记住本次登录</span></label><a class="text-link" href="#">忘记密码</a></div>
+        <p class="form-error" id="login-error" data-form-error aria-live="polite" hidden></p>
+        <button class="button button--primary login-submit" data-login-submit type="submit"><span data-submit-label>进入私密档案</span></button>
+        <p class="prototype-note">DEMO：任意非空账号均可进入；用户名输入 demo-error 可查看失败状态。</p>
+      </form>
+    </section>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>

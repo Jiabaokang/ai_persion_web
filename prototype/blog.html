@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2ede2"><title>博客 · 智识花园</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="blog">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <header class="site-header"><div class="site-header__inner">
+    <a class="masthead" href="index.html"><span class="masthead__issue">NO. 06 / 2026</span><span class="masthead__name">智识花园</span></a>
+    <nav class="desktop-nav" aria-label="主导航"><a data-nav-link="home" href="index.html">01 首页</a><a data-nav-link="blog" href="blog.html">02 博客</a><a data-nav-link="notes" href="notes.html">03 私密档案</a></nav>
+    <div class="header-actions"><button class="icon-button" data-theme-toggle type="button">主题</button><button class="icon-button menu-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-navigation">菜单</button></div>
+  </div></header>
+  <div class="mobile-nav-overlay" data-drawer-overlay></div>
+  <aside class="mobile-nav" id="mobile-navigation" data-drawer aria-label="移动端导航" aria-hidden="true" tabindex="-1">
+    <div class="mobile-nav__header"><span class="masthead__name">目录</span><button class="icon-button" data-drawer-close type="button">关闭</button></div>
+    <nav class="mobile-nav__links"><a data-nav-link="home" href="index.html">01 / 首页</a><a data-nav-link="blog" href="blog.html">02 / 博客</a><a data-nav-link="notes" href="notes.html">03 / 私密档案</a><a href="login.html">04 / 登录</a></nav>
+    <p class="mobile-nav__note">PUBLIC JOURNAL · 12 ARTICLES</p>
+  </aside>
+
+  <main id="main-content" class="page-shell">
+    <header class="page-intro">
+      <p class="kicker">PUBLIC<br>JOURNAL</p>
+      <div><p class="edition-rule">02 / BLOG ARCHIVE</p><h1>公开写作</h1><p class="page-intro__dek">关于工程、系统与个人成长的完整记录。写下来的，不只是答案，还有抵达答案的路径。</p></div>
+    </header>
+
+    <form class="filter-panel" data-filter-form role="search" onsubmit="return false">
+      <div class="filter-row">
+        <label class="search-wrap"><span class="search-label">SEARCH / 搜索全文</span><input class="search-input" data-search type="search" placeholder="标题、摘要或标签" autocomplete="off"></label>
+        <output class="filter-status" data-result-count aria-live="polite">共 6 篇</output>
+      </div>
+      <div class="tag-filter" data-tag-filter aria-label="按标签筛选">
+        <button class="tag-button" data-tag="架构" type="button" aria-pressed="false">架构</button>
+        <button class="tag-button" data-tag="部署" type="button" aria-pressed="false">部署</button>
+        <button class="tag-button" data-tag="Vue" type="button" aria-pressed="false">Vue</button>
+        <button class="tag-button" data-tag="SQLite" type="button" aria-pressed="false">SQLite</button>
+        <button class="tag-button" data-tag="AI" type="button" aria-pressed="false">AI</button>
+        <button class="tag-button" data-tag="思考" type="button" aria-pressed="false">思考</button>
+        <button class="tag-button filter-clear" data-filter-clear type="button">清除条件</button>
+      </div>
+    </form>
+
+    <section aria-label="博客文章">
+      <div class="archive-list" data-cards>
+        <a class="archive-entry" data-card data-tags="架构,部署,SQLite" href="blog-post.html">
+          <span class="archive-entry__number">01</span><div><h2>在 2 核 2G 的小机器上，跑起一个完整的个人站</h2><p class="archive-entry__summary">SQLite、PM2、Nginx、CDN，把全年成本压到几杯咖啡以内。</p><div class="archive-entry__tags"><span class="tag">架构</span><span class="tag">部署</span><span class="tag">SQLite</span></div></div><div class="archive-entry__meta">2026.06.12<br>8 MIN READ</div>
+        </a>
+        <a class="archive-entry" data-card data-tags="Vue,Nuxt,架构" href="blog-post.html">
+          <span class="archive-entry__number">02</span><div><h2>Nuxt 3 混合渲染：让公开页静态、私密页动态</h2><p class="archive-entry__summary">SSG + SSR 的取舍逻辑，以及如何用 routeRules 清楚表达页面边界。</p><div class="archive-entry__tags"><span class="tag">Vue</span><span class="tag">Nuxt</span><span class="tag">架构</span></div></div><div class="archive-entry__meta">2026.05.30<br>12 MIN READ</div>
+        </a>
+        <a class="archive-entry" data-card data-tags="SQLite,搜索,中文" href="blog-post.html">
+          <span class="archive-entry__number">03</span><div><h2>SQLite FTS5 + jieba：给中文做全文搜索</h2><p class="archive-entry__summary">不用重型搜索服务，也能让个人知识库真正可检索。</p><div class="archive-entry__tags"><span class="tag">SQLite</span><span class="tag">搜索</span><span class="tag">中文</span></div></div><div class="archive-entry__meta">2026.05.18<br>6 MIN READ</div>
+        </a>
+        <a class="archive-entry" data-card data-tags="思考,AI,工具" href="blog-post.html">
+          <span class="archive-entry__number">04</span><div><h2>我如何使用 AI，但不把思考外包给 AI</h2><p class="archive-entry__summary">把模型当作思考放大器，而不是答案贩卖机。</p><div class="archive-entry__tags"><span class="tag">思考</span><span class="tag">AI</span><span class="tag">工具</span></div></div><div class="archive-entry__meta">2026.05.05<br>10 MIN READ</div>
+        </a>
+        <a class="archive-entry" data-card data-tags="TypeScript,Vue,工程化" href="blog-post.html">
+          <span class="archive-entry__number">05</span><div><h2>TypeScript 严格模式：痛苦两周，受益两年</h2><p class="archive-entry__summary">一次真实项目迁移后留下的类型边界实践。</p><div class="archive-entry__tags"><span class="tag">TypeScript</span><span class="tag">Vue</span><span class="tag">工程化</span></div></div><div class="archive-entry__meta">2026.04.22<br>9 MIN READ</div>
+        </a>
+        <a class="archive-entry" data-card data-tags="架构,部署" href="blog-post.html">
+          <span class="archive-entry__number">06</span><div><h2>一份够用的个人服务部署清单</h2><p class="archive-entry__summary">从域名、证书到备份和恢复，逐项确认真正影响稳定性的事情。</p><div class="archive-entry__tags"><span class="tag">架构</span><span class="tag">部署</span></div></div><div class="archive-entry__meta">2026.04.08<br>7 MIN READ</div>
+        </a>
+      </div>
+      <div class="empty-state" data-empty hidden><strong>没有找到匹配文章</strong><p>换一个关键词，或清除当前筛选条件。</p><button class="button" data-filter-clear type="button">清除条件</button></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="site-footer__inner"><span>© 2026 智识花园 · PUBLIC EDITION</span><nav class="site-footer__links"><a href="index.html">首页</a><a href="notes.html">私密档案</a><a href="login.html">登录</a></nav></div></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
