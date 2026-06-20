@@ -106,3 +106,30 @@ test('theme and drawer implementation expose accessible state', async () => {
   assert.match(js, /focus\(\)/)
   assert.match(js, /previouslyFocusedElement/)
 })
+
+test('pages avoid legacy decoration and inline presentation', async () => {
+  for (const page of pages) {
+    const html = await read(page)
+    assert.doesNotMatch(html, /\sstyle=/)
+    assert.doesNotMatch(html, /aurora-bg|glass(?:-strong)?|grid-cards|card-cover/)
+  }
+})
+
+test('page ids are unique and aria controls resolve', async () => {
+  for (const page of pages) {
+    const html = await read(page)
+    const ids = Array.from(html.matchAll(/\sid="([^"]+)"/g), (match) => match[1])
+    assert.equal(new Set(ids).size, ids.length, `${page} contains duplicate ids`)
+    const controlledIds = Array.from(html.matchAll(/\saria-controls="([^"]+)"/g), (match) => match[1])
+    for (const id of controlledIds) assert.ok(ids.includes(id), `${page} aria-controls target #${id} is missing`)
+  }
+})
+
+test('internal html links target an existing prototype page', async () => {
+  const knownPages = new Set(pages)
+  for (const page of pages) {
+    const html = await read(page)
+    const links = Array.from(html.matchAll(/href="([^"#?]+\.html)(?:[?#][^"]*)?"/g), (match) => match[1])
+    for (const link of links) assert.ok(knownPages.has(link), `${page} links to missing ${link}`)
+  }
+})
