@@ -1,56 +1,233 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#f2ede2"><title>在 2 核 2G 的小机器上跑起个人站 · 智识花园</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0F172A">
+  <title>在 2 核 2G 的小机器上，跑起一个完整的个人站 · 智识花园</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body data-page="blog">
-  <div class="reading-progress" data-reading-progress aria-hidden="true"></div><a class="skip-link" href="#main-content">跳到正文</a>
-  <header class="site-header"><div class="site-header__inner"><a class="masthead" href="index.html"><span class="masthead__issue">NO. 06 / 2026</span><span class="masthead__name">智识花园</span></a><nav class="desktop-nav" aria-label="主导航"><a data-nav-link="home" href="index.html">01 首页</a><a data-nav-link="blog" href="blog.html">02 博客</a><a data-nav-link="notes" href="notes.html">03 私密档案</a></nav><div class="header-actions"><button class="icon-button" data-theme-toggle type="button">主题</button><button class="icon-button menu-button" data-menu-toggle type="button" aria-expanded="false" aria-controls="mobile-navigation">菜单</button></div></div></header>
-  <div class="mobile-nav-overlay" data-drawer-overlay></div><aside class="mobile-nav" id="mobile-navigation" data-drawer aria-label="移动端导航" aria-hidden="true" tabindex="-1"><div class="mobile-nav__header"><span class="masthead__name">目录</span><button class="icon-button" data-drawer-close type="button">关闭</button></div><nav class="mobile-nav__links"><a data-nav-link="home" href="index.html">01 / 首页</a><a data-nav-link="blog" href="blog.html">02 / 博客</a><a data-nav-link="notes" href="notes.html">03 / 私密档案</a><a href="login.html">04 / 登录</a></nav><p class="mobile-nav__note">PUBLIC JOURNAL · FEATURE 01</p></aside>
 
-  <main id="main-content" class="page-shell article-page">
-    <a class="back-link" href="blog.html">返回博客目录</a>
-    <article data-article>
-      <header class="article-header">
-        <p class="eyebrow">FEATURE 01 / 架构与部署</p>
-        <h1>在 2 核 2G 的小机器上，跑起一个完整的个人站</h1>
-        <p class="article-header__dek">从零开始的极简部署笔记：SQLite、PM2、Nginx、CDN，把所有成本压到几杯咖啡以内。</p>
-        <div class="article-meta"><span>2026.06.12</span><span>8 分钟阅读</span><span>最后更新 2026.06.18</span></div>
-      </header>
-      <div class="article-layout">
-        <div class="article-body" data-article-body>
-          <p>两年前我第一次认真搭个人站，用的是一台阿里云 2 核 2G 的 ECS。朋友听完第一反应是：“2G 内存够吗？”事实证明，够——而且余量比想象中大得多。</p>
-          <p>这篇文章记录最终跑通的方案，以及在性能、复杂度和维护成本之间做出的取舍。</p>
-          <h2 id="why-small">为什么坚持用小机器</h2>
-          <p>个人站的大部分时间没有并发，真正稀缺的不是算力，而是维护它的注意力。更小的机器会迫使架构保持克制：单进程、单数据库、明确的缓存边界。</p>
-          <blockquote>最好的个人基础设施，不是最强的那套，而是半年以后你仍然敢升级的那套。</blockquote>
-          <h2 id="architecture">最终架构</h2>
-          <p>公开页面由 Nuxt 预渲染，访问者主要命中 CDN；私密页面和后台保留 SSR。Node 进程只负责真正需要动态执行的部分。</p>
-          <h3 id="sqlite">SQLite：把数据留在一处</h3>
-          <p>SQLite 对单用户内容系统非常合适。配合 WAL 模式和定时备份，它把数据库维护降到文件级别。数据模型简单，迁移和恢复也容易演练。</p>
-          <h3 id="process">PM2 与内存边界</h3>
-          <p>Node 使用单实例运行，设置内存重启阈值。与其在小机器上制造伪高可用，不如保证服务能被可靠拉起，并让静态流量尽量不进入 Node。</p>
-          <h2 id="cache">缓存策略</h2>
-          <p>图片进 OSS，公开页面和前端资源进 CDN；私密内容明确设置为不可缓存。缓存规则围绕内容身份设计，而不是只围绕文件后缀。</p>
-          <h2 id="backup">备份比高可用重要</h2>
-          <p>每天使用 SQLite 在线备份生成一致快照，上传 OSS 并保留滚动版本。每个月至少执行一次恢复演练，确认备份真的能够使用。</p>
-          <h2 id="ending">写在最后</h2>
-          <p>2 核 2G 不是限制，而是一条清晰的设计边界。它让我删掉了大量并不需要的复杂度，最终留下了一套真正愿意长期维护的系统。</p>
-        </div>
-        <aside class="article-toc" data-toc aria-label="文章目录">
-          <h2>CONTENTS / 目录</h2><ol><li><a href="#why-small">为什么坚持用小机器</a></li><li><a href="#architecture">最终架构</a></li><li><a href="#sqlite">SQLite</a></li><li><a href="#process">PM2 与内存边界</a></li><li><a href="#cache">缓存策略</a></li><li><a href="#backup">备份比高可用重要</a></li><li><a href="#ending">写在最后</a></li></ol>
-        </aside>
+  <div class="aurora-bg" aria-hidden="true"><span></span></div>
+
+  <nav class="nav" aria-label="主导航">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-mark">智</span>
+        <span>智识花园</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link" data-nav-link="home">首页</a>
+        <a href="blog.html" class="nav-link" data-nav-link="blog">博客</a>
+        <a href="notes.html" class="nav-link" data-nav-link="notes">笔记</a>
       </div>
-      <nav class="adjacent-posts" aria-label="相邻文章"><a href="blog-post.html"><small>PREVIOUS / 02</small><strong>Nuxt 3 混合渲染</strong></a><a href="blog-post.html"><small>NEXT / 03</small><strong>SQLite FTS5 + jieba</strong></a></nav>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" data-theme-toggle aria-label="切换主题">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <a href="login.html" class="nav-icon-btn nav-menu-btn" aria-label="登录">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/>
+          </svg>
+        </a>
+        <button class="nav-icon-btn nav-menu-btn" data-menu-toggle aria-label="打开菜单">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <a href="login.html" class="nav-avatar">
+          <span class="nav-avatar-img">J</span>
+          <span class="nav-avatar-name">Jiabaokang</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="drawer-overlay" data-drawer-overlay></div>
+  <aside class="drawer" data-drawer aria-label="移动端导航">
+    <div class="drawer-header">
+      <a href="index.html" class="nav-brand">
+        <span class="nav-brand-mark">智</span>
+        <span>智识花园</span>
+      </a>
+      <button class="nav-icon-btn" data-drawer-close aria-label="关闭菜单">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="drawer-links">
+      <a href="index.html" class="drawer-link" data-nav-link="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        首页
+      </a>
+      <a href="blog.html" class="drawer-link" data-nav-link="blog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V9a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2h-2z"/>
+        </svg>
+        博客
+      </a>
+      <a href="notes.html" class="drawer-link" data-nav-link="notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+        </svg>
+        笔记
+      </a>
+    </nav>
+  </aside>
+
+  <main>
+    <article class="container" style="padding-top: 7rem; max-width: 800px;">
+      <a href="blog.html" class="section-link" style="margin-bottom: 1.5rem; display: inline-flex;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(180deg);">
+          <path d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
+        <span>返回博客</span>
+      </a>
+
+      <header class="article-header">
+        <div class="article-meta">
+          <span>2026-06-12</span>
+          <span class="article-meta-dot"></span>
+          <span>8 分钟阅读</span>
+          <span class="article-meta-dot"></span>
+          <span>2,143 次浏览</span>
+        </div>
+        <h1 class="article-title">在 2 核 2G 的小机器上，跑起一个完整的个人站</h1>
+        <div class="card-tags" style="margin-top: 1rem;">
+          <span class="tag">架构</span>
+          <span class="tag">部署</span>
+          <span class="tag">SQLite</span>
+        </div>
+      </header>
+
+      <div class="article-cover"></div>
+
+      <div class="prose">
+        <p>这是一个关于"如何在最小的机器上跑起一个完整可用个人站"的笔记。
+        没有花哨的微服务，没有 Redis 集群，没有 k8s——只有一个 2 核 2G 的 ECS，
+        一个 SQLite 文件，一个 PM2 守护的 Node 进程，和一个 nginx 反代。</p>
+
+        <h2>为什么不上云数据库？</h2>
+        <p>云数据库便宜的一年也要几百，而个人站的数据量一年可能不到 10MB。
+        用 SQLite 的好处显而易见：</p>
+        <ul>
+          <li><strong>零运维</strong>：没有连接池，没有跨地域同步，没有主从切换</li>
+          <li><strong>零成本</strong>：本地文件，备份用 <code>sqlite3 .backup</code> 即可</li>
+          <li><strong>够用</strong>：单表百万级数据下，查询比 PG 还快（数据都在内存里）</li>
+          <li><strong>迁移简单</strong>：整个站点是 1 个文件 + 几张图片，scp 一下就到新机器</li>
+        </ul>
+
+        <h2>架构全景</h2>
+        <p>整个架构画出来就是这样的：</p>
+        <pre><code>[用户浏览器]
+    ↓
+[阿里云 CDN]  ← 缓存公开页面/图片/JS/CSS
+    ↓
+[nginx (反代 :80/:443)]
+    ↓
+[Nuxt 3 Node 进程 (PM2 守护, :3000)]
+    ↓
+[SQLite 文件 (/data/db.sqlite, WAL 模式)]
+    ↓
+[阿里云 OSS]  ← 图片/附件存储</code></pre>
+
+        <p>注意：CDN 兜底了 90% 的静态请求，Node 进程只处理私密页面和后台管理。
+        所以即使 2 核 2G，也不会有压力。</p>
+
+        <h2>内存预算：精打细算</h2>
+        <p>2G 内存要装：系统 ~500MB、Node ~500MB、SQLite ~50MB、nginx ~50MB。
+        剩下的不到 1G 用来给文件系统缓存和突发流量。</p>
+        <blockquote>
+          关键配置：Node 启动参数 <code>--max-old-space-size=512</code>，
+          PM2 配置 <code>max_memory_restart=600M</code>，超了就自动重启。
+        </blockquote>
+
+        <h2>数据备份：一天一次不能少</h2>
+        <p>SQLite 文件丢了一切就没了。我的备份策略：</p>
+        <ol>
+          <li>每天凌晨 3 点 cron 跑 <code>scripts/backup.sh</code></li>
+          <li>脚本用 <code>sqlite3 .backup</code> 做热备份（不锁表）</li>
+          <li>压缩后传到阿里云 OSS 的 <code>backups/</code> 目录</li>
+          <li>保留 7 天滚动 + 月度归档</li>
+          <li>备份脚本带校验码，失败时发邮件告警</li>
+        </ol>
+
+        <h2>CDN 配置的几个坑</h2>
+        <p>第一次配 CDN 的时候踩了不少坑。总结一下：</p>
+        <ul>
+          <li><strong>回源 Host 必须用 ECS IP</strong>，不能用域名（避免回环）</li>
+          <li><strong>缓存策略要分层</strong>：HTML 5 分钟，JS/CSS 1 年，图片 30 天</li>
+          <li><strong>必须开启 HTTPS</strong>：阿里云免费 DV SSL 一年一续</li>
+          <li><strong>防盗链要设置</strong>：Referer 白名单 + URL 鉴权（防刷）</li>
+        </ul>
+
+        <h2>下一步</h2>
+        <p>基础跑通之后，下一步要做的：</p>
+        <ul>
+          <li>TipTap 编辑器 + Markdown 导入（P4 阶段）</li>
+          <li>FTS5 中文搜索（P7 阶段）</li>
+          <li>公众号格式一键导出（P10 阶段）</li>
+        </ul>
+        <p>这是一个慢慢生长的项目，不急。</p>
+      </div>
+
+      <footer class="article-footer">
+        <div class="card-tags">
+          <span class="tag">架构</span>
+          <span class="tag">部署</span>
+          <span class="tag">SQLite</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+            <span>分享</span>
+          </button>
+        </div>
+      </footer>
+
+      <!-- Prev/Next -->
+      <nav style="display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 2.5rem;" class="prev-next">
+        <a href="blog-post.html" class="glass" style="padding: 1rem 1.25rem; display: block; color: inherit; cursor: pointer;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">← 上一篇</div>
+          <div style="font-weight: 600; color: var(--text-primary);">把 AI 当作工具，而不是同事</div>
+        </a>
+        <a href="blog-post.html" class="glass" style="padding: 1rem 1.25rem; display: block; color: inherit; text-align: right; cursor: pointer;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">下一篇 →</div>
+          <div style="font-weight: 600; color: var(--text-primary);">SQLite FTS5 + jieba：给中文做全文搜索的优雅方式</div>
+        </a>
+      </nav>
     </article>
   </main>
 
-  <div class="mobile-toc-bar"><span>阅读进度 <b data-reading-percent>0%</b></span><button class="button" data-toc-toggle type="button" aria-expanded="false" aria-controls="mobile-toc">目录</button></div>
-  <div class="mobile-nav-overlay" data-toc-overlay></div><aside class="toc-drawer" id="mobile-toc" data-toc-drawer aria-label="移动文章目录" aria-hidden="true" tabindex="-1"><div class="toc-drawer__header"><strong>文章目录</strong><button class="icon-button" data-toc-close type="button">关闭</button></div><ol><li><a href="#why-small">为什么坚持用小机器</a></li><li><a href="#architecture">最终架构</a></li><li><a href="#sqlite">SQLite</a></li><li><a href="#process">PM2 与内存边界</a></li><li><a href="#cache">缓存策略</a></li><li><a href="#backup">备份比高可用重要</a></li><li><a href="#ending">写在最后</a></li></ol></aside>
-  <footer class="site-footer"><div class="site-footer__inner"><span>© 2026 智识花园 · FEATURE 01</span><nav class="site-footer__links"><a href="index.html">首页</a><a href="blog.html">博客目录</a><a href="notes.html">私密档案</a></nav></div></footer>
+  <style>
+    @media (min-width: 768px) {
+      .prev-next { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 智识花园 · Built with curiosity</div>
+      <div class="footer-links">
+        <a href="index.html">首页</a>
+        <a href="blog.html">博客</a>
+        <a href="notes.html">笔记</a>
+        <a href="login.html">登录</a>
+      </div>
+    </div>
+  </footer>
+
   <script src="assets/app.js"></script>
 </body>
 </html>
