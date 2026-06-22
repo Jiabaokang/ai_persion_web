@@ -1,25 +1,11 @@
 <script setup lang="ts">
 /**
  * 主题切换按钮（light / dark）
- * 基于 VueUse useColorMode，自动持久化到 localStorage
- * 任务 I2 将抽取 useTheme composable；当前为 inline 实现
+ * 基于 I2 useTheme composable，自动持久化到 localStorage
  */
-import { computed } from 'vue'
-import { useColorMode } from '@vueuse/core'
+import { useTheme } from '~/composables/useTheme'
 
-const color = useColorMode({
-  attribute: 'data-theme',
-  modes: {
-    light: 'light',
-    dark: 'dark',
-  },
-})
-
-const isLight = computed(() => color.value === 'light')
-
-function toggle() {
-  color.value = isLight.value ? 'dark' : 'light'
-}
+const { isLight, toggle } = useTheme()
 </script>
 
 <template>

@@ -2,14 +2,11 @@
 /**
  * 顶部导航
  * 整合 brand + 桌面导航 + 主题切换 + 移动端菜单触发
- * 抽屉状态由本组件管理，任务 I2 抽取 useDrawer composable
+ * 抽屉状态由 useDrawer composable 共享管理
  */
-import { ref } from 'vue'
+import { useDrawer } from '~/composables/useDrawer'
 
-const isDrawerOpen = ref(false)
-const openDrawer = () => {
-  isDrawerOpen.value = true
-}
+const { isOpen, open } = useDrawer()
 </script>
 
 <template>
@@ -62,7 +59,7 @@ const openDrawer = () => {
           class="nav-icon-btn nav-menu-btn"
           data-menu-toggle
           aria-label="打开菜单"
-          @click="openDrawer"
+          @click="open"
         >
           <svg
             viewBox="0 0 24 24"
@@ -80,5 +77,5 @@ const openDrawer = () => {
   </nav>
 
   <!-- 移动端抽屉 -->
-  <AppDrawer v-model:open="isDrawerOpen" />
+  <AppDrawer v-model:open="isOpen" />
 </template>

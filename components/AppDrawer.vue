@@ -1,9 +1,11 @@
 <script setup lang="ts">
 /**
  * 移动端抽屉
- * 父组件通过 v-model:open 双向绑定状态
- * 点击遮罩或关闭按钮触发 update:open(false)
+ * 使用 useDrawer composable 与 AppHeader 共享开关状态
+ * 同时 emit update:open 保持 v-model 兼容
  */
+import { useDrawer } from '~/composables/useDrawer'
+
 defineProps<{
   open: boolean
 }>()
@@ -12,8 +14,11 @@ const emit = defineEmits<{
   'update:open': [value: boolean]
 }>()
 
+const { close: closeDrawer } = useDrawer()
+
 function close() {
   emit('update:open', false)
+  closeDrawer()
 }
 </script>
 
