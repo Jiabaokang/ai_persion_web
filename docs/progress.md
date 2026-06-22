@@ -10,13 +10,43 @@
 
 状态：`✅ 完成` / `🔄 进行中` / `⏸ 暂停` / `❌ 跳过`
 
+## Commit 规范（2026-06-22 定）
+
+- **类型前缀**保持英文：`feat` / `fix` / `docs` / `chore` / `refactor` / `test` / `style` / `perf` / `ci` / `build`
+- **冒号后描述**用中文
+- 例：`feat: 添加登录页面` / `fix: 修复 SQLite 连接泄漏` / `chore: 升级 pnpm 到 10.x`
+- 原因：conventional-commits 工具链（commitlint、release-please、semantic-release）均按英文类型识别
+
 ## 任务清单（25 MVP + 7 增强）
 
 ### 阶段 0 - 脚手架
 
 | 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
 |---|---|---|---|---|---|
-| 0 | 项目初始化 | 🔄 | (进行中) | 2026-06-22 | 目录结构 + 配置 + 最小可运行 |
+| 0 | 项目初始化 | ✅ | `22486c7` (6 commits) | 2026-06-22 | 见下"任务 0 详情" |
+
+### 任务 0 详情（6 个子 commit）
+
+```
+40d0646 chore: 添加项目根级配置（gitignore/env/prettier/license/nvmrc）
+29bb15d chore: 添加构建工具链配置（nuxt/uno/vitest/eslint/tsconfig）
+f44a9ef chore: 添加项目依赖（package.json + pnpm-lock.yaml）
+18d3dff feat: 添加 Nuxt 应用骨架（app/error/page/layout/api）
+3aa5ba6 feat: 创建前后端目录结构占位（含 .gitkeep）
+22486c7 docs: 添加 README 和任务进度追踪
+```
+
+**关键产物**：
+- `.gitignore` / `.env.example` / `.nvmrc` / `LICENSE` / `.prettierrc.json`
+- `nuxt.config.ts` / `uno.config.ts` / `vitest.config.ts` / `eslint.config.mjs` / `tsconfig.json`
+- `package.json`（Nuxt 3 + UnoCSS + VueUse + Vitest + ESLint）
+- `app.vue` / `error.vue` / `pages/index.vue` / `layouts/default.vue`
+- `server/api/health.get.ts`（健康检查接口）
+- `assets/css/tokens.css` / `assets/css/main.css`（设计令牌 + 全局样式）
+- 9 个空目录（含 `.gitkeep`）：components / composables / public / scripts / server/{db,utils,middleware} / tests/{unit,e2e}
+- `README.md` / `docs/progress.md`
+
+**验证**：`pnpm exec nuxt prepare` 通过，`.nuxt/` 已生成。`pnpm dev` 未运行（避免占端口）。
 
 ### 阶段 1 - Nuxt 基础
 
