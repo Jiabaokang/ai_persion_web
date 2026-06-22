@@ -1,5 +1,10 @@
 <template>
-  <div class="min-h-screen">
-    <slot />
+  <div>
+    <AppAuroraBackground />
+    <AppHeader />
+    <main>
+      <slot />
+    </main>
+    <AppFooter />
   </div>
 </template>

@@ -1,16 +1,22 @@
 // 任务 I0 - 设计令牌迁移：UnoCSS shortcuts 单元测试
 // 验证 uno.config.ts 中的快捷类能正确生成 CSS
+//
+// 注意：测试用精简配置（去掉 web fonts / icons 预设），避免在 CI 触发 Google Fonts 拉取。
 
 import { describe, it, expect, beforeAll } from 'vitest'
-import { createGenerator } from 'unocss'
-import type { Generator } from 'unocss'
-import config from '../../../uno.config'
+import { createGenerator, presetUno } from 'unocss'
+import type { UnoGenerator } from 'unocss'
+import { shortcuts, theme } from '../../../uno.config'
 
-let generator: Generator
+let generator: UnoGenerator
 
 beforeAll(async () => {
-  // createGenerator 返回 Promise，需要 await
-  generator = await createGenerator(config)
+  // 使用精简 preset（无 web fonts / icons），避免离线 / CI 环境噪音
+  generator = await createGenerator({
+    presets: [presetUno() as any],
+    theme,
+    shortcuts,
+  } as any)
 })
 
 describe('UnoCSS shortcuts - 玻璃/渐变/容器', () => {
