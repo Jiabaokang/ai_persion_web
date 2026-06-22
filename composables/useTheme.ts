@@ -10,13 +10,14 @@ type Theme = 'dark' | 'light'
 const THEME_KEY = 'ai-personal-website-theme'
 
 export function useTheme() {
-  const theme = ref<Theme>(
-    (localStorage.getItem(THEME_KEY) as Theme) || (getSystemPreference() || 'dark'),
-  )
+  // SSR 安全：服务端无 localStorage/window，默认返回 dark
+  const initial = getBrowserTheme() || 'dark'
+  const theme = ref<Theme>(initial)
 
   const isLight = computed(() => theme.value === 'light')
 
   function sync() {
+    if (typeof window === 'undefined') return
     document.documentElement.setAttribute('data-theme', theme.value)
     localStorage.setItem(THEME_KEY, theme.value)
   }
@@ -34,9 +35,10 @@ export function useTheme() {
   return { theme, isLight, toggle, set }
 }
 
-function getSystemPreference(): Theme | undefined {
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light'
-  }
+function getBrowserTheme(): Theme | undefined {
+  if (typeof window === 'undefined') return undefined
+  const stored = localStorage.getItem(THEME_KEY) as Theme | null
+  if (stored === 'dark' || stored === 'light') return stored
+  if (window.matchMedia('(prefers-color-scheme: light)').matches) return 'light'
   return undefined
 }
