@@ -76,8 +76,8 @@ f44a9ef chore: 添加项目依赖（package.json + pnpm-lock.yaml）
 | 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
 |---|---|---|---|---|---|
 | I0 | 设计令牌迁移 | ✅ | `92e1476` + `edacc8e` | 2026-06-22 | 见下"I0 详情" |
-| I1 | 公共布局迁移 | ⏸ | - | - | Header/Footer/Drawer → 6 组件 |
-| I2 | 公共 composables | ⏸ | - | - | theme/filter/drawer/scrollSpy |
+| I1 | 公共布局迁移 | ✅ | `6967d49` + `b713c62` | 2026-06-23 | 6 组件 + 布局 + 测试（61/61） |
+| I2 | 公共 composables | ✅ | `8f2f6d7` + `850f48b` | 2026-06-23 | theme/drawer/filter/scrollSpy（73/73） |
 
 ### 任务 I0 详情
 
@@ -108,15 +108,7 @@ edacc8e test(I0): 补全设计令牌和极光背景的断言
 | 2 | UnoCSS + Lint 工具链 | ⏸ | - | - | 基础版已含，I0 扩展 |
 | 3 | Vitest 测试框架 | ⏸ | - | - | 配置文件已写入 |
 
-### 阶段 2 - 原型迁移
-
-| 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
-|---|---|---|---|---|---|
-| I0 | 设计令牌迁移 | ⏸ | - | - | CSS vars → UnoCSS preset shortcuts |
-| I1 | 公共布局迁移 | ⏸ | - | - | Header/Footer/Drawer → 6 组件 |
-| I2 | 公共 composables | ⏸ | - | - | theme/filter/drawer/scrollSpy |
-
-### 阶段 3 - 数据层
+### 阶段 2 - 数据层
 
 | 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
 |---|---|---|---|---|---|
