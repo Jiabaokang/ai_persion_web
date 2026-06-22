@@ -29,4 +29,11 @@ export default withNuxt(
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     },
   },
+  // 3) 测试文件放宽 any 类型（mock/config 绕过类型窄化）
+  {
+    files: ['tests/**'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 )

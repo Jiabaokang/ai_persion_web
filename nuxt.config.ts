@@ -41,11 +41,12 @@ export default defineNuxtConfig({
   },
 
   // ========== 全局 CSS ==========
-  // 顺序敏感：先 tokens 再 main 再 aurora
+  // 顺序敏感：tokens → main → aurora → layout
   css: [
     '~/assets/css/tokens.css', // 设计令牌（CSS 变量）
     '~/assets/css/main.css', // 全局样式（重置 + 排版）
     '~/assets/css/aurora.css', // 极光背景动画
+    '~/assets/css/layout.css', // 公共布局（Nav/Drawer/Footer）
   ],
 
   // ========== 运行时配置 ==========

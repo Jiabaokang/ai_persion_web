@@ -9,8 +9,12 @@
 // @see https://vitest.dev/
 
 import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  // 启用 Vue SFC 编译（必须，否则无法解析 .vue 文件）
+  // @ts-expect-error @vitejs/plugin-vue 6.x 的 Vite 7 类型与 vitest 内置的 Vite 5 类型冲突，运行时正常
+  plugins: [vue()],
   test: {
     // DOM 环境：happy-dom（轻量、快）
     environment: 'happy-dom',

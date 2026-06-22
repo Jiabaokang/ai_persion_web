@@ -11,6 +11,55 @@ import {
   presetWebFonts,
 } from 'unocss'
 
+// 导出供测试复用（经 vitest.config.ts 的 vue plugin 解析后可用）
+export const shortcuts: [string, string][] = [
+  // ===== 玻璃拟态 =====
+  [
+    'glass',
+    'bg-[rgba(15,23,42,0.4)] backdrop-blur-[20px] backdrop-saturate-[180%] border border-[rgba(255,255,255,0.1)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]',
+  ],
+  [
+    'glass-strong',
+    'bg-[rgba(15,23,42,0.65)] backdrop-blur-[20px] backdrop-saturate-[180%] border border-[rgba(255,255,255,0.18)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]',
+  ],
+
+  // ===== 渐变文字 =====
+  [
+    'gradient-text',
+    'bg-[linear-gradient(135deg,#22D3EE_0%,#A855F7_50%,#EC4899_100%)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent',
+  ],
+
+  // ===== 响应式容器 =====
+  [
+    'container',
+    'max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8',
+  ],
+
+  // ===== 章节垂直内边距 =====
+  [
+    'section',
+    'py-16 md:py-24',
+  ],
+
+  // ===== 垂直堆叠 =====
+  ['stack', '[&>*+*]:mt-4'],
+  ['stack-lg', '[&>*+*]:mt-6'],
+  ['stack-xl', '[&>*+*]:mt-10'],
+]
+
+export const theme = {
+  colors: {
+    'base': '#0F172A', // 主背景 - 深蓝黑
+    'surface': '#1E293B', // 表面 - 略亮深蓝
+    'surface-2': '#334155', // 表面 2 - 进一步提亮
+    'ink': '#F1F5F9', // 主文字 - 近白
+    'ink-2': '#94A3B8', // 次文字 - 中灰
+    'cyan': '#22D3EE', // 极光 - 青
+    'purple': '#A855F7', // 极光 - 紫
+    'pink': '#EC4899', // 极光 - 粉
+  },
+}
+
 export default defineConfig({
   presets: [
     // 原子化 CSS 基础预设（兼容 Tailwind / Windi 语法）
@@ -45,57 +94,20 @@ export default defineConfig({
     }),
   ],
 
-  // 主题色（与 assets/css/tokens.css 中的 CSS 变量保持同步）
   theme: {
     colors: {
-      'base': '#0F172A', // 主背景 - 深蓝黑
-      'surface': '#1E293B', // 表面 - 略亮深蓝
-      'surface-2': '#334155', // 表面 2 - 进一步提亮
-      'ink': '#F1F5F9', // 主文字 - 近白
-      'ink-2': '#94A3B8', // 次文字 - 中灰
-      'cyan': '#22D3EE', // 极光 - 青
-      'purple': '#A855F7', // 极光 - 紫
-      'pink': '#EC4899', // 极光 - 粉
+      'base': '#0F172A',
+      'surface': '#1E293B',
+      'surface-2': '#334155',
+      'ink': '#F1F5F9',
+      'ink-2': '#94A3B8',
+      'cyan': '#22D3EE',
+      'purple': '#A855F7',
+      'pink': '#EC4899',
     },
   },
 
   // 自定义快捷类（任务 I0 注入）
   // 与 prototype/assets/styles.css 中的 .glass / .gradient-text 等对应
-  shortcuts: [
-    // ===== 玻璃拟态 =====
-    [
-      'glass',
-      'bg-[rgba(15,23,42,0.4)] backdrop-blur-[20px] backdrop-saturate-[180%] border border-[rgba(255,255,255,0.1)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]',
-    ],
-    [
-      'glass-strong',
-      'bg-[rgba(15,23,42,0.65)] backdrop-blur-[20px] backdrop-saturate-[180%] border border-[rgba(255,255,255,0.18)] rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]',
-    ],
-
-    // ===== 渐变文字 =====
-    [
-      'gradient-text',
-      'bg-[linear-gradient(135deg,#22D3EE_0%,#A855F7_50%,#EC4899_100%)] [-webkit-background-clip:text] [background-clip:text] [-webkit-text-fill-color:transparent] text-transparent',
-    ],
-
-    // ===== 响应式容器 =====
-    [
-      'container',
-      'max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8',
-    ],
-
-    // ===== 章节垂直内边距 =====
-    [
-      'section',
-      'py-16 md:py-24',
-    ],
-
-    // ===== 垂直堆叠 =====
-    ['stack', '[&>*+*]:mt-4'],
-    ['stack-lg', '[&>*+*]:mt-6'],
-    ['stack-xl', '[&>*+*]:mt-10'],
-  ],
-
-  // 图标预设默认从 Iconify CDN 加载
-  // 离线场景：pnpm add @iconify-json/<集合名> 后会自动切换到本地
+  shortcuts,
 })
