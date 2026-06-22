@@ -1,32 +1,77 @@
 /* 智识花园 - 设计令牌
  * 与 prototype/assets/styles.css 同步
- * 完整版（含 glass/aurora/keyframes）由 I0 任务扩展
+ * 由 I0 任务迁移完成
+ * 由 I1 任务扩展布局相关 token
  */
 
 :root {
-  /* 基础色 */
-  --color-base: #0F172A;
-  --color-surface: #1E293B;
-  --color-surface-2: #334155;
-  --color-ink: #F1F5F9;
-  --color-ink-2: #94A3B8;
+  /* ========== 基础色（深色为默认） ========== */
+  --bg-base: #0F172A;
+  --bg-deep: #020617;
+  --bg-elevated: rgba(30, 41, 59, 0.6);
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+  --text-faint: #475569;
 
-  /* 极光三色 */
-  --color-cyan: #22D3EE;
-  --color-purple: #A855F7;
-  --color-pink: #EC4899;
+  /* ========== 玻璃 ========== */
+  --glass-bg: rgba(15, 23, 42, 0.4);
+  --glass-bg-strong: rgba(15, 23, 42, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.18);
+  --glass-blur: 20px;
 
-  /* 玻璃参数（I0 会扩展为 UnoCSS shortcuts） */
-  --blur-glass: 12px;
-  --blur-glass-strong: 20px;
+  /* ========== 极光强调色 ========== */
+  --accent-cyan: #22D3EE;
+  --accent-purple: #A855F7;
+  --accent-pink: #EC4899;
+  --accent-blue: #3B82F6;
+  --accent-emerald: #10B981;
 
-  /* 字号阶梯（与 Space Grotesk / DM Sans 配合） */
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* ========== 渐变 ========== */
+  --gradient-aurora: linear-gradient(135deg, #22D3EE 0%, #A855F7 50%, #EC4899 100%);
+  --gradient-aurora-soft: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(168, 85, 247, 0.15) 50%, rgba(236, 72, 153, 0.15) 100%);
+  --gradient-text: linear-gradient(135deg, #22D3EE 0%, #A855F7 50%, #EC4899 100%);
 
-  /* 圆角 */
-  --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.5rem;
+  /* ========== 阴影 ========== */
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.35);
+  --shadow-glow-purple: 0 0 24px rgba(168, 85, 247, 0.35);
+
+  /* ========== 圆角 ========== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ========== 动效 ========== */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  /* ========== 字体 ========== */
+  --font-display: 'Space Grotesk', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-body: 'DM Sans', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+}
+
+/* ========== 浅色主题覆盖（由 useTheme 切换） ========== */
+[data-theme='light'] {
+  --bg-base: #F8FAFC;
+  --bg-deep: #E2E8F0;
+  --bg-elevated: rgba(241, 245, 249, 0.7);
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #64748B;
+  --text-faint: #94A3B8;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-border-strong: rgba(15, 23, 42, 0.15);
+
+  --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.1);
 }

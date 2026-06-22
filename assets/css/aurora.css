@@ -1,0 +1,95 @@
+/* 智识花园 - 极光背景动画
+ *
+ * 由 I0 任务从 prototype/assets/styles.css 迁移
+ * 复杂度超出 UnoCSS shortcut 能力，保持为 CSS class
+ * 性能优化：移动端只保留 2 个 blob，遵循 prefers-reduced-motion
+ *
+ * 用法：<div class="aurora-bg" aria-hidden="true"><span></span></div>
+ */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg-base);
+}
+
+.aurora-bg::before,
+.aurora-bg::after,
+.aurora-bg > span {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.aurora-bg::before {
+  width: 50vw;
+  height: 50vw;
+  background: var(--accent-purple);
+  top: -10%;
+  left: -10%;
+  animation: aurora-1 18s var(--ease-in-out) infinite;
+}
+
+.aurora-bg::after {
+  width: 45vw;
+  height: 45vw;
+  background: var(--accent-cyan);
+  bottom: -15%;
+  right: -10%;
+  animation: aurora-2 22s var(--ease-in-out) infinite;
+}
+
+.aurora-bg > span {
+  display: block;
+  width: 40vw;
+  height: 40vw;
+  background: var(--accent-pink);
+  top: 30%;
+  left: 30%;
+  animation: aurora-3 26s var(--ease-in-out) infinite;
+}
+
+/* 移动端：简化到 2 个 blob（GPU 友好） */
+@media (max-width: 767px) {
+  .aurora-bg > span {
+    display: none;
+  }
+  .aurora-bg::before,
+  .aurora-bg::after {
+    opacity: 0.4;
+    filter: blur(60px);
+  }
+}
+
+/* 关键帧动画 */
+@keyframes aurora-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30vw, 20vh) scale(1.2); }
+  66% { transform: translate(-10vw, 40vh) scale(0.9); }
+}
+
+@keyframes aurora-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25vw, -30vh) scale(1.15); }
+}
+
+@keyframes aurora-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-20vw, 20vh) scale(0.85); }
+  75% { transform: translate(20vw, -15vh) scale(1.1); }
+}
+
+/* 无动画偏好：禁用所有动画 */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg::before,
+  .aurora-bg::after,
+  .aurora-bg > span {
+    animation: none !important;
+  }
+}
