@@ -24,6 +24,9 @@
 | 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
 |---|---|---|---|---|---|
 | 0 | 项目初始化 | ✅ | `22486c7` (6 commits) | 2026-06-22 | 见下"任务 0 详情" |
+| 1 | Nuxt 3 + TS 脚手架 | ✅ | `5bdfbfb` | 2026-06-22 | 与任务 0 合并实现 |
+| 2 | UnoCSS + Lint 工具链 | ✅ | `5bdfbfb` | 2026-06-22 | @nuxt/eslint + UnoCSS shortcuts |
+| 3 | Vitest 测试框架 | ✅ | `5bdfbfb` | 2026-06-22 | 配置 + 3 个示例测试文件 |
 
 ### 任务 0 详情（6 个子 commit）
 
@@ -47,6 +50,55 @@ f44a9ef chore: 添加项目依赖（package.json + pnpm-lock.yaml）
 - `README.md` / `docs/progress.md`
 
 **验证**：`pnpm exec nuxt prepare` 通过，`.nuxt/` 已生成。`pnpm dev` 未运行（避免占端口）。
+
+### 任务 1/2/3 详情（3 子 commit）
+
+```
+5bdfbfb chore: 任务 1/2/3 收尾（ESLint 升级 + Vitest 拆分 + 示例测试）
+```
+
+**关键产物**：
+- `nuxt.config.ts`：注册 `@nuxt/eslint` 模块 + 启用 stylistic
+- `eslint.config.mjs`：用 `withNuxt` + ignores（`prototype/**` 等）
+- `vitest.config.ts`：改用纯 `vitest/config`（避免 @nuxt/test-utils/config 兼容问题）
+- `package.json`：新增 `unocss` 直接依赖（用于 createGenerator 测试）
+- `.nuxtrc`：自动生成
+- `server/utils/health.ts`：纯函数，便于单测
+- `server/api/health.get.ts`：薄包装，调用 utils
+- `tests/unit/server/health.test.ts`：4 个测试
+- `tests/unit/css/tokens.test.ts`：3 组测试
+- `tests/unit/config/shortcuts.test.ts`：UnoCSS shortcuts 生成测试
+
+**验证**：`pnpm test:run` 25/25 通过，`pnpm lint` 0 错误。
+
+### 阶段 1 - 原型迁移
+
+| 任务 | 名称 | 状态 | Commit | 完成时间 | 备注 |
+|---|---|---|---|---|---|
+| I0 | 设计令牌迁移 | ✅ | `92e1476` + `edacc8e` | 2026-06-22 | 见下"I0 详情" |
+| I1 | 公共布局迁移 | ⏸ | - | - | Header/Footer/Drawer → 6 组件 |
+| I2 | 公共 composables | ⏸ | - | - | theme/filter/drawer/scrollSpy |
+
+### 任务 I0 详情
+
+```
+92e1476 feat(I0): 设计令牌迁移（CSS 变量 + UnoCSS shortcuts + 极光背景）
+edacc8e test(I0): 补全设计令牌和极光背景的断言
+```
+
+**关键产物**：
+- `assets/css/tokens.css` 扩展：完整颜色 / 玻璃 / 极光 / 圆角 / 动效 / 浅色主题覆盖
+- `assets/css/aurora.css`：极光背景动画（keyframes + 移动端简化 + prefers-reduced-motion）
+- `nuxt.config.ts`：注册 `aurora.css` 到全局 CSS
+- `uno.config.ts` shortcuts：
+  - `glass` / `glass-strong`（玻璃拟态卡片）
+  - `gradient-text`（渐变文字）
+  - `container`（响应式容器）
+  - `section`（章节垂直内边距）
+  - `stack` / `stack-lg` / `stack-xl`（垂直堆叠）
+- `tests/unit/css/aurora.test.ts`：6 个测试
+
+**验证**：`pnpm test:run` 39/39 通过（13 个 shortcuts 测试 + 18 个 tokens 测试 + 4 个 health 测试 + 6 个 aurora 测试）。`pnpm lint` 0 错误。
 
 ### 阶段 1 - Nuxt 基础
 
