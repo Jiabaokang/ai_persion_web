@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import Database from 'better-sqlite3'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator'
-import { contents, tags, contentTags, assets, sessions } from '~/server/utils/schema'
 import { eq } from 'drizzle-orm'
+import { contents, tags, contentTags } from '~/server/utils/schema'
 
 describe('content tables', () => {
   let db: ReturnType<typeof drizzle>

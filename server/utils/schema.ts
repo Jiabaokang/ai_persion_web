@@ -39,7 +39,7 @@ export const tags = sqliteTable('tags', {
 export const contentTags = sqliteTable('content_tags', {
   contentId: integer('content_id').notNull().references(() => contents.id, { onDelete: 'cascade' }),
   tagId: integer('tag_id').notNull().references(() => tags.id, { onDelete: 'cascade' }),
-}, (t) => ({ pk: primaryKey({ columns: [t.contentId, t.tagId] }) }))
+}, t => ({ pk: primaryKey({ columns: [t.contentId, t.tagId] }) }))
 
 export const assets = sqliteTable('assets', {
   id: integer('id').primaryKey({ autoIncrement: true }),
