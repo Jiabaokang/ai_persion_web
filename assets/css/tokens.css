@@ -1,0 +1,32 @@
+/* 智识花园 - 设计令牌
+ * 与 prototype/assets/styles.css 同步
+ * 完整版（含 glass/aurora/keyframes）由 I0 任务扩展
+ */
+
+:root {
+  /* 基础色 */
+  --color-base: #0F172A;
+  --color-surface: #1E293B;
+  --color-surface-2: #334155;
+  --color-ink: #F1F5F9;
+  --color-ink-2: #94A3B8;
+
+  /* 极光三色 */
+  --color-cyan: #22D3EE;
+  --color-purple: #A855F7;
+  --color-pink: #EC4899;
+
+  /* 玻璃参数（I0 会扩展为 UnoCSS shortcuts） */
+  --blur-glass: 12px;
+  --blur-glass-strong: 20px;
+
+  /* 字号阶梯（与 Space Grotesk / DM Sans 配合） */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* 圆角 */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+}
