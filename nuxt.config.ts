@@ -9,7 +9,16 @@
 
 export default defineNuxtConfig({
   // 兼容性日期：锁定 Nuxt 行为版本
-  compatibilityDate: '2025-01-01',
+
+  // ========== 模块 ==========
+  modules: [
+    // 原子化 CSS 引擎
+    '@unocss/nuxt',
+    // Vue 组合式工具库（自动导入）
+    '@vueuse/nuxt',
+    // ESLint 集成（生成 .nuxt/eslint.config.mjs）
+    '@nuxt/eslint',
+  ],
 
   // 开发工具：浏览器中访问 /__nuxt_devtools__
   devtools: { enabled: true },
@@ -31,19 +40,12 @@ export default defineNuxtConfig({
     },
   },
 
-  // ========== 模块 ==========
-  modules: [
-    // 原子化 CSS 引擎
-    '@unocss/nuxt',
-    // Vue 组合式工具库（自动导入）
-    '@vueuse/nuxt',
-  ],
-
   // ========== 全局 CSS ==========
-  // 顺序敏感：先 tokens 后 main（main 可能引用 tokens 的变量）
+  // 顺序敏感：先 tokens 再 main 再 aurora
   css: [
-    '~/assets/css/tokens.css',  // 设计令牌（CSS 变量）
-    '~/assets/css/main.css',    // 全局样式（重置 + 排版）
+    '~/assets/css/tokens.css', // 设计令牌（CSS 变量）
+    '~/assets/css/main.css', // 全局样式（重置 + 排版）
+    '~/assets/css/aurora.css', // 极光背景动画
   ],
 
   // ========== 运行时配置 ==========
@@ -69,6 +71,13 @@ export default defineNuxtConfig({
     },
   },
 
+  // ========== 实验性特性 ==========
+  experimental: {
+    // 公开页面 payload 提取（SSG 优化）
+    payloadExtraction: true,
+  },
+  compatibilityDate: '2025-01-01',
+
   // ========== Nitro 服务端配置 ==========
   nitro: {
     // 部署目标：Node.js 服务器（适合阿里云 ECS）
@@ -85,9 +94,12 @@ export default defineNuxtConfig({
     typeCheck: false,
   },
 
-  // ========== 实验性特性 ==========
-  experimental: {
-    // 公开页面 payload 提取（SSG 优化）
-    payloadExtraction: true,
+  // ========== ESLint 配置 ==========
+  // 详细规则在 eslint.config.mjs 中扩展
+  eslint: {
+    config: {
+      // 启用 Stylistic（格式化规则）
+      stylistic: true,
+    },
   },
 })

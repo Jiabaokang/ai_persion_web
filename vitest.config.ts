@@ -2,15 +2,15 @@
 //
 // 说明：
 //   - 使用 happy-dom（轻量 DOM，比 jsdom 快 3-5x）
-//   - 通过 @nuxt/test-utils/config 启用 Nuxt 测试能力
-//   - 未来任务 21（E2E）可能切换到 playwright
+//   - 启用全局 API（describe/it/expect 等无需导入）
+//   - 当前不依赖 Nuxt context（避免 pathe 兼容问题）
+//   - 未来 Nuxt 组件测试用 @nuxt/test-utils/runtime 直接调用
 //
 // @see https://vitest.dev/
-// @see https://nuxt.com/docs/getting-started/testing
 
-import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { defineConfig } from 'vitest/config'
 
-export default defineVitestConfig({
+export default defineConfig({
   test: {
     // DOM 环境：happy-dom（轻量、快）
     environment: 'happy-dom',
