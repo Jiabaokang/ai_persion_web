@@ -10,6 +10,9 @@
 export default defineNuxtConfig({
   // 兼容性日期：锁定 Nuxt 行为版本
 
+  // ========== 自动导入 ==========
+  // composables/ 顶层默认导入，explicit 声明确保子目录也可导入
+
   // ========== 模块 ==========
   modules: [
     // 原子化 CSS 引擎
@@ -19,6 +22,7 @@ export default defineNuxtConfig({
     // ESLint 集成（生成 .nuxt/eslint.config.mjs）
     '@nuxt/eslint',
   ],
+  imports: { dirs: ['composables/**'] },
 
   // 开发工具：浏览器中访问 /__nuxt_devtools__
   devtools: { enabled: true },
