@@ -108,6 +108,5 @@ export default defineConfig({
   },
 
   // 自定义快捷类（任务 I0 注入）
-  // 与 prototype/assets/styles.css 中的 .glass / .gradient-text 等对应
   shortcuts,
 })

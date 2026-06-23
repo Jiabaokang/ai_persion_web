@@ -106,7 +106,7 @@ curl http://localhost:3000/api/health
 | `scripts/` | **运维脚本** | `backup.sh`（数据备份）、`deploy.sh`（部署） |
 | `data/` | **运行时数据**（gitignored） | SQLite 数据库文件、上传临时区 |
 | `docs/` | **项目文档** | `progress.md`（进度）、`superpowers/specs/`（设计）、`superpowers/plans/`（计划） |
-| `prototype/` | **玻璃感 HTML 原型**（参考用） | 设计参考、样式参考；不参与构建 |
+
 
 ### 完整目录树
 
@@ -173,15 +173,7 @@ ai_persion_web/
 │   └── superpowers/                 # 设计与计划
 │       ├── specs/                   # 设计规格
 │       └── plans/                   # 实现计划
-│
-└── prototype/                       # 玻璃感 HTML 原型（参考）
-    ├── index.html
-    ├── blog.html
-    ├── ...
-    └── assets/
-        ├── styles.css
-        └── app.js
-```
+│```
 
 ---
 

@@ -16,8 +16,6 @@ export default withNuxt(
       'dist/**',
       'coverage/**',
       'pnpm-lock.yaml',
-      // 玻璃感 HTML 原型（参考用，不参与构建）
-      'prototype/**',
     ],
   },
   // 2) 项目级自定义规则
