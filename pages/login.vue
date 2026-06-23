@@ -33,12 +33,12 @@ async function submit() {
         登录
       </h1>
       <div class="space-y-3">
-        <Input
+        <UiInput
           v-model="username"
           name="username"
           placeholder="用户名"
         />
-        <Input
+        <UiInput
           v-model="password"
           name="password"
           type="password"
@@ -50,12 +50,12 @@ async function submit() {
         >
           {{ error }}
         </p>
-        <Button
+        <UiButton
           type="submit"
           :disabled="loading"
         >
           {{ loading ? '登录中…' : '登录' }}
-        </Button>
+        </UiButton>
       </div>
     </form>
   </div>
