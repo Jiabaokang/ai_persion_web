@@ -1,0 +1,883 @@
+{
+  "source": "https://tool.lu/nav/?node_id=27",
+  "scrapedAt": "2026-06-23T16:45:34.069Z",
+  "groups": [
+    {
+      "id": "ai-llm",
+      "title": "大语言模型",
+      "links": [
+        {
+          "name": "ChatGPT",
+          "description": "ChatGPT 的官网",
+          "url": "https://tool.lu/nav/kE/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "Claude",
+          "description": "Claude 的官网",
+          "url": "https://tool.lu/nav/kF/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "Grok",
+          "description": "x 的 Grok 官网",
+          "url": "https://tool.lu/nav/kQ/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/164248yaris95tisr3ispa.ico"
+        },
+        {
+          "name": "Gemini",
+          "description": "Google 的 Gemini 的官网",
+          "url": "https://tool.lu/nav/kR/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/1655043yyb7uye3wzhghdw.svg"
+        },
+        {
+          "name": "通义千问",
+          "description": "阿里的通义千问的官网",
+          "url": "https://tool.lu/nav/kS/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/1656474chp43vhlcvcepzo.png"
+        },
+        {
+          "name": "豆包",
+          "description": "字节的豆包的官网",
+          "url": "https://tool.lu/nav/kT/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/165721lj4y5594p0pz9clj.png"
+        },
+        {
+          "name": "DeepSeek",
+          "description": "DeepSeek 的官网",
+          "url": "https://tool.lu/nav/kX/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/174154v07kklkpcky9nk1p.ico"
+        },
+        {
+          "name": "MiniCPM3",
+          "description": "国产面壁小钢炮",
+          "url": "https://tool.lu/nav/lY/url",
+          "icon": "https://oss.tool.lu/favicon/202503/12/114017o8ooe8memg43rwn8.ico"
+        },
+        {
+          "name": "Mistral",
+          "description": "mistral官网",
+          "url": "https://tool.lu/nav/lZ/url",
+          "icon": "https://oss.tool.lu/favicon/202503/12/1142308eme870eu6vhp0dz.ico"
+        },
+        {
+          "name": "QWen",
+          "description": "通义千问官网",
+          "url": "https://tool.lu/nav/m0/url",
+          "icon": "https://oss.tool.lu/favicon/202503/12/114308ad5flo3xpjx3x9hn.png"
+        },
+        {
+          "name": "Phi-4",
+          "description": "微软的小语言模型",
+          "url": "https://tool.lu/nav/m1/url",
+          "icon": "https://oss.tool.lu/favicon/202503/12/115234jmomkj2vokzklp2v.ico"
+        },
+        {
+          "name": "Gemma 3",
+          "description": "Google的小语言模型",
+          "url": "https://tool.lu/nav/m2/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/113810falmeqoaoeo67v6y.ico"
+        },
+        {
+          "name": "MINIMAX",
+          "description": "海螺官网",
+          "url": "https://tool.lu/nav/m5/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/115149ivyipwlclllimlvi.png"
+        },
+        {
+          "name": "KIMI",
+          "description": "kimi官网",
+          "url": "https://tool.lu/nav/m6/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/115233343oo50epvnqv14f.ico"
+        },
+        {
+          "name": "Reka Flash 3",
+          "description": "21B的模型",
+          "url": "https://tool.lu/nav/mb/url",
+          "icon": "https://oss.tool.lu/favicon/202503/21/152745gwqk2pv6kjuxhhhg.ico"
+        },
+        {
+          "name": "Kimi K2",
+          "description": "kimi 开源大模型",
+          "url": "https://tool.lu/nav/mA/url",
+          "icon": "https://oss.tool.lu/favicon/202507/12/0704461iybsbg3b1jix3t1.ico"
+        }
+      ]
+    },
+    {
+      "id": "ai-tool",
+      "title": "工具",
+      "links": [
+        {
+          "name": "Gamma",
+          "description": "使用 AI 创建 PPT",
+          "url": "https://tool.lu/nav/ku/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "Google AI Studio",
+          "description": "使用最新的google大语言模型",
+          "url": "https://tool.lu/nav/kw/url",
+          "icon": "https://oss.tool.lu/favicon/202412/14/235507tqqqkqqbg6zebw9b.ico"
+        },
+        {
+          "name": "OpenRouter",
+          "description": "超全的大语言模型代理",
+          "url": "https://tool.lu/nav/kx/url",
+          "icon": "https://oss.tool.lu/favicon/202412/14/235602p9xiz71u86jj8vnn.ico"
+        },
+        {
+          "name": "V0",
+          "description": "单组件网页生成",
+          "url": "https://tool.lu/nav/ky/url",
+          "icon": "https://oss.tool.lu/favicon/202412/15/000246mtovogswkv8zim01.png"
+        },
+        {
+          "name": "bolt",
+          "description": "ai 生成前端工程",
+          "url": "https://tool.lu/nav/kz/url",
+          "icon": "https://oss.tool.lu/favicon/202412/14/235800x66n79c8u49pnn6x.svg"
+        },
+        {
+          "name": "Cursor",
+          "description": "The AI Code Editor",
+          "url": "https://tool.lu/nav/kA/url",
+          "icon": "https://oss.tool.lu/favicon/202412/14/235846n5vve5h3iux1uqu3.png"
+        },
+        {
+          "name": "SUNO",
+          "description": "ai写歌，效果真实",
+          "url": "https://tool.lu/nav/kB/url",
+          "icon": "https://oss.tool.lu/favicon/202412/15/000310ojkr1sn666rkprtr.ico"
+        },
+        {
+          "name": "Recraft",
+          "description": "图片矢量化",
+          "url": "https://tool.lu/nav/kC/url",
+          "icon": "https://oss.tool.lu/favicon/202412/15/155017so33zqny3atwjot6.ico"
+        },
+        {
+          "name": "Whisk",
+          "description": "Google的图像风格融合工具",
+          "url": "https://tool.lu/nav/kD/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "Codia",
+          "description": "figma 截图转设计图，设计图转代码",
+          "url": "https://tool.lu/nav/kJ/url",
+          "icon": "https://oss.tool.lu/favicon/202412/25/191922o42cp429821dc1om.ico"
+        },
+        {
+          "name": "Builder.io",
+          "description": "figma 设计图转代码插件",
+          "url": "https://tool.lu/nav/kK/url",
+          "icon": "https://cdn.builder.io/api/v1/image/assets%2FYJIGb4i01jvw0SRdL5Bt%2F470aa2bd45fb4ff5b77c91a394a957e6?width=240"
+        },
+        {
+          "name": "Lovable",
+          "description": "ai 前端工程生成",
+          "url": "https://tool.lu/nav/kL/url",
+          "icon": "https://oss.tool.lu/favicon/202501/01/020105tqplfpe8lxvqvbyf.ico"
+        },
+        {
+          "name": "BibiGPT",
+          "description": "语音转录，一键总结",
+          "url": "https://tool.lu/nav/kM/url",
+          "icon": "https://oss.tool.lu/favicon/202501/02/1839322h0ga20ogda7dahd.png"
+        },
+        {
+          "name": "Perplexity",
+          "description": "ai 搜索引擎",
+          "url": "https://tool.lu/nav/ld/url",
+          "icon": "https://oss.tool.lu/favicon/202502/10/120026ee9tiorpuqohlphp.ico"
+        },
+        {
+          "name": "A0",
+          "description": "单组件ReactNative生成",
+          "url": "https://tool.lu/nav/le/url",
+          "icon": "https://oss.tool.lu/favicon/202502/12/105749w2n6n0n160z0w77a.ico"
+        },
+        {
+          "name": "Midjourney",
+          "description": "ai 文生图",
+          "url": "https://tool.lu/nav/lf/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "krea",
+          "description": "ai图像、视频创作平台",
+          "url": "https://tool.lu/nav/ma/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "alphaXiv",
+          "description": "论文阅读助手",
+          "url": "https://tool.lu/nav/mp/url",
+          "icon": "https://oss.tool.lu/favicon/202504/09/1151253a3jiffuugflx3f3.ico"
+        },
+        {
+          "name": "ZenMux",
+          "description": "大语言模型代理",
+          "url": "https://tool.lu/nav/mJ/url",
+          "icon": "https://oss.tool.lu/favicon/202602/07/1927413775u4spppf3pa43.svg"
+        }
+      ]
+    },
+    {
+      "id": "ai-community",
+      "title": "社区",
+      "links": [
+        {
+          "name": "Replicate",
+          "description": "机器学习模型预览",
+          "url": "https://tool.lu/nav/jI/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "civitai",
+          "description": "AI绘画社区",
+          "url": "https://tool.lu/nav/jJ/url",
+          "icon": "https://oss.tool.lu/favicon/202302/22/174206f54ezv5fmhehh4fv.ico"
+        },
+        {
+          "name": "PromptBase",
+          "description": "prompt交易市场",
+          "url": "https://tool.lu/nav/jN/url",
+          "icon": "https://oss.tool.lu/favicon/202303/23/215315w9jbjht9mp5embey.png"
+        },
+        {
+          "name": "Hugging Face",
+          "description": "ai模型社区",
+          "url": "https://tool.lu/nav/jO/url",
+          "icon": "https://oss.tool.lu/favicon/202303/23/215554am8taezd5h8gonoj.ico"
+        },
+        {
+          "name": "PromptHero",
+          "description": "prompt集合",
+          "url": "https://tool.lu/nav/jP/url",
+          "icon": "https://oss.tool.lu/favicon/default.png"
+        },
+        {
+          "name": "MajinAI",
+          "description": "AI图像生成prompt搜索引擎",
+          "url": "https://tool.lu/nav/jY/url",
+          "icon": "https://oss.tool.lu/favicon/202310/22/2254077rd49064rdmhm3jd.ico"
+        },
+        {
+          "name": "Comfy Workflows",
+          "description": "ComfyUI 工作流",
+          "url": "https://tool.lu/nav/k2/url",
+          "icon": "https://oss.tool.lu/favicon/202311/27/1712100uspkrmwrpwlh5py.ico"
+        },
+        {
+          "name": "openart",
+          "description": "ComfyUI 工作流",
+          "url": "https://tool.lu/nav/k8/url",
+          "icon": "https://oss.tool.lu/favicon/202403/09/204305a6q6qw7zlgl0g09i.ico"
+        },
+        {
+          "name": "cursor.directory",
+          "description": "开发人员的prompt合集",
+          "url": "https://tool.lu/nav/kg/url",
+          "icon": "https://oss.tool.lu/favicon/202408/27/135343xzlmpoe4mprm1po3.ico"
+        },
+        {
+          "name": "Midjourney sref codes library",
+          "description": "Midjourney风格提示词",
+          "url": "https://tool.lu/nav/l1/url",
+          "icon": "https://oss.tool.lu/favicon/202501/20/095701gegv8y0ofxknnx0y.ico"
+        },
+        {
+          "name": "agent recipes",
+          "description": "agent范式",
+          "url": "https://tool.lu/nav/l2/url",
+          "icon": "https://oss.tool.lu/favicon/202501/20/1013327vb7j2sejdsvjp2v.ico"
+        },
+        {
+          "name": "Smithery",
+          "description": "MCP 服务合集",
+          "url": "https://tool.lu/nav/lr/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/1223382jgzj664v4vmndnm.svg"
+        },
+        {
+          "name": "Composio",
+          "description": "MCP 服务合集",
+          "url": "https://tool.lu/nav/lT/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/204321ltzpct6lzu3ltjuh.png"
+        },
+        {
+          "name": "pulsemcp",
+          "description": "mcp服务合集",
+          "url": "https://tool.lu/nav/mv/url",
+          "icon": "https://oss.tool.lu/favicon/202504/28/2029077caciayi1yiyc7ch.svg"
+        }
+      ]
+    },
+    {
+      "id": "finetuning",
+      "title": "LLM微调模型",
+      "links": [
+        {
+          "name": "zeta",
+          "description": "zed 微调的代码编辑预测模型",
+          "url": "https://tool.lu/nav/lh/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/1031246czyy9cyamylexzo.ico"
+        },
+        {
+          "name": "FastApply",
+          "description": "softgen 微调的代码合并模型",
+          "url": "https://tool.lu/nav/li/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/10312425y7uoyk6xy9jt22.ico"
+        },
+        {
+          "name": "IELTSDuck",
+          "description": "雅思作文评分模型",
+          "url": "https://tool.lu/nav/lj/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/10285407wem2hie86668b2.ico"
+        },
+        {
+          "name": "mirau",
+          "description": "游戏故事模型",
+          "url": "https://tool.lu/nav/lk/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/1031210mr303m2b30v50k0.ico"
+        },
+        {
+          "name": "Tifa-DeepsexV2",
+          "description": "角色扮演、小说模型",
+          "url": "https://tool.lu/nav/ll/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/103918rbpeu7w7ea44kk4d.ico"
+        },
+        {
+          "name": "UIGEN-T1",
+          "description": "生成网页UI的模型",
+          "url": "https://tool.lu/nav/lm/url",
+          "icon": "https://oss.tool.lu/favicon/202502/17/104445m5ps5hzjs0ozprjg.ico"
+        },
+        {
+          "name": "Events-of-the-day_Calander-planner",
+          "description": "日历助手微调模型",
+          "url": "https://tool.lu/nav/ln/url",
+          "icon": "https://oss.tool.lu/favicon/202502/18/1452168c3j5ianatciaqx5.ico"
+        },
+        {
+          "name": "AlphaMaze",
+          "description": "迷宫模型",
+          "url": "https://tool.lu/nav/lq/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/122305lcxlo75llxyoixsf.ico"
+        },
+        {
+          "name": "LLaMA-Mesh",
+          "description": "3d模型生成",
+          "url": "https://tool.lu/nav/ls/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/122412yj9vvtwe3mmtw11z.ico"
+        },
+        {
+          "name": "Wayfarer-Large",
+          "description": "文字冒险游戏模型",
+          "url": "https://tool.lu/nav/lt/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/122634jf7si87icg5lj5xr.ico"
+        },
+        {
+          "name": "ReaderLM-v2",
+          "description": "html提取为markdown模型",
+          "url": "https://tool.lu/nav/lv/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/184056yiju0cibori1bpbc.ico"
+        },
+        {
+          "name": "TableGPT2",
+          "description": "处理表格数据的模型",
+          "url": "https://tool.lu/nav/lw/url",
+          "icon": "https://oss.tool.lu/favicon/202502/24/103617pgngqx235gpjge2w.ico"
+        },
+        {
+          "name": "GemmaX2",
+          "description": "用于翻译的模型",
+          "url": "https://tool.lu/nav/lx/url",
+          "icon": "https://oss.tool.lu/favicon/202502/24/142248huy6qkthswowjwgg.ico"
+        },
+        {
+          "name": "olmOCR",
+          "description": "ocr模型",
+          "url": "https://tool.lu/nav/ly/url",
+          "icon": "https://oss.tool.lu/favicon/202502/26/213303o9jzjbcp7s2rco3t.ico"
+        },
+        {
+          "name": "Aya Vision",
+          "description": "Cohere视觉模型",
+          "url": "https://tool.lu/nav/lS/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/202833qbjkunc8251qu35u.ico"
+        },
+        {
+          "name": "Florence-2-base-PromptGen",
+          "description": "基于微软 Florence-2 模型并使用了来自 Civitai 图像和标记的精选数据集",
+          "url": "https://tool.lu/nav/lX/url",
+          "icon": "https://oss.tool.lu/favicon/202503/12/113418hh57s6sec97z0gge.ico"
+        },
+        {
+          "name": "Bespoke-MiniCheck",
+          "description": "检查事实的微调模型",
+          "url": "https://tool.lu/nav/m8/url",
+          "icon": "https://oss.tool.lu/favicon/202503/17/164705kk1e8ibn6zc33bgm.ico"
+        },
+        {
+          "name": "SmolDocling",
+          "description": "多模态ocr模型",
+          "url": "https://tool.lu/nav/m9/url",
+          "icon": "https://oss.tool.lu/favicon/202503/18/103104k1chrbbmoohh2x2j.ico"
+        },
+        {
+          "name": "SpatialLM",
+          "description": "3D空间理解模型",
+          "url": "https://tool.lu/nav/md/url",
+          "icon": "https://oss.tool.lu/favicon/202503/21/1537469q9v5pz9b0miyacr.ico"
+        },
+        {
+          "name": "Fin-R1",
+          "description": "金融复杂领域的推理模型",
+          "url": "https://tool.lu/nav/mf/url",
+          "icon": "https://oss.tool.lu/favicon/202503/21/180037rg5af4l64qzyqy5r.ico"
+        },
+        {
+          "name": "HallOumi",
+          "description": "检查事实的微调模型",
+          "url": "https://tool.lu/nav/ml/url",
+          "icon": "https://oss.tool.lu/favicon/202504/03/103425mdfat8s12nai5g35.ico"
+        },
+        {
+          "name": "DeepCoder",
+          "description": "o3-mini级别的代码模型",
+          "url": "https://tool.lu/nav/mo/url",
+          "icon": "https://oss.tool.lu/favicon/202504/09/082606de9d9qc198dmcpzd.ico"
+        },
+        {
+          "name": "deeptranslate-r2-4b",
+          "description": "用于英文和中文之间的高质量翻译",
+          "url": "https://tool.lu/nav/mx/url",
+          "icon": "https://oss.tool.lu/favicon/202505/30/161802kwu3999npav9wywq.png"
+        }
+      ]
+    },
+    {
+      "id": "embedding",
+      "title": "Embedding模型",
+      "links": [
+        {
+          "name": "jina-embeddings-v2-base-code",
+          "description": "代码embedding模型",
+          "url": "https://tool.lu/nav/lo/url",
+          "icon": "https://oss.tool.lu/favicon/202502/20/143051hv4vdjzrrjo1onno.ico"
+        },
+        {
+          "name": "bge-m3",
+          "description": "多语言embedding模型",
+          "url": "https://tool.lu/nav/lu/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/122722aqfsszg4gn184bug.ico"
+        },
+        {
+          "name": "BGE-VL",
+          "description": "多模态embedding模型",
+          "url": "https://tool.lu/nav/lU/url",
+          "icon": "https://oss.tool.lu/favicon/202503/06/1512131eg0juffirriyxxe.ico"
+        },
+        {
+          "name": "SFR-Embedding-Code",
+          "description": "salesforce代码embeding模型",
+          "url": "https://tool.lu/nav/mg/url",
+          "icon": "https://oss.tool.lu/favicon/202503/25/121210j8juli3lzjrxzlx6.ico"
+        },
+        {
+          "name": "Qodo-Embed",
+          "description": "代码embeding模型",
+          "url": "https://tool.lu/nav/mh/url",
+          "icon": "https://oss.tool.lu/favicon/202503/25/1213258nc29h0zk9n3h92c.ico"
+        },
+        {
+          "name": "OASIS",
+          "description": "代码embeding模型",
+          "url": "https://tool.lu/nav/mi/url",
+          "icon": "https://oss.tool.lu/favicon/202503/25/1215209mx88gxx8mc3xyz6.ico"
+        },
+        {
+          "name": "CodeT5+",
+          "description": "代码embeding模型",
+          "url": "https://tool.lu/nav/mj/url",
+          "icon": "https://oss.tool.lu/favicon/202503/25/121558l7o5xgbzddt8e77d.ico"
+        },
+        {
+          "name": "jina-embeddings-v3",
+          "description": "多语言embedding模型",
+          "url": "https://tool.lu/nav/ms/url",
+          "icon": "https://oss.tool.lu/favicon/202504/10/075241rwzfsvsxfmflyhzj.ico"
+        }
+      ]
+    },
+    {
+      "id": "reranker",
+      "title": "Reranker模型",
+      "links": [
+        {
+          "name": "bge-reranker-v2-m3",
+          "description": "多语言重排序模型",
+          "url": "https://tool.lu/nav/mq/url",
+          "icon": "https://oss.tool.lu/favicon/202504/10/0747333vf3uy6xny3zxvxx.ico"
+        },
+        {
+          "name": "jina-reranker-m0",
+          "description": "多模态、多语言重排序模型",
+          "url": "https://tool.lu/nav/mr/url",
+          "icon": "https://oss.tool.lu/favicon/202504/10/0749542fho5a3be7d0s326.ico"
+        }
+      ]
+    },
+    {
+      "id": "image-model",
+      "title": "图像模型",
+      "links": [
+        {
+          "name": "Distill Any Depth",
+          "description": "图像深度识别模型",
+          "url": "https://tool.lu/nav/lA/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/101652dag4kdn38ffrrzqy.ico"
+        },
+        {
+          "name": "TripoSR",
+          "description": "3D模型生成",
+          "url": "https://tool.lu/nav/lB/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/142900quxlsdd8xkgqwlkg.ico"
+        },
+        {
+          "name": "Hunyuan3D",
+          "description": "3D模型生成",
+          "url": "https://tool.lu/nav/lC/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/142814usgsnldpj3szqgny.ico"
+        },
+        {
+          "name": "BiRefNet",
+          "description": "图像分割模型",
+          "url": "https://tool.lu/nav/lI/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/14402578j3bj3aj8wwtb3g.ico"
+        },
+        {
+          "name": "APISR",
+          "description": "图像超分模型",
+          "url": "https://tool.lu/nav/lJ/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/144527bbv6agbxfzkgfbxy.ico"
+        },
+        {
+          "name": "SUPIR",
+          "description": "图像超分模型",
+          "url": "https://tool.lu/nav/lK/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/144618wzwogo5c0sgxoc9x.ico"
+        },
+        {
+          "name": "StarVector",
+          "description": "图片转svg矢量图",
+          "url": "https://tool.lu/nav/mc/url",
+          "icon": "https://oss.tool.lu/favicon/202503/21/153224oc7gw5hzvcitn45c.ico"
+        },
+        {
+          "name": "FLUX.1-dev",
+          "description": "图像生成模型（扩散）",
+          "url": "https://tool.lu/nav/mt/url",
+          "icon": "https://oss.tool.lu/favicon/202504/10/075559ylof1yvyleg1qeog.ico"
+        }
+      ]
+    },
+    {
+      "id": "token-relay",
+      "title": "Token中转",
+      "links": [
+        {
+          "name": "接口AI",
+          "description": "国内的大语言模型代理",
+          "url": "https://tool.lu/nav/mK/url",
+          "icon": "https://tool.lu/nav/mK/favicon"
+        },
+        {
+          "name": "Toknex",
+          "description": "One key for 100+ AI models",
+          "url": "https://tool.lu/nav/mL/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/181551i7d6ucxot677dh78.png"
+        },
+        {
+          "name": "SudoCode",
+          "description": "一个 API Base 接入 Claude Code 和 Codex",
+          "url": "https://tool.lu/nav/mM/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/211829zem62zvv726jjbqe.ico"
+        },
+        {
+          "name": "我的刀盾",
+          "description": "统一 API 网关，服务于 所有 AI 模型",
+          "url": "https://tool.lu/nav/mN/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/2119511nry3oxazyteda7i.png"
+        },
+        {
+          "name": "luchikey",
+          "description": "Subscription to API Conversion Platform",
+          "url": "https://tool.lu/nav/mO/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/2124388uiutn1wg1p4tipt.png"
+        },
+        {
+          "name": "聪明AI",
+          "description": "第三方 AI API 网关服务",
+          "url": "https://tool.lu/nav/mP/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/213925sgsdjgfgjeji51yj.png"
+        },
+        {
+          "name": "UU API",
+          "description": "面向开发者与企业的 AI 模型接入平台",
+          "url": "https://tool.lu/nav/mQ/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/214213pjor6cvmyhh6drhp.svg"
+        },
+        {
+          "name": "Maru Code",
+          "description": "AI API Gateway Platform",
+          "url": "https://tool.lu/nav/mR/url",
+          "icon": "https://oss.tool.lu/favicon/202605/30/2240344cil7e1eaee697a9.png"
+        },
+        {
+          "name": "DawCode",
+          "description": "一站式接入 Claude Code · Codex · Gemini CLI",
+          "url": "https://tool.lu/nav/mS/url",
+          "icon": "https://oss.tool.lu/favicon/202605/31/1858459asbflnutlvtni0t.png"
+        },
+        {
+          "name": "RightCode",
+          "description": "企业级 AI Agent 分发平台",
+          "url": "https://tool.lu/nav/mT/url",
+          "icon": "https://oss.tool.lu/favicon/202605/31/190135cxm7zxocgts9h8s7.ico"
+        },
+        {
+          "name": "WildAI",
+          "description": "Codex/Claude Code 代订阅",
+          "url": "https://tool.lu/nav/mU/url",
+          "icon": "https://oss.tool.lu/favicon/202606/08/202132m88xwgr9ozz9ya47.ico"
+        },
+        {
+          "name": "LinkAI",
+          "description": "让 AI 服务接入更稳定、更清晰",
+          "url": "https://tool.lu/nav/mV/url",
+          "icon": "https://oss.tool.lu/favicon/202606/11/124916monr0y8c0uwvc8ro.svg"
+        }
+      ]
+    },
+    {
+      "id": "audio-model",
+      "title": "音频模型",
+      "links": [
+        {
+          "name": "CosyVoice",
+          "description": "阿里tts模型",
+          "url": "https://tool.lu/nav/lD/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/1431004ogtg77oxm9ylljl.ico"
+        },
+        {
+          "name": "Fish Speech",
+          "description": "tts模型",
+          "url": "https://tool.lu/nav/lE/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/1433560i8jkn08nmwb2q68.ico"
+        },
+        {
+          "name": "E2/F5 TTS",
+          "description": "tts模型",
+          "url": "https://tool.lu/nav/lF/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/1434451iiwl032e046i1tq.ico"
+        },
+        {
+          "name": "FireRedASR",
+          "description": "小红书语音识别模型",
+          "url": "https://tool.lu/nav/lG/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/143632uxdodi7uw1uwxozh.ico"
+        },
+        {
+          "name": "Whisper",
+          "description": "OpenAI语音识别模型",
+          "url": "https://tool.lu/nav/lH/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/143737l8d3lmq32qr2ltl2.ico"
+        },
+        {
+          "name": "DiffRhythm",
+          "description": "歌曲生成模型",
+          "url": "https://tool.lu/nav/lM/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "InspireMusic",
+          "description": "音乐生成模型",
+          "url": "https://tool.lu/nav/lN/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "YuE",
+          "description": "歌曲生成模型",
+          "url": "https://tool.lu/nav/lO/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "QA-MDT",
+          "description": "音乐生成模型",
+          "url": "https://tool.lu/nav/lP/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "MusiConGen",
+          "description": "音乐生成模型",
+          "url": "https://tool.lu/nav/lQ/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "MelodyFlow",
+          "description": "音乐生成模型",
+          "url": "https://tool.lu/nav/lR/url",
+          "icon": "https://oss.tool.lu/favicon/202503/05/1445562s9xo5rbrsbv0399.ico"
+        },
+        {
+          "name": "Dia",
+          "description": "逼真的tts模型",
+          "url": "https://tool.lu/nav/mu/url",
+          "icon": "https://oss.tool.lu/favicon/202504/23/2211259cn3z1t831189sl8.ico"
+        },
+        {
+          "name": "SongGeneration",
+          "description": "腾讯开源的歌曲生成模型",
+          "url": "https://tool.lu/nav/mz/url",
+          "icon": "https://oss.tool.lu/favicon/202506/30/0910498zcoscmc7deutotd.ico"
+        }
+      ]
+    },
+    {
+      "id": "dataset",
+      "title": "数据集",
+      "links": [
+        {
+          "name": "General Reasoning",
+          "description": "开放推理数据集",
+          "url": "https://tool.lu/nav/lp/url",
+          "icon": "https://oss.tool.lu/favicon/202502/23/122222dqsgosxohm06hzkz.ico"
+        },
+        {
+          "name": "kaggle",
+          "description": "开源数据集",
+          "url": "https://tool.lu/nav/m7/url",
+          "icon": "https://oss.tool.lu/favicon/202503/15/023446ff1pzpexpox03ixi.ico"
+        },
+        {
+          "name": "Roboflow Universe",
+          "description": "图像标注数据集",
+          "url": "https://tool.lu/nav/mk/url",
+          "icon": "https://oss.tool.lu/favicon/202504/02/18115800gllkknql1okk90.ico"
+        },
+        {
+          "name": "Hugging Face数据集",
+          "description": "开源数据集社区",
+          "url": "https://tool.lu/nav/mw/url",
+          "icon": "https://oss.tool.lu/favicon/202505/02/1217533wdeeea3znynjvxd.ico"
+        }
+      ]
+    },
+    {
+      "id": "video-model",
+      "title": "视频模型",
+      "links": [
+        {
+          "name": "可灵",
+          "description": "快手的可灵模型的官网",
+          "url": "https://tool.lu/nav/kU/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/173000eqeuvapqqakqdi07.png"
+        },
+        {
+          "name": "海螺AI",
+          "description": "海螺视频模型官网",
+          "url": "https://tool.lu/nav/kV/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/1704379icu6onp9t9nxqxx.png"
+        },
+        {
+          "name": "即梦AI",
+          "description": "字节的视频生成模型官网",
+          "url": "https://tool.lu/nav/kW/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/170809quwfuqddl6filaia.ico"
+        },
+        {
+          "name": "腾讯混元3D",
+          "description": "3d模型和视频生成",
+          "url": "https://tool.lu/nav/l4/url",
+          "icon": "https://oss.tool.lu/favicon/202501/21/190939ucmxcy2s0m3wv1be.png"
+        },
+        {
+          "name": "Tripo AI",
+          "description": "3d模型生成",
+          "url": "https://tool.lu/nav/lz/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/004406zi1siaps11ikhf9z.ico"
+        },
+        {
+          "name": "Wan",
+          "description": "阿里万相视频生成模型",
+          "url": "https://tool.lu/nav/lL/url",
+          "icon": "https://oss.tool.lu/favicon/202503/04/145035uduua006gslgdgdg.ico"
+        },
+        {
+          "name": "Open-Sora",
+          "description": "潞晨视频生成模型",
+          "url": "https://tool.lu/nav/m3/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/11410228n9ajz589awn153.ico"
+        },
+        {
+          "name": "HunyuanVideo",
+          "description": "腾讯混元视频生成模型",
+          "url": "https://tool.lu/nav/m4/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/114213yqz2q2u5uqy0hqq2.ico"
+        },
+        {
+          "name": "StepVideo",
+          "description": "StepFun视频生成模型",
+          "url": "https://tool.lu/nav/me/url",
+          "icon": "https://oss.tool.lu/favicon/202503/21/153954r7zpa4o6xpdcx6p6.ico"
+        },
+        {
+          "name": "SkyReels-A2",
+          "description": "视频合成模型",
+          "url": "https://tool.lu/nav/mn/url",
+          "icon": "https://oss.tool.lu/favicon/202504/04/1455293753ketlcozhekhv.ico"
+        }
+      ]
+    },
+    {
+      "id": "arithmetic-platform",
+      "title": "算力平台",
+      "links": [
+        {
+          "name": "Together AI",
+          "description": "提供训练，推理服务云平台",
+          "url": "https://tool.lu/nav/kP/url",
+          "icon": "https://oss.tool.lu/favicon/202501/10/16394467rfua7p7nzaxkuu.svg"
+        },
+        {
+          "name": "Vast.ai",
+          "description": "GPU算力租赁",
+          "url": "https://tool.lu/nav/lV/url",
+          "icon": "https://oss.tool.lu/favicon/202503/13/12012087xqe8te72zt37x4.png"
+        },
+        {
+          "name": "RunPod",
+          "description": "AI推理和训练的云平台",
+          "url": "https://tool.lu/nav/lW/url",
+          "icon": "https://oss.tool.lu/favicon/202503/11/1549451i6nhthslti9iius.ico"
+        },
+        {
+          "name": "fal.ai",
+          "description": "ai模型云平台",
+          "url": "https://tool.lu/nav/mG/url",
+          "icon": "https://oss.tool.lu/favicon/202509/23/115613kk9498k9n5tk9kne.png"
+        },
+        {
+          "name": "WaveSpeedAI",
+          "description": "模型云平台",
+          "url": "https://tool.lu/nav/mI/url",
+          "icon": "https://oss.tool.lu/favicon/202510/10/090138lz6crldh59b6ccfl.ico"
+        }
+      ]
+    }
+  ],
+  "totalLinks": 134
+}

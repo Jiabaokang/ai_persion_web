@@ -45,6 +45,12 @@ const { isOpen, open } = useDrawer()
           笔记
         </AppNavLink>
         <AppNavLink
+          to="/ai"
+          page="ai"
+        >
+          AI 导航
+        </AppNavLink>
+        <AppNavLink
           to="/wechat"
           page="wechat"
         >

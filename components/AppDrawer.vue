@@ -84,6 +84,11 @@ function close() {
           @click="close"
         >笔记</NuxtLink>
         <NuxtLink
+          to="/ai"
+          class="drawer-link"
+          @click="close"
+        >AI 导航</NuxtLink>
+        <NuxtLink
           to="/wechat"
           class="drawer-link"
           @click="close"

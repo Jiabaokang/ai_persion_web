@@ -23,11 +23,13 @@ dist/
 
 # ---------- 数据库 & 数据 ----------
 # SQLite 数据库文件及 WAL 模式附属文件
-data/
+data/*
 *.db
 *.db-journal
 *.db-wal
 *.db-shm
+# 例外：静态导航数据（由 scripts/scrape-ai-nav.mjs 离线生成，需随代码提交）
+!data/ai-nav.json
 
 # ---------- 用户内容 ----------
 # 公开页面上传的图片（开发期暂存）
