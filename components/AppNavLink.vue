@@ -9,7 +9,7 @@ import { useRoute } from 'vue-router'
 
 const props = defineProps<{
   to: string
-  page: 'home' | 'blog' | 'notes' | 'wechat'
+  page: 'home' | 'blog' | 'notes' | 'wechat' | 'ai'
 }>()
 
 const route = useRoute()

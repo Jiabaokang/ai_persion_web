@@ -1,17 +1,23 @@
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkGfm from 'remark-gfm'
-import remarkRehype from 'remark-rehype'
-import rehypeStringify from 'rehype-stringify'
-
 export async function renderMarkdown(md: string): Promise<string> {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeStringify)
-    .process(md)
-  return String(file)
+  const looksLikeHtml = /<[^>]+>/.test(md)
+  if (looksLikeHtml) return md
+  const escapeHtml = (s: string) => s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
+  const blocks = md.trim().split(/\n{2,}/)
+  return blocks
+    .map((block) => {
+      const line = block.split('\n')[0] || ''
+      if (/^###\s+/.test(line)) return `<h3>${escapeHtml(line.replace(/^###\s+/, ''))}</h3>`
+      if (/^##\s+/.test(line)) return `<h2>${escapeHtml(line.replace(/^##\s+/, ''))}</h2>`
+      if (/^#\s+/.test(line)) return `<h1>${escapeHtml(line.replace(/^#\s+/, ''))}</h1>`
+      return `<p>${escapeHtml(block).replace(/\n/g, '<br />')}</p>`
+    })
+    .join('\n')
 }
 
 export function calculateReadingTime(md: string): number {

@@ -2,11 +2,9 @@
 const props = defineProps<{ initial?: any, id?: number }>()
 
 const form = reactive({
-  type: props.initial?.type ?? 'blog',
   title: props.initial?.title ?? '',
   summary: props.initial?.summary ?? '',
   contentMd: props.initial?.contentMd ?? '',
-  visibility: props.initial?.visibility ?? (props.initial?.type === 'note' || props.initial?.type === 'inspiration' ? 'private' : 'public'),
   status: props.initial?.status ?? 'draft',
   tagNamesInput: props.initial?.tags?.map((t: any) => t.name).join(', ') ?? '',
 })
@@ -14,35 +12,30 @@ const form = reactive({
 const saving = ref(false)
 const error = ref('')
 
-const privateOnly = computed(() => form.type === 'note' || form.type === 'inspiration')
-
-watchEffect(() => {
-  if (privateOnly.value) form.visibility = 'private'
-})
-
 function buildPayload() {
   const tagNames = form.tagNamesInput
     .split(/[,，]/)
     .map((s: string) => s.trim())
     .filter(Boolean)
-  return { ...form, tagNames, tagNamesInput: undefined }
+  return {
+    type: 'inspiration',
+    visibility: 'private',
+    title: form.title,
+    summary: form.summary,
+    contentMd: form.contentMd,
+    status: form.status,
+    tagNames,
+  }
 }
 
 async function save() {
   saving.value = true
   error.value = ''
   try {
-    if (props.id) {
-      await $fetch(`/api/contents/${props.id}`, {
-        method: 'PATCH', body: buildPayload(), credentials: 'include',
-      })
-    }
-    else {
-      await $fetch('/api/contents', {
-        method: 'POST', body: buildPayload(), credentials: 'include',
-      })
-    }
-    await navigateTo('/admin/posts')
+    const saved = props.id
+      ? await $fetch(`/api/contents/${props.id}`, { method: 'PATCH', body: buildPayload(), credentials: 'include' })
+      : await $fetch('/api/contents', { method: 'POST', body: buildPayload(), credentials: 'include' })
+    await navigateTo(`/inspiration/${saved.slug}`)
   }
   catch (e: any) {
     error.value = e?.data?.statusMessage || '保存失败'
@@ -58,47 +51,12 @@ async function save() {
     class="space-y-4 bg-white p-6 rounded shadow"
     @submit.prevent="save"
   >
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium mb-1">类型</label>
-        <select
-          v-model="form.type"
-          class="w-full px-3 py-2 border border-gray-300 rounded"
-        >
-          <option value="blog">
-            博客
-          </option>
-          <option value="wechat">
-            公众号
-          </option>
-          <option value="note">
-            笔记（私密）
-          </option>
-          <option value="inspiration">
-            灵感（私密）
-          </option>
-        </select>
-      </div>
-      <div v-if="!privateOnly">
-        <label class="block text-sm font-medium mb-1">可见性</label>
-        <select
-          v-model="form.visibility"
-          class="w-full px-3 py-2 border border-gray-300 rounded"
-        >
-          <option value="public">
-            公开
-          </option>
-          <option value="private">
-            私密
-          </option>
-        </select>
-      </div>
-    </div>
     <div>
       <label class="block text-sm font-medium mb-1">标题</label>
       <UiInput
         v-model="form.title"
         name="title"
+        placeholder="一句话记下灵感"
       />
     </div>
     <div>
@@ -106,7 +64,7 @@ async function save() {
       <UiInput
         v-model="form.summary"
         name="summary"
-        placeholder="（可选，用于列表和 SEO）"
+        placeholder="（可选）"
       />
     </div>
     <div>
@@ -114,7 +72,7 @@ async function save() {
       <UiInput
         v-model="form.tagNamesInput"
         name="tags"
-        placeholder="技术,生活"
+        placeholder="产品,交互,写作"
       />
     </div>
     <div>
@@ -122,7 +80,7 @@ async function save() {
       <ClientOnly>
         <ContentEditor
           v-model="form.contentMd"
-          :type="form.type"
+          type="inspiration"
         />
         <template #fallback>
           <textarea
@@ -138,12 +96,12 @@ async function save() {
         v-model="form.status"
         type="radio"
         value="draft"
-      > 草稿</label>
+      > 碎片</label>
       <label class="text-sm"><input
         v-model="form.status"
         type="radio"
         value="published"
-      > 发布</label>
+      > 已整理</label>
     </div>
     <p
       v-if="error"
@@ -159,9 +117,11 @@ async function save() {
         {{ saving ? '保存中…' : '保存' }}
       </UiButton>
       <NuxtLink
-        to="/admin/posts"
+        to="/inspiration"
         class="px-4 py-2 border border-gray-300 rounded"
-      >取消</NuxtLink>
+      >
+        取消
+      </NuxtLink>
     </div>
   </form>
 </template>

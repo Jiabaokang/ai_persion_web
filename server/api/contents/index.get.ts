@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
   }
 
   if (query.type) conds.push(eq(contents.type, query.type as typeof contents.type._.data))
+  if (query.slug) conds.push(eq(contents.slug, query.slug as string))
   if (query.visibility) conds.push(eq(contents.visibility, query.visibility as typeof contents.visibility._.data))
   if (query.status) conds.push(eq(contents.status, query.status as typeof contents.status._.data))
 

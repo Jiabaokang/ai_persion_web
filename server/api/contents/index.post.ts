@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
   const html = await renderMarkdown(body.contentMd)
   const readingTime = calculateReadingTime(body.contentMd)
   const slug = body.slug || slugify(body.title) || `post-${Date.now()}`
+  const visibility = (body.type === 'note' || body.type === 'inspiration') ? 'private' : body.visibility
 
   const inserted = db.insert(contents).values({
     slug,
@@ -31,7 +32,7 @@ export default defineEventHandler(async (event) => {
     summary: body.summary,
     contentMd: body.contentMd,
     contentHtml: html,
-    visibility: body.visibility,
+    visibility,
     status: body.status,
     coverImageUrl: body.coverImageUrl,
     readingTime,
