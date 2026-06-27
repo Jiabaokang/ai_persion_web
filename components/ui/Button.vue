@@ -9,7 +9,7 @@ withDefaults(defineProps<{ type?: 'button' | 'submit', disabled?: boolean }>(), 
   <button
     :type="type"
     :disabled="disabled"
-    class="w-full px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 disabled:opacity-50"
+    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--gradient-aurora)] text-white font-900 shadow-[var(--shadow-glow-cyan)] hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed"
   >
     <slot />
   </button>

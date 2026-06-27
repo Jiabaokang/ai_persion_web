@@ -5,17 +5,16 @@ definePageMeta({ layout: 'admin' })
 
 const route = useRoute()
 const { data: post } = await useFetch(`/api/contents/${route.params.id}`, { credentials: 'include' })
+
+useHead({
+  title: '编辑内容 · 管理后台',
+})
 </script>
 
 <template>
-  <div>
-    <h2 class="text-2xl font-bold mb-4">
-      编辑文章
-    </h2>
-    <PostForm
-      v-if="post"
-      :id="Number(route.params.id)"
-      :initial="post"
-    />
-  </div>
+  <PostForm
+    v-if="post"
+    :id="Number(route.params.id)"
+    :initial="post"
+  />
 </template>

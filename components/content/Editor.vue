@@ -15,13 +15,21 @@ const editor = useEditor({
     Link.configure({ openOnClick: false }),
   ],
   editorProps: {
-    attributes: { class: 'prose prose-sm sm:prose lg:prose-lg max-w-none focus:outline-none min-h-[300px] p-4' },
+    attributes: {
+      class: 'min-h-[420px] p-4 md:p-5 outline-none text-[var(--text-primary)] leading-relaxed selection:bg-[rgba(34,211,238,0.22)] selection:text-[var(--text-primary)] [&_a]:text-[var(--accent-cyan)] [&_a]:underline [&_a]:underline-offset-4 [&_pre]:bg-[rgba(255,255,255,0.06)] [&_pre]:border [&_pre]:border-[rgba(255,255,255,0.10)] [&_pre]:rounded-2xl [&_pre]:p-4 [&_code]:font-mono',
+    },
   },
   onUpdate: ({ editor }) => emit('update:modelValue', editor.getHTML()),
 })
 
 const showSource = ref(false)
 const sourceContent = ref(props.modelValue)
+
+function toolBtnClass(active: boolean) {
+  const base = 'w-9 h-9 rounded-xl inline-flex items-center justify-center text-sm transition border'
+  if (active) return `${base} bg-[rgba(255,255,255,0.10)] border-[rgba(255,255,255,0.14)] text-[var(--text-primary)]`
+  return `${base} bg-transparent border-transparent text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--text-primary)]`
+}
 
 function toggleSource() {
   showSource.value = !showSource.value
@@ -39,64 +47,74 @@ function updateFromSource() {
 </script>
 
 <template>
-  <div class="border border-gray-300 rounded">
+  <div class="rounded-2xl border border-[rgba(255,255,255,0.10)] bg-[rgba(255,255,255,0.03)] overflow-hidden">
     <div
       v-if="editor && !showSource"
-      class="border-b border-gray-200 p-2 flex gap-1"
+      class="border-b border-[rgba(255,255,255,0.10)] px-3 py-2.5 flex items-center gap-1"
     >
       <button
         type="button"
-        class="px-2 py-1 text-sm hover:bg-gray-100 rounded"
-        :class="{ 'bg-gray-200': editor.isActive('bold') }"
+        :class="toolBtnClass(editor.isActive('bold'))"
         @click="editor.chain().focus().toggleBold().run()"
       >
-        B
+        <span class="font-800 tracking--0.2">
+          B
+        </span>
       </button>
       <button
         type="button"
-        class="px-2 py-1 text-sm italic hover:bg-gray-100 rounded"
-        :class="{ 'bg-gray-200': editor.isActive('italic') }"
+        :class="toolBtnClass(editor.isActive('italic'))"
         @click="editor.chain().focus().toggleItalic().run()"
       >
-        I
+        <span class="font-800 italic tracking--0.2">
+          I
+        </span>
       </button>
       <button
         type="button"
-        class="px-2 py-1 text-sm hover:bg-gray-100 rounded"
-        :class="{ 'bg-gray-200': editor.isActive('heading', { level: 2 }) }"
+        :class="toolBtnClass(editor.isActive('heading', { level: 2 }))"
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
       >
-        H2
+        <span class="font-800 text-xs tracking--0.2">
+          H2
+        </span>
       </button>
       <button
         type="button"
-        class="px-2 py-1 text-sm hover:bg-gray-100 rounded"
-        :class="{ 'bg-gray-200': editor.isActive('bulletList') }"
+        :class="toolBtnClass(editor.isActive('bulletList'))"
         @click="editor.chain().focus().toggleBulletList().run()"
       >
-        •
+        <span class="font-900 text-base leading-none">
+          •
+        </span>
       </button>
       <button
         type="button"
-        class="px-2 py-1 text-sm hover:bg-gray-100 rounded"
-        :class="{ 'bg-gray-200': editor.isActive('codeBlock') }"
+        :class="toolBtnClass(editor.isActive('codeBlock'))"
         @click="editor.chain().focus().toggleCodeBlock().run()"
       >
-        { }
+        <span class="font-800 text-xs font-mono">
+          {'{ }'}
+        </span>
       </button>
       <span class="flex-1" />
+      <div class="hidden sm:flex items-center gap-2 text-xs text-[var(--text-muted)] font-mono mr-2">
+        {{ showSource ? 'MD' : 'WYSIWYG' }}
+      </div>
       <button
         type="button"
-        class="px-2 py-1 text-sm hover:bg-gray-100 rounded"
+        :class="toolBtnClass(false)"
         @click="toggleSource"
       >
-        &lt;/&gt;
+        <span class="font-800 text-xs font-mono">
+          &lt;/&gt;
+        </span>
       </button>
     </div>
     <div v-if="showSource">
       <textarea
         v-model="sourceContent"
-        class="w-full p-4 font-mono text-sm min-h-[300px] focus:outline-none"
+        class="w-full px-4 py-4 font-mono text-sm min-h-[420px] outline-none text-[var(--text-primary)] bg-transparent"
         @blur="updateFromSource"
       />
     </div>
