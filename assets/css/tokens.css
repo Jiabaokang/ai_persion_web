@@ -1,77 +1,67 @@
-/* 智识花园 - 设计令牌
- * 与 prototype/assets/styles.css 同步
- * 由 I0 任务迁移完成
- * 由 I1 任务扩展布局相关 token
- */
+/* 智识花园暖纸设计令牌 */
 
 :root {
-  /* ========== 基础色（深色为默认） ========== */
-  --bg-base: #0F172A;
-  --bg-deep: #020617;
-  --bg-elevated: rgba(30, 41, 59, 0.6);
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-muted: #64748B;
-  --text-faint: #475569;
+  color-scheme: light;
 
-  /* ========== 玻璃 ========== */
-  --glass-bg: rgba(15, 23, 42, 0.4);
-  --glass-bg-strong: rgba(15, 23, 42, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-border-strong: rgba(255, 255, 255, 0.18);
-  --glass-blur: 20px;
+  /* 纸面与墨色 */
+  --paper-base: #F3EBDD;
+  --paper-surface: #F8F2E7;
+  --paper-muted: #E9DECC;
+  --paper-deep: #D8CAB5;
+  --ink-primary: #2A241D;
+  --ink-secondary: #6F6558;
+  --ink-muted: #968B7C;
+  --ink-faint: #B3A797;
 
-  /* ========== 极光强调色 ========== */
-  --accent-cyan: #22D3EE;
-  --accent-purple: #A855F7;
-  --accent-pink: #EC4899;
-  --accent-blue: #3B82F6;
-  --accent-emerald: #10B981;
+  /* 编辑部强调色 */
+  --accent-terracotta: #B85C38;
+  --accent-terracotta-dark: #8E4028;
+  --accent-moss: #667653;
+  --accent-moss-soft: #DDE1D2;
 
-  /* ========== 渐变 ========== */
-  --gradient-aurora: linear-gradient(135deg, #22D3EE 0%, #A855F7 50%, #EC4899 100%);
-  --gradient-aurora-soft: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(168, 85, 247, 0.15) 50%, rgba(236, 72, 153, 0.15) 100%);
-  --gradient-text: linear-gradient(135deg, #22D3EE 0%, #A855F7 50%, #EC4899 100%);
+  /* 线条与层级 */
+  --rule-color: rgba(71, 59, 43, 0.18);
+  --rule-strong: rgba(71, 59, 43, 0.34);
+  --focus-ring: rgba(184, 92, 56, 0.24);
+  --shadow-float: 0 18px 48px rgba(79, 61, 39, 0.14);
+  --shadow-soft: 0 8px 24px rgba(79, 61, 39, 0.08);
 
-  /* ========== 阴影 ========== */
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --shadow-glow-cyan: 0 0 24px rgba(34, 211, 238, 0.35);
-  --shadow-glow-purple: 0 0 24px rgba(168, 85, 247, 0.35);
-
-  /* ========== 圆角 ========== */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* 形状 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
   --radius-full: 9999px;
 
-  /* ========== 动效 ========== */
+  /* 动效 */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 150ms;
   --duration-base: 250ms;
   --duration-slow: 400ms;
 
-  /* ========== 字体 ========== */
-  --font-display: 'Space Grotesk', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-  --font-body: 'DM Sans', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+  /* 字体 */
+  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* 迁移期语义别名：只复用暖纸颜色，不恢复旧视觉。 */
+  --bg-base: var(--paper-base);
+  --bg-deep: var(--paper-muted);
+  --bg-elevated: var(--paper-surface);
+  --text-primary: var(--ink-primary);
+  --text-secondary: var(--ink-secondary);
+  --text-muted: var(--ink-muted);
+  --text-faint: var(--ink-faint);
+  --color-base: var(--paper-base);
+  --color-surface: var(--paper-surface);
+  --color-surface-2: var(--paper-muted);
+  --color-ink: var(--ink-primary);
+  --color-ink-2: var(--ink-secondary);
+  --color-purple: var(--accent-terracotta);
 }
 
-/* ========== 浅色主题覆盖（由 useTheme 切换） ========== */
+[data-theme='dark'],
 [data-theme='light'] {
-  --bg-base: #F8FAFC;
-  --bg-deep: #E2E8F0;
-  --bg-elevated: rgba(241, 245, 249, 0.7);
-  --text-primary: #0F172A;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
-  --text-faint: #94A3B8;
-
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-bg-strong: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(15, 23, 42, 0.08);
-  --glass-border-strong: rgba(15, 23, 42, 0.15);
-
-  --shadow-glass: 0 8px 32px 0 rgba(15, 23, 42, 0.1);
+  color-scheme: light;
 }

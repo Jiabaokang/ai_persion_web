@@ -1,37 +1,55 @@
-/* 智识花园 - 全局样式
- * 极简重置 + 基础排版
- * 玻璃拟态、极光背景等高级样式由 I0 任务扩展
- */
+/* 智识花园全局重置与暖纸排版 */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html, body, #__nuxt {
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#__nuxt {
+  min-height: 100%;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
 }
 
 body {
+  min-height: 100vh;
   font-family: var(--font-body);
-  color: var(--color-ink);
-  background: var(--color-base);
+  font-size: 16px;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.2;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
+  color: var(--ink-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.28;
+  text-wrap: balance;
 }
 
-code, pre, kbd, samp {
+p {
+  margin-top: 0;
+}
+
+code,
+pre,
+kbd,
+samp {
   font-family: var(--font-mono);
-  font-size: 0.9em;
 }
 
 a {
@@ -39,32 +57,52 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
 button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
+  border: 0;
   background: none;
   color: inherit;
+  cursor: pointer;
 }
 
-img, video {
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-terracotta);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--focus-ring);
+}
+
+img,
+video {
+  display: block;
   max-width: 100%;
   height: auto;
-  display: block;
 }
 
-/* 滚动条美化 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--color-base);
+  background: var(--paper-base);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-2);
-  border-radius: 4px;
+  border: 3px solid var(--paper-base);
+  border-radius: var(--radius-full);
+  background: var(--paper-deep);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-purple);
+  background: var(--ink-muted);
 }

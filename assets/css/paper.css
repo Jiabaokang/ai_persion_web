@@ -1,0 +1,62 @@
+/* 全站暖纸表面与通用编辑部细节 */
+
+html {
+  background-color: var(--paper-base);
+}
+
+body {
+  background-color: var(--paper-base);
+  background-image: url('/images/paper-texture.webp');
+  background-repeat: repeat;
+  background-size: 1024px auto;
+  color: var(--ink-primary);
+}
+
+::selection {
+  background: rgba(184, 92, 56, 0.2);
+  color: var(--ink-primary);
+}
+
+.paper-surface {
+  background-color: rgba(248, 242, 231, 0.92);
+  border: 1px solid var(--rule-color);
+  border-radius: var(--radius-lg);
+}
+
+.paper-rule {
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.paper-kicker {
+  color: var(--accent-terracotta);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.paper-muted {
+  color: var(--ink-secondary);
+}
+
+.paper-link {
+  color: var(--accent-terracotta-dark);
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 92, 56, 0.35);
+  text-underline-offset: 0.22em;
+}
+
+.paper-link:hover {
+  text-decoration-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

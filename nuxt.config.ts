@@ -38,18 +38,17 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: '个人网站：笔记 / 灵感 / 博客 / 公众号' },
-        // 支持深色模式（与系统主题同步）
-        { name: 'color-scheme', content: 'light dark' },
+        { name: 'color-scheme', content: 'light' },
       ],
     },
   },
 
   // ========== 全局 CSS ==========
-  // 顺序敏感：tokens → main → aurora → layout
+  // 顺序敏感：tokens → paper → main → layout
   css: [
     '~/assets/css/tokens.css', // 设计令牌（CSS 变量）
+    '~/assets/css/paper.css', // 暖纸纹理与编辑部通用样式
     '~/assets/css/main.css', // 全局样式（重置 + 排版）
-    '~/assets/css/aurora.css', // 极光背景动画
     '~/assets/css/layout.css', // 公共布局（Nav/Drawer/Footer）
   ],
 
