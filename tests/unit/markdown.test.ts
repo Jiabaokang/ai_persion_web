@@ -4,7 +4,7 @@ import { renderMarkdown, calculateReadingTime, slugify } from '~/server/utils/ma
 describe('markdown', () => {
   it('renders headings and paragraphs', async () => {
     const html = await renderMarkdown('# Hello\n\nWorld')
-    expect(html).toContain('<h1>Hello</h1>')
+    expect(html).toContain('<h1 id="hello">Hello</h1>')
     expect(html).toContain('<p>World</p>')
   })
 

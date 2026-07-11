@@ -1,18 +1,10 @@
+packages:
+  - '.'
+
 allowBuilds:
-  '3': true
-  ' ': true
-  '"': true
-  ',': true
-  '-': true
-  '[': true
-  ']': true
-  b: true
-  d: true
-  e: true
-  i: true
-  l: true
-  q: true
-  r: true
-  s: true
-  t: true
-  u: true
+  '@parcel/watcher': true
+  bcrypt: true
+  better-sqlite3: true
+  esbuild: true
+  unrs-resolver: true
+  vue-demi: true
