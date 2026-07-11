@@ -39,6 +39,12 @@ useHead({
   ],
 })
 
+const tutorialLink = {
+  title: 'AI教程',
+  description: '系统化学习 AI 工具、工作流与落地实践，适合快速补齐知识路径。',
+  href: 'https://ai.codefather.cn/library/2010994846520700929',
+}
+
 const { data, pending, error } = await useFetch<NavData>('/api/ai-nav', {
   default: () => ({ source: '', scrapedAt: '', groups: [], totalLinks: 0 }),
 })
@@ -143,6 +149,46 @@ function clearQuery() {
           class="ai-update"
         >· 数据更新于 {{ updatedAt }}</span>
       </p>
+
+      <a
+        :href="tutorialLink.href"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="ai-tutorial glass-strong"
+        data-ai-tutorial
+      >
+        <div class="ai-tutorial-copy">
+          <p class="ai-tutorial-eyebrow">
+            EDITOR'S PICK
+          </p>
+          <h2 class="ai-tutorial-title">
+            {{ tutorialLink.title }}
+          </h2>
+          <p class="ai-tutorial-desc">
+            {{ tutorialLink.description }}
+          </p>
+        </div>
+        <span class="ai-tutorial-cta">
+          立即查看教程
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line
+              x1="7"
+              y1="17"
+              x2="17"
+              y2="7"
+            />
+            <polyline points="7 7 17 7 17 17" />
+          </svg>
+        </span>
+      </a>
 
       <!-- 搜索 -->
       <div class="ai-search-wrap">
@@ -387,6 +433,90 @@ function clearQuery() {
 .ai-update {
   color: var(--text-muted);
   font-size: 0.875rem;
+}
+.ai-tutorial {
+  margin: 1.75rem auto 0;
+  max-width: 760px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+.ai-tutorial::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(34, 211, 238, 0.18), transparent 42%),
+    radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.18), transparent 38%);
+  pointer-events: none;
+}
+.ai-tutorial:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -18px rgba(34, 211, 238, 0.35);
+}
+.ai-tutorial-copy,
+.ai-tutorial-cta {
+  position: relative;
+  z-index: 1;
+}
+.ai-tutorial-copy {
+  min-width: 0;
+}
+.ai-tutorial-eyebrow {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--accent-cyan);
+}
+.ai-tutorial-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  color: var(--text-primary);
+}
+.ai-tutorial-desc {
+  margin: 0.5rem 0 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.ai-tutorial-cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: rgba(34, 211, 238, 0.12);
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  color: var(--text-primary);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+.ai-tutorial-cta svg {
+  width: 16px;
+  height: 16px;
+}
+.ai-tutorial:hover .ai-tutorial-cta {
+  transform: translateX(2px);
+  background: rgba(34, 211, 238, 0.18);
+  border-color: rgba(34, 211, 238, 0.45);
+  color: var(--accent-cyan);
 }
 
 /* 搜索 */
@@ -805,12 +935,24 @@ function clearQuery() {
 
 @media (prefers-reduced-motion: reduce) {
   .ai-card,
+  .ai-tutorial,
+  .ai-tutorial-cta,
   .ai-card-arrow,
   .ai-sidebar-link {
     transition: none !important;
   }
   .ai-spinner {
     animation: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .ai-tutorial {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ai-tutorial-cta {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>
