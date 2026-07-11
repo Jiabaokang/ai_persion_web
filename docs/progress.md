@@ -2,6 +2,16 @@
 
 > 每完成一个任务追加一行。Commit hash 用于回溯。Token 紧张时，这是恢复会话的唯一依据。
 
+## 当前接力任务（2026-07-11）
+
+暖纸风整站改造已经完成视觉定稿、设计规格和实现计划，代码实现尚未开始。
+
+- 高层状态与接力规则：[`20260711115524+暖纸风整站改造任务接力清单.md`](20260711115524+暖纸风整站改造任务接力清单.md)
+- 设计规格：[`superpowers/specs/2026-07-11-warm-paper-site-redesign-design.md`](superpowers/specs/2026-07-11-warm-paper-site-redesign-design.md)
+- 详细计划：[`superpowers/plans/2026-07-11-warm-paper-site-redesign.md`](superpowers/plans/2026-07-11-warm-paper-site-redesign.md)
+
+后续执行者每完成一个暖纸改造任务，必须同步更新接力清单总表和详细计划复选框。
+
 ## 格式
 
 ```
