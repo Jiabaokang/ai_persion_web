@@ -1,16 +1,12 @@
 <script setup lang="ts">
-/**
- * 页脚：版权 + 主要链接
- * 移动端纵向排列，桌面端横向分布
- */
-
 const year = new Date().getFullYear()
 </script>
 
 <template>
+  <!-- 中栏底部版权与辅助链接 -->
   <footer class="footer">
-    <div class="container footer-inner">
-      <div>© {{ year }} 智识花园 · Built with curiosity</div>
+    <div class="footer-inner">
+      <div>© {{ year }} 智识花园 · 用好奇心浇灌的小角落</div>
       <div class="footer-links">
         <NuxtLink to="/">首页</NuxtLink>
         <NuxtLink to="/blog">博客</NuxtLink>

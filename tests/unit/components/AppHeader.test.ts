@@ -1,5 +1,5 @@
 // 任务 I1 - AppHeader 组件测试
-// 验证头部包含品牌、桌面导航、移动端菜单按钮、主题切换
+// 验证移动头部包含品牌与菜单入口
 
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
@@ -23,8 +23,7 @@ function mountHeader() {
     global: {
       plugins: [router],
       stubs: {
-        // stub 子组件：避免对真实 useRoute/useColorMode 的依赖
-        AppThemeToggle: { template: '<button data-theme-toggle />' },
+        // stub 子组件：避免对子组件内部状态的依赖
         AppNavLink: {
           template: '<a :href="to" :data-nav-link="page"><slot /></a>',
           props: ['to', 'page'],
@@ -47,22 +46,15 @@ describe('AppHeader', () => {
     expect(wrapper.text()).toContain('智识花园')
   })
 
-  it('渲染桌面导航链接', () => {
-    const wrapper = mountHeader()
-    expect(wrapper.find('[data-nav-link="home"]').exists()).toBe(true)
-    expect(wrapper.find('[data-nav-link="blog"]').exists()).toBe(true)
-    expect(wrapper.find('[data-nav-link="notes"]').exists()).toBe(true)
-    expect(wrapper.find('[data-nav-link="wechat"]').exists()).toBe(true)
-  })
-
   it('渲染移动端菜单按钮', () => {
     const wrapper = mountHeader()
     expect(wrapper.find('[data-menu-toggle]').exists()).toBe(true)
   })
 
-  it('渲染主题切换按钮', () => {
+  it('使用移动暖纸头部且不包含内联 SVG', () => {
     const wrapper = mountHeader()
-    expect(wrapper.find('[data-theme-toggle]').exists()).toBe(true)
+    expect(wrapper.find('.paper-mobile-header').exists()).toBe(true)
+    expect(wrapper.find('svg').exists()).toBe(false)
   })
 
   it('点击菜单按钮后抽屉出现', async () => {

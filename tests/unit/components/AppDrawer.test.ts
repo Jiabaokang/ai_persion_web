@@ -35,9 +35,16 @@ describe('AppDrawer', () => {
     expect(wrapper.emitted('update:open')).toEqual([[false]])
   })
 
-  it('渲染 4 个导航链接', () => {
+  it('渲染全部 6 个公共导航链接', () => {
     const wrapper = mountDrawer({ open: true })
     const links = wrapper.findAll('.drawer-link')
-    expect(links.length).toBeGreaterThanOrEqual(4)
+    expect(links).toHaveLength(6)
+    expect(wrapper.text()).toContain('灵感')
+  })
+
+  it('抽屉使用暖纸语义且不包含内联 SVG', () => {
+    const wrapper = mountDrawer({ open: true })
+    expect(wrapper.find('.paper-drawer').exists()).toBe(true)
+    expect(wrapper.find('svg').exists()).toBe(false)
   })
 })

@@ -20,7 +20,7 @@ describe('AppFooter', () => {
   it('渲染版权文本', () => {
     const wrapper = mountFooter()
     expect(wrapper.text()).toContain('智识花园')
-    expect(wrapper.text()).toContain('Built with curiosity')
+    expect(wrapper.text()).toContain('用好奇心浇灌的小角落')
   })
 
   it('包含当前年份', () => {
