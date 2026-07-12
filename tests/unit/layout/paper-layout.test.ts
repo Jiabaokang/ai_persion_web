@@ -22,11 +22,12 @@ describe('暖纸公共布局', () => {
 
   it('右栏提供日期、近期入口和知识摘录', () => {
     expect(asideSource).toContain('reading-aside__date')
-    expect(asideSource).toContain('近期阅读')
+    expect(asideSource).toContain('近期笔记与灵感')
     expect(asideSource).toContain('知识不是记住多少')
   })
 
-  it('不再挂载极光背景', () => {
-    expect(layoutSource).not.toContain('AppAuroraBackground')
+  it('提供跳过导航与纸面应用根节点', () => {
+    expect(layoutSource).toContain('skip-link')
+    expect(layoutSource).toContain('paper-app')
   })
 })

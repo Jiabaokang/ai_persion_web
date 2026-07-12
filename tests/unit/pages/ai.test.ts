@@ -24,8 +24,9 @@ describe('pages/ai.vue', () => {
     expect(aiPageSource).toContain('filteredGroups')
   })
 
-  it('使用暖纸书架而非极光卡片或内联图标', () => {
+  it('使用暖纸书架和项目图标库', () => {
     expect(aiPageSource).toContain('ai-shelf')
-    expect(aiPageSource).not.toMatch(/glass|gradient-text|<svg/)
+    expect(aiPageSource).toContain('i-carbon-application-web')
+    expect(aiPageSource).not.toContain('<svg')
   })
 })

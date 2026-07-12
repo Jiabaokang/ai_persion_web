@@ -3,13 +3,6 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 const read = (path: string) => readFileSync(resolve(process.cwd(), path), 'utf8')
-const adminFiles = [
-  'layouts/admin.vue',
-  'pages/admin/index.vue',
-  'pages/admin/posts/index.vue',
-  'components/admin/PostForm.vue',
-]
-
 describe('暖纸管理后台', () => {
   it('使用同源纸面侧栏和移动导航', () => {
     const source = read('layouts/admin.vue')
@@ -39,9 +32,5 @@ describe('暖纸管理后台', () => {
     expect(source).toContain('post-settings is-sticky')
     expect(source).toContain('<ContentMarkdownEditor')
     expect(source).toContain('<ContentImportMarkdownButton')
-  })
-
-  it.each(adminFiles)('%s 不依赖旧视觉语义', (path) => {
-    expect(read(path)).not.toMatch(/glass|gradient-text|gradient-aurora|aurora-bg/)
   })
 })

@@ -3,7 +3,6 @@ import {
   defineConfig,
   presetIcons,
   presetUno,
-  presetWebFonts,
 } from 'unocss'
 
 export const shortcuts: [string, string][] = [
@@ -47,16 +46,8 @@ export default defineConfig({
     presetIcons({
       scale: 1.15,
       extraProperties: {
-        display: 'inline-block',
+        'display': 'inline-block',
         'vertical-align': 'middle',
-      },
-    }),
-    presetWebFonts({
-      provider: 'google',
-      fonts: {
-        display: [{ name: 'Noto Serif SC', weights: ['500', '600', '700'] }],
-        body: [{ name: 'Noto Sans SC', weights: ['400', '500', '600', '700'] }],
-        mono: [{ name: 'JetBrains Mono', weights: ['400', '500'] }],
       },
     }),
   ],

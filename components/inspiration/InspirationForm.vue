@@ -6,7 +6,7 @@ const form = reactive({
   summary: props.initial?.summary ?? '',
   contentMd: props.initial?.contentMd ?? '',
   status: props.initial?.status ?? 'draft',
-  tagNamesInput: props.initial?.tags?.map((t: any) => t.name).join(', ') ?? '',
+  tagNamesInput: props.initial?.tags?.map((tag: any) => tag.name).join(', ') ?? '',
 })
 
 const saving = ref(false)

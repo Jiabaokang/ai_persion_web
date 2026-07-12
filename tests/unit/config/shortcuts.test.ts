@@ -1,7 +1,11 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { createGenerator, presetUno } from 'unocss'
 import type { UnoGenerator } from 'unocss'
 import { shortcuts, theme } from '../../../uno.config'
+
+const unoSource = readFileSync(resolve(process.cwd(), 'uno.config.ts'), 'utf8')
 
 let generator: UnoGenerator
 
@@ -39,8 +43,13 @@ describe('UnoCSS 暖纸语义快捷方式', () => {
     expect(css).toMatch(/padding-(left|inline-start)[^;]*1rem/)
   })
 
-  it('不再导出 glass 和 gradient-text', () => {
-    expect(shortcuts.some(([name]) => name === 'glass')).toBe(false)
-    expect(shortcuts.some(([name]) => name === 'gradient-text')).toBe(false)
+  it('只导出暖纸视觉语义快捷方式', () => {
+    expect(shortcuts.some(([name]) => name === 'paper-surface')).toBe(true)
+    expect(shortcuts.some(([name]) => name === 'paper-rule')).toBe(true)
+    expect(shortcuts.some(([name]) => name === 'paper-focus')).toBe(true)
+  })
+
+  it('构建过程不依赖远程字体抓取', () => {
+    expect(unoSource).not.toContain('presetWebFonts')
   })
 })

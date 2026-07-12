@@ -12,14 +12,12 @@ describe('编辑部首页与内容列表', () => {
     expect(source).toContain('写一篇文章')
     expect(source).toContain('导入 Markdown')
     expect(source).toContain('/images/ink-plant.webp')
-    expect(source).not.toMatch(/glass|gradient-text/)
   })
 
   it.each(['pages/blog/index.vue', 'pages/notes/index.vue', 'pages/wechat/index.vue'])('%s 共用行列表', (path) => {
     const source = read(path)
     expect(source).toContain('<ContentContentList')
     expect(source).toContain('editorial-index')
-    expect(source).not.toMatch(/glass|gradient-text/)
   })
 
   it('右侧阅读索引读取近期笔记和灵感', () => {

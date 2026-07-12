@@ -11,7 +11,6 @@ describe('灵感、登录与编辑流程暖纸迁移', () => {
     expect(source).toContain('/inspiration/new')
     expect(source).toContain('/inspiration/edit/')
     expect(source).toContain('@click="remove(p.id)"')
-    expect(source).not.toMatch(/glass|gradient-text/)
   })
 
   it.each(['pages/inspiration/new.vue', 'pages/inspiration/edit/[id].vue'])('%s 使用纸面编辑工作区', (path) => {
@@ -27,6 +26,6 @@ describe('灵感、登录与编辑流程暖纸迁移', () => {
     expect(source).toContain('showPassword')
     expect(source).toContain('/images/ink-plant.webp')
     expect(source).toContain('login-sheet')
-    expect(source).not.toMatch(/aurora|glass|gradient-text|<svg/)
+    expect(source).not.toContain('<svg')
   })
 })

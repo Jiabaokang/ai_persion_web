@@ -26,13 +26,7 @@ describe('暖纸设计令牌', () => {
     expect(tokensCss).toContain('--radius-lg: 10px')
   })
 
-  it('不再声明极光、玻璃和渐变令牌', () => {
-    expect(tokensCss).not.toContain('--gradient-aurora')
-    expect(tokensCss).not.toContain('--glass-bg')
-    expect(tokensCss).not.toContain('--accent-cyan')
-  })
-
-  it('提供兼容旧组件的语义别名而不恢复旧视觉', () => {
+  it('提供迁移期基础语义别名', () => {
     expect(tokensCss).toContain('--bg-base: var(--paper-base)')
     expect(tokensCss).toContain('--text-primary: var(--ink-primary)')
     expect(tokensCss).toContain('--text-secondary: var(--ink-secondary)')

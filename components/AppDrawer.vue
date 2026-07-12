@@ -46,8 +46,15 @@ watch(() => props.open, (open) => {
       aria-label="移动端导航"
     >
       <div class="drawer-header">
-        <NuxtLink to="/" class="nav-brand" @click="close">
-          <span class="nav-brand-mark" aria-hidden="true">智</span>
+        <NuxtLink
+          to="/"
+          class="nav-brand"
+          @click="close"
+        >
+          <span
+            class="nav-brand-mark"
+            aria-hidden="true"
+          >智</span>
           <span>智识花园</span>
         </NuxtLink>
         <button
@@ -57,7 +64,10 @@ watch(() => props.open, (open) => {
           aria-label="关闭菜单"
           @click="close"
         >
-          <span class="i-carbon-close" aria-hidden="true" />
+          <span
+            class="i-carbon-close"
+            aria-hidden="true"
+          />
         </button>
       </div>
 
@@ -69,7 +79,10 @@ watch(() => props.open, (open) => {
           class="drawer-link"
           @click="close"
         >
-          <span :class="item.icon" aria-hidden="true" />
+          <span
+            :class="item.icon"
+            aria-hidden="true"
+          />
           <span>{{ item.label }}</span>
         </NuxtLink>
       </nav>

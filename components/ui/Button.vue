@@ -6,11 +6,33 @@ withDefaults(defineProps<{ type?: 'button' | 'submit', disabled?: boolean }>(), 
 </script>
 
 <template>
+  <!-- 通用主操作按钮：使用暖纸体系的陶土红强调色。 -->
   <button
     :type="type"
     :disabled="disabled"
-    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--gradient-aurora)] text-white font-900 shadow-[var(--shadow-glow-cyan)] hover:brightness-110 transition disabled:opacity-60 disabled:cursor-not-allowed"
+    class="ui-button"
   >
     <slot />
   </button>
 </template>
+
+<style scoped>
+.ui-button {
+  display: inline-flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--accent-terracotta-dark);
+  border-radius: var(--radius-sm);
+  background: var(--accent-terracotta);
+  color: var(--paper-surface);
+  font-weight: 700;
+  transition: background var(--duration-fast), opacity var(--duration-fast);
+}
+
+.ui-button:hover:not(:disabled) { background: var(--accent-terracotta-dark); }
+.ui-button:disabled { cursor: not-allowed; opacity: 0.55; }
+</style>

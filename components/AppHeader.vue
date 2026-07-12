@@ -7,8 +7,14 @@ const { isOpen, open } = useDrawer()
 <template>
   <!-- 移动端顶部品牌栏，桌面端由侧栏承载导航 -->
   <header class="paper-mobile-header">
-    <NuxtLink to="/" class="nav-brand">
-      <span class="nav-brand-mark" aria-hidden="true">智</span>
+    <NuxtLink
+      to="/"
+      class="nav-brand"
+    >
+      <span
+        class="nav-brand-mark"
+        aria-hidden="true"
+      >智</span>
       <span>智识花园</span>
     </NuxtLink>
 
@@ -19,7 +25,10 @@ const { isOpen, open } = useDrawer()
       :aria-expanded="isOpen"
       @click="open"
     >
-      <span class="i-carbon-menu" aria-hidden="true" />
+      <span
+        class="i-carbon-menu"
+        aria-hidden="true"
+      />
     </button>
   </header>
 
