@@ -11,7 +11,9 @@ const form = reactive({
 
 const saving = ref(false)
 const error = ref('')
+const importMessage = ref('')
 
+// 将灵感表单整理为私密内容接口需要的负载。
 function buildPayload() {
   const tagNames = form.tagNamesInput
     .split(/[,，]/)
@@ -28,6 +30,7 @@ function buildPayload() {
   }
 }
 
+// 显式保存当前灵感，导入 Markdown 后仍由用户决定何时提交。
 async function save() {
   saving.value = true
   error.value = ''
@@ -44,9 +47,26 @@ async function save() {
     saving.value = false
   }
 }
+
+// 将本地 Markdown 应用到灵感正文，覆盖已有内容前必须确认。
+function applyImportedMarkdown(payload: { content: string, suggestedTitle: string }) {
+  if (form.contentMd.trim() && !window.confirm('当前正文已有内容，是否用导入文件覆盖？')) return
+
+  form.contentMd = payload.content
+  if (!form.title.trim()) form.title = payload.suggestedTitle
+  error.value = ''
+  importMessage.value = 'Markdown 已导入，请确认内容后保存'
+}
+
+// 将本地文件读取错误展示在表单内。
+function handleImportError(message: string) {
+  importMessage.value = ''
+  error.value = message
+}
 </script>
 
 <template>
+  <!-- 灵感编辑表单：保留快速记录流程并复用统一 Markdown 工作台。 -->
   <form
     class="space-y-4 bg-white p-6 rounded shadow"
     @submit.prevent="save"
@@ -78,10 +98,16 @@ async function save() {
     <div>
       <label class="block text-sm font-medium mb-1">内容</label>
       <ClientOnly>
-        <ContentEditor
+        <ContentMarkdownEditor
           v-model="form.contentMd"
-          type="inspiration"
-        />
+        >
+          <template #actions>
+            <ContentImportMarkdownButton
+              @imported="applyImportedMarkdown"
+              @error="handleImportError"
+            />
+          </template>
+        </ContentMarkdownEditor>
         <template #fallback>
           <textarea
             v-model="form.contentMd"
@@ -90,6 +116,13 @@ async function save() {
           />
         </template>
       </ClientOnly>
+      <p
+        v-if="importMessage"
+        class="mt-2 text-sm text-[var(--accent-moss)]"
+        role="status"
+      >
+        {{ importMessage }}
+      </p>
     </div>
     <div class="flex items-center gap-4">
       <label class="text-sm"><input

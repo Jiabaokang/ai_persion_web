@@ -20,6 +20,8 @@ const form = reactive({
 const saving = ref(false)
 const error = ref('')
 const justSaved = ref(false)
+const importMessage = ref('')
+const importError = ref('')
 
 const privateOnly = computed(() => form.type === 'note' || form.type === 'inspiration')
 const isEdit = computed(() => Boolean(props.id))
@@ -29,6 +31,7 @@ watchEffect(() => {
   if (privateOnly.value) form.visibility = 'private'
 })
 
+// 将表单状态收敛为后端内容接口需要的稳定负载。
 function buildPayload() {
   const tagNames = form.tagNamesInput
     .split(/[,，]/)
@@ -47,6 +50,7 @@ function buildPayload() {
   }
 }
 
+// 保存当前内容；本地导入只改写表单，不会绕过此显式保存动作。
 async function save() {
   saving.value = true
   error.value = ''
@@ -56,7 +60,9 @@ async function save() {
         method: 'PATCH', body: buildPayload(), credentials: 'include',
       })
       justSaved.value = true
-      setTimeout(() => { justSaved.value = false }, 1200)
+      setTimeout(() => {
+        justSaved.value = false
+      }, 1200)
     }
     else {
       const created = await $fetch<{ id: number }>('/api/contents', {
@@ -76,7 +82,7 @@ async function save() {
   }
 }
 
-if (process.client) {
+if (import.meta.client) {
   useEventListener(window, 'keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
       e.preventDefault()
@@ -89,6 +95,7 @@ const inputBase = 'w-full px-4 py-3 rounded-2xl bg-[rgba(255,255,255,0.05)] bord
 const inputFocus = 'focus:border-[rgba(34,211,238,0.55)] focus:shadow-[0_0_0_3px_rgba(34,211,238,0.12)]'
 const inputClass = `${inputBase} ${inputFocus}`
 
+// 根据当前发布状态返回按钮样式，任务 8 会统一迁移为后台纸面组件。
 function statusPillClass(value: Status) {
   const base = 'w-full inline-flex items-center justify-center gap-2 px-3 py-2.5 rounded-2xl text-sm font-800 border transition'
   if (form.status === value) {
@@ -96,9 +103,26 @@ function statusPillClass(value: Status) {
   }
   return `${base} bg-[rgba(255,255,255,0.04)] border-[rgba(255,255,255,0.10)] text-[var(--text-secondary)] hover:bg-[rgba(255,255,255,0.07)] hover:text-[var(--text-primary)]`
 }
+
+// 将本地 Markdown 写入表单；已有正文必须得到用户明确确认后才能覆盖。
+function applyImportedMarkdown(payload: { content: string, suggestedTitle: string }) {
+  if (form.contentMd.trim() && !window.confirm('当前正文已有内容，是否用导入文件覆盖？')) return
+
+  form.contentMd = payload.content
+  if (!form.title.trim()) form.title = payload.suggestedTitle
+  importError.value = ''
+  importMessage.value = 'Markdown 已导入，请确认内容后保存'
+}
+
+// 展示文件校验或读取错误，不与保存接口错误混为一谈。
+function handleImportError(message: string) {
+  importMessage.value = ''
+  importError.value = message
+}
 </script>
 
 <template>
+  <!-- 内容编辑表单：正文工作台与发布设置保持清晰的主次关系。 -->
   <form @submit.prevent="save">
     <div class="flex items-start justify-between gap-4 flex-wrap mb-6">
       <div class="min-w-60">
@@ -202,10 +226,16 @@ function statusPillClass(value: Status) {
           </div>
           <div class="p-2 md:p-3">
             <ClientOnly>
-              <ContentEditor
+              <ContentMarkdownEditor
                 v-model="form.contentMd"
-                :type="form.type"
-              />
+              >
+                <template #actions>
+                  <ContentImportMarkdownButton
+                    @imported="applyImportedMarkdown"
+                    @error="handleImportError"
+                  />
+                </template>
+              </ContentMarkdownEditor>
               <template #fallback>
                 <textarea
                   v-model="form.contentMd"
@@ -214,6 +244,20 @@ function statusPillClass(value: Status) {
                 />
               </template>
             </ClientOnly>
+            <p
+              v-if="importError"
+              class="mt-3 text-sm text-[var(--accent-terracotta)]"
+              role="alert"
+            >
+              {{ importError }}
+            </p>
+            <p
+              v-else-if="importMessage"
+              class="mt-3 text-sm text-[var(--accent-moss)]"
+              role="status"
+            >
+              {{ importMessage }}
+            </p>
           </div>
         </div>
       </section>
