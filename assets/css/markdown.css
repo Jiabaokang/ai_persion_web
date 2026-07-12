@@ -1,0 +1,214 @@
+/* Markdown 阅读页：保持接近纸书的行宽、节奏与低干扰层级。 */
+.reading-page {
+  width: min(100%, 860px);
+  margin-inline: auto;
+  padding: clamp(40px, 7vw, 92px) clamp(20px, 5vw, 72px) 96px;
+}
+
+.reading-article {
+  position: relative;
+}
+
+.reading-header {
+  max-width: 65ch;
+  margin-bottom: clamp(34px, 5vw, 56px);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.reading-header h1 {
+  margin: 0;
+  font-size: clamp(2.15rem, 6vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.reading-meta,
+.reading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 16px;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.reading-meta span + span::before {
+  margin-right: 14px;
+  color: var(--rule-strong);
+  content: '／';
+}
+
+.reading-actions {
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule-color);
+}
+
+.reading-actions__group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.reading-actions a,
+.reading-actions button {
+  color: var(--ink-secondary);
+}
+
+.reading-actions a:hover,
+.reading-actions button:hover {
+  color: var(--accent-terracotta);
+}
+
+.markdown-content {
+  max-width: 65ch;
+  color: var(--ink-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.02rem, 0.98rem + 0.22vw, 1.14rem);
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.markdown-content > :first-child { margin-top: 0; }
+.markdown-content > :last-child { margin-bottom: 0; }
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin: 2.6em 0 0.8em;
+  font-weight: 600;
+  line-height: 1.35;
+  scroll-margin-top: 80px;
+}
+
+.markdown-content h1 { font-size: 2rem; }
+.markdown-content h2 {
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--rule-color);
+  font-size: 1.58rem;
+}
+.markdown-content h3 { font-size: 1.3rem; }
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 { font-size: 1.08rem; }
+
+.markdown-content p,
+.markdown-content ul,
+.markdown-content ol,
+.markdown-content blockquote,
+.markdown-content pre,
+.markdown-content table,
+.markdown-content figure {
+  margin: 0 0 1.55em;
+}
+
+.markdown-content a {
+  color: var(--accent-terracotta);
+  text-decoration: underline;
+  text-decoration-color: rgba(184, 92, 56, 0.4);
+  text-underline-offset: 0.2em;
+}
+
+.markdown-content a:hover { text-decoration-color: currentColor; }
+.markdown-content ul,
+.markdown-content ol { padding-left: 1.45em; }
+.markdown-content li + li { margin-top: 0.38em; }
+.markdown-content li::marker { color: var(--accent-moss); }
+
+.markdown-content .task-list-item {
+  margin-left: -1.25em;
+  list-style: none;
+}
+
+.markdown-content input[type='checkbox'] {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.55em;
+  accent-color: var(--accent-moss);
+}
+
+.markdown-content blockquote {
+  margin-left: 0;
+  padding: 0.15em 0 0.15em 1.2em;
+  border-left: 3px solid var(--accent-terracotta);
+  color: var(--ink-secondary);
+  font-style: italic;
+}
+
+.markdown-content code {
+  padding: 0.12em 0.35em;
+  border: 1px solid var(--rule-color);
+  border-radius: 3px;
+  background: var(--paper-muted);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+.markdown-content pre {
+  max-width: 100%;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border: 1px solid var(--rule-color);
+  border-radius: var(--radius-md);
+  background: #2f2a24;
+  color: #f3ebdd;
+  line-height: 1.65;
+}
+
+.markdown-content pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.markdown-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 9px 14px;
+  border: 1px solid var(--rule-color);
+  text-align: left;
+}
+
+.markdown-content th {
+  background: var(--paper-muted);
+  font-weight: 650;
+}
+
+.markdown-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+  border-radius: var(--radius-sm);
+}
+
+.markdown-content hr {
+  width: 44%;
+  margin: 3.2em auto;
+  border: 0;
+  border-top: 1px solid var(--rule-color);
+}
+
+@media (max-width: 640px) {
+  .reading-page { padding-top: 32px; }
+  .reading-header h1 { font-size: clamp(2rem, 12vw, 3.25rem); }
+  .markdown-content { line-height: 1.82; }
+}

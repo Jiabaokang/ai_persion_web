@@ -8,18 +8,20 @@ if (!post.value) throw createError({ statusCode: 404 })
 </script>
 
 <template>
+  <!-- 笔记书页：以紧凑元信息和统一正文组件呈现。 -->
   <article
     v-if="post"
-    class="container section"
+    class="reading-page reading-article"
   >
-    <div class="glass-strong p-8">
-      <h1 class="text-3xl font-bold mb-2">
+    <header class="reading-header">
+      <div class="reading-meta">
+        <span>笔记</span>
+        <span v-if="post.updatedAt">更新于 {{ new Date(post.updatedAt).toLocaleDateString('zh-CN') }}</span>
+      </div>
+      <h1>
         {{ post.title }}
       </h1>
-      <div
-        class="prose max-w-none"
-        v-html="post.contentHtml"
-      />
-    </div>
+    </header>
+    <ContentMarkdownContent :html="post.contentHtml || ''" />
   </article>
 </template>

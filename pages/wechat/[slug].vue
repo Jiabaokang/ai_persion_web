@@ -7,25 +7,21 @@ if (!post.value) throw createError({ statusCode: 404, statusMessage: 'Not found'
 </script>
 
 <template>
+  <!-- 公众号书页：保留来源语义，并复用统一 Markdown 阅读体验。 -->
   <article
     v-if="post"
-    class="container section"
+    class="reading-page reading-article"
   >
-    <div class="glass-strong p-8">
-      <h1 class="text-3xl font-bold mb-2">
+    <header class="reading-header">
+      <div class="reading-meta">
+        <span>公众号</span>
+        <span v-if="post.publishedAt">{{ new Date(post.publishedAt).toLocaleDateString('zh-CN') }}</span>
+        <span v-if="post.readingTime">{{ post.readingTime }} 分钟阅读</span>
+      </div>
+      <h1>
         {{ post.title }}
       </h1>
-      <div class="text-sm text-ink-2 mb-6">
-        {{ new Date(post.publishedAt).toLocaleDateString() }}
-        <span
-          v-if="post.readingTime"
-          class="ml-2"
-        >· {{ post.readingTime }} 分钟阅读</span>
-      </div>
-      <div
-        class="prose max-w-none"
-        v-html="post.contentHtml"
-      />
-    </div>
+    </header>
+    <ContentMarkdownContent :html="post.contentHtml || ''" />
   </article>
 </template>

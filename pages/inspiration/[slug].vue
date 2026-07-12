@@ -7,6 +7,7 @@ const { data: post } = await useFetch<any>('/api/contents', {
 })
 if (!post.value) throw createError({ statusCode: 404 })
 
+// 删除当前灵感后返回索引页，避免停留在已失效的详情路由。
 async function remove() {
   if (!post.value) return
   if (!confirm('确认删除？')) return
@@ -16,40 +17,40 @@ async function remove() {
 </script>
 
 <template>
+  <!-- 灵感书页：编辑操作与正文阅读保持视觉分离。 -->
   <article
     v-if="post"
-    class="container section"
+    class="reading-page reading-article"
   >
-    <div class="glass-strong p-8">
-      <div class="flex items-center justify-between mb-6 text-sm">
+    <header class="reading-header">
+      <div class="reading-actions">
         <NuxtLink
           to="/inspiration"
-          class="text-ink-2 hover:underline"
         >
-          返回列表
+          ← 返回灵感
         </NuxtLink>
-        <div class="flex items-center gap-3">
+        <div class="reading-actions__group">
           <NuxtLink
             :to="`/inspiration/edit/${post.id}`"
-            class="text-primary-500 hover:underline"
           >
             编辑
           </NuxtLink>
           <button
-            class="text-red-500 hover:underline"
+            type="button"
             @click="remove"
           >
             删除
           </button>
         </div>
       </div>
-      <h1 class="text-3xl font-bold mb-2">
+      <div class="reading-meta">
+        <span>灵感</span>
+        <span v-if="post.updatedAt">更新于 {{ new Date(post.updatedAt).toLocaleDateString('zh-CN') }}</span>
+      </div>
+      <h1>
         {{ post.title }}
       </h1>
-      <div
-        class="prose max-w-none"
-        v-html="post.contentHtml"
-      />
-    </div>
+    </header>
+    <ContentMarkdownContent :html="post.contentHtml || ''" />
   </article>
 </template>

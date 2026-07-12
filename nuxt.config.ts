@@ -44,10 +44,11 @@ export default defineNuxtConfig({
   },
 
   // ========== 全局 CSS ==========
-  // 顺序敏感：tokens → paper → main → layout
+  // 顺序敏感：tokens → paper → markdown → main → layout
   css: [
     '~/assets/css/tokens.css', // 设计令牌（CSS 变量）
     '~/assets/css/paper.css', // 暖纸纹理与编辑部通用样式
+    '~/assets/css/markdown.css', // Markdown 阅读与预览排版
     '~/assets/css/main.css', // 全局样式（重置 + 排版）
     '~/assets/css/layout.css', // 公共布局（Nav/Drawer/Footer）
   ],
