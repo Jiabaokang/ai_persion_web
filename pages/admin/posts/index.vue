@@ -1,40 +1,33 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'admin' })
-type AdminContentRow = {
+
+interface AdminContentRow {
   id: number
   slug: string
-  type: 'note' | 'inspiration' | 'blog' | 'wechat' | (string & {})
+  type: string
   title: string
-  visibility: 'public' | 'private' | (string & {})
-  status: 'draft' | 'published' | (string & {})
+  visibility: string
+  status: string
   updatedAt?: string | number | Date | null
-  createdAt?: string | number | Date | null
 }
 
 const { data: posts, pending, error, refresh } = await useFetch<AdminContentRow[]>('/api/contents', {
   credentials: 'include',
+  default: () => [],
 })
 
 const list = computed(() => posts.value ?? [])
 
+// 删除内容前二次确认，并在接口成功后刷新表格。
 async function remove(id: number) {
   if (!confirm('确认删除？')) return
   await $fetch(`/api/contents/${id}`, { method: 'DELETE', credentials: 'include' })
   await refresh()
 }
 
-function badgeClass(kind: 'status' | 'visibility', value: string) {
-  const base = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-600 border'
-  if (kind === 'status') {
-    if (value === 'published') return `${base} bg-[rgba(34,211,238,0.12)] border-[rgba(34,211,238,0.28)] text-[var(--text-primary)]`
-    return `${base} bg-[rgba(168,85,247,0.10)] border-[rgba(168,85,247,0.25)] text-[var(--text-primary)]`
-  }
-  if (value === 'public') return `${base} bg-[rgba(16,185,129,0.10)] border-[rgba(16,185,129,0.22)] text-[var(--text-primary)]`
-  return `${base} bg-[rgba(236,72,153,0.10)] border-[rgba(236,72,153,0.22)] text-[var(--text-primary)]`
-}
-
+// 将接口枚举翻译为后台可读标签。
 function label(value: string) {
-  const map: Record<string, string> = {
+  const labels: Record<string, string> = {
     published: '已发布',
     draft: '草稿',
     public: '公开',
@@ -44,230 +37,172 @@ function label(value: string) {
     blog: '博客',
     wechat: '公众号',
   }
-  return map[value] ?? value
+  return labels[value] ?? value
+}
+
+// 使用语义类表达状态，避免把颜色逻辑散落到表格模板。
+function badgeClass(value: string) {
+  return ['admin-badge', `is-${value}`]
 }
 </script>
 
 <template>
-  <div class="stack-lg">
-    <div class="flex items-end justify-between gap-4 flex-wrap">
-      <div class="min-w-60">
-        <h2 class="text-2xl md:text-3xl font-800 tracking--0.3">
-          <span class="gradient-text">文章管理</span>
-        </h2>
-        <div class="mt-1 text-sm text-[var(--text-muted)]">
-          统一管理 note / inspiration / blog / wechat 等内容
-        </div>
+  <!-- 内容档案表：在同一行检视类型、可见性、发布状态与操作。 -->
+  <div class="admin-content-page">
+    <header class="admin-content-head">
+      <div>
+        <p class="paper-kicker">
+          Content archive
+        </p>
+        <h1>内容管理</h1>
+        <p>统一管理博客、公众号、笔记与灵感。</p>
       </div>
-
       <NuxtLink
         to="/admin/posts/new"
-        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[var(--gradient-aurora)] text-white font-800 shadow-[var(--shadow-glow-cyan)] hover:brightness-110 transition"
+        class="admin-content-create"
       >
-        <span class="i-carbon-add w-5 h-5" />
-        <span>新建内容</span>
+        <span
+          class="i-carbon-add"
+          aria-hidden="true"
+        />
+        新建内容
       </NuxtLink>
+    </header>
+
+    <div class="admin-content-toolbar">
+      <span>共 {{ list.length }} 条记录</span>
+      <button
+        type="button"
+        @click="refresh()"
+      >
+        <span
+          class="i-carbon-renew"
+          aria-hidden="true"
+        />
+        刷新
+      </button>
     </div>
 
     <div
       v-if="error"
-      class="glass-strong p-5 flex items-start gap-3"
+      class="admin-content-state"
+      role="alert"
     >
-      <span class="i-carbon-warning-alt w-5 h-5 text-[var(--accent-pink)]" />
-      <div>
-        <div class="font-700">
-          列表加载失败
-        </div>
-        <div class="text-sm text-[var(--text-secondary)] mt-1">
-          {{ error.message }}
-        </div>
-      </div>
+      <span
+        class="i-carbon-warning-alt"
+        aria-hidden="true"
+      />
+      <div><strong>列表加载失败</strong><p>{{ error.message }}</p></div>
+    </div>
+    <div
+      v-else-if="pending"
+      class="admin-content-state"
+    >
+      <span
+        class="i-carbon-progress-bar-round admin-spin"
+        aria-hidden="true"
+      />
+      正在整理内容档案……
+    </div>
+    <div
+      v-else-if="!list.length"
+      class="admin-content-state"
+    >
+      <span
+        class="i-carbon-document-blank"
+        aria-hidden="true"
+      />
+      <div><strong>还没有内容</strong><p>先创建一条内容，写点东西。</p></div>
+      <NuxtLink to="/admin/posts/new">新建内容</NuxtLink>
     </div>
 
     <div
       v-else
-      class="glass-strong overflow-hidden"
+      class="admin-content-table-wrap"
     >
-      <div class="px-4 md:px-6 py-4 border-b border-[rgba(255,255,255,0.10)] flex items-center justify-between gap-3">
-        <div class="text-sm text-[var(--text-secondary)]">
-          共 {{ list.length }} 条
-        </div>
-        <button
-          class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm text-[var(--text-secondary)] border border-[var(--glass-border)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--text-primary)] transition"
-          @click="refresh()"
-        >
-          <span class="i-carbon-renew w-4 h-4" />
-          刷新
-        </button>
-      </div>
-
-      <div
-        v-if="pending"
-        class="p-4 md:p-6 space-y-3"
-      >
-        <div
-          v-for="i in 6"
-          :key="i"
-          class="h-14 rounded-2xl bg-[rgba(255,255,255,0.06)] animate-pulse"
-        />
-      </div>
-
-      <div
-        v-else-if="list.length === 0"
-        class="p-10 md:p-14 text-center"
-      >
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.10)]">
-          <span class="i-carbon-document-blank w-7 h-7 text-[var(--text-secondary)]" />
-        </div>
-        <div class="mt-4 text-lg font-800">
-          还没有内容
-        </div>
-        <div class="mt-1 text-sm text-[var(--text-muted)]">
-          先创建一条内容，写点东西。
-        </div>
-        <div class="mt-6">
-          <NuxtLink
-            to="/admin/posts/new"
-            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[var(--gradient-aurora)] text-white font-800 shadow-[var(--shadow-glow-cyan)] hover:brightness-110 transition"
-          >
-            <span class="i-carbon-add w-5 h-5" />
-            新建内容
-          </NuxtLink>
-        </div>
-      </div>
-
-      <div v-else>
-        <div class="hidden md:block">
-          <table class="w-full text-sm">
-            <thead class="text-left text-[var(--text-muted)]">
-              <tr>
-                <th class="px-6 py-4 font-600">
-                  标题
-                </th>
-                <th class="px-6 py-4 font-600">
-                  类型
-                </th>
-                <th class="px-6 py-4 font-600">
-                  可见性
-                </th>
-                <th class="px-6 py-4 font-600">
-                  状态
-                </th>
-                <th class="px-6 py-4 font-600 text-right">
-                  操作
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="p in list"
-                :key="p.id"
-                class="border-t border-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.04)] transition"
-              >
-                <td class="px-6 py-4">
-                  <div class="font-700 text-[var(--text-primary)] leading-tight">
-                    <NuxtLink
-                      :to="`/admin/posts/${p.id}`"
-                      class="hover:underline decoration-[rgba(34,211,238,0.6)] underline-offset-4"
-                    >
-                      {{ p.title }}
-                    </NuxtLink>
-                  </div>
-                  <div class="mt-1 text-xs text-[var(--text-muted)] font-mono truncate max-w-180">
-                    /{{ p.slug }}
-                  </div>
-                </td>
-                <td class="px-6 py-4 text-[var(--text-secondary)]">
-                  {{ label(p.type) }}
-                </td>
-                <td class="px-6 py-4">
-                  <span :class="badgeClass('visibility', p.visibility)">
-                    {{ label(p.visibility) }}
-                  </span>
-                </td>
-                <td class="px-6 py-4">
-                  <span :class="badgeClass('status', p.status)">
-                    {{ label(p.status) }}
-                  </span>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center justify-end gap-2">
-                    <NuxtLink
-                      :to="`/admin/posts/${p.id}`"
-                      class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm text-[var(--text-secondary)] border border-[var(--glass-border)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--text-primary)] transition"
-                    >
-                      <span class="i-carbon-edit w-4 h-4" />
-                      编辑
-                    </NuxtLink>
-                    <button
-                      class="inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm text-[var(--text-secondary)] border border-[var(--glass-border)] hover:bg-[rgba(236,72,153,0.14)] hover:border-[rgba(236,72,153,0.30)] hover:text-[var(--text-primary)] transition"
-                      @click="remove(p.id)"
-                    >
-                      <span class="i-carbon-trash-can w-4 h-4" />
-                      删除
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="md:hidden p-4 space-y-3">
-          <div
+      <table class="admin-content-table">
+        <thead>
+          <tr>
+            <th>标题 / 路径</th>
+            <th>类型</th>
+            <th>可见性</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
             v-for="p in list"
             :key="p.id"
-            class="rounded-2xl border border-[rgba(255,255,255,0.10)] bg-[rgba(255,255,255,0.04)] p-4"
           >
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0">
-                <NuxtLink
-                  :to="`/admin/posts/${p.id}`"
-                  class="block font-800 leading-snug truncate"
-                >
-                  {{ p.title }}
+            <td>
+              <NuxtLink :to="`/admin/posts/${p.id}`">{{ p.title }}</NuxtLink>
+              <small>/{{ p.slug }}</small>
+            </td>
+            <td><span class="admin-type">{{ label(p.type) }}</span></td>
+            <td><span :class="badgeClass(p.visibility)">{{ label(p.visibility) }}</span></td>
+            <td><span :class="badgeClass(p.status)">{{ label(p.status) }}</span></td>
+            <td>
+              <div class="admin-row-actions">
+                <NuxtLink :to="`/admin/posts/${p.id}`">
+                  <span
+                    class="i-carbon-edit"
+                    aria-hidden="true"
+                  />
+                  编辑
                 </NuxtLink>
-                <div class="mt-1 text-xs text-[var(--text-muted)] font-mono truncate">
-                  /{{ p.slug }}
-                </div>
+                <button
+                  type="button"
+                  @click="remove(p.id)"
+                >
+                  <span
+                    class="i-carbon-trash-can"
+                    aria-hidden="true"
+                  />
+                  删除
+                </button>
               </div>
-              <span
-                class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.10)]"
-              >
-                <span class="i-carbon-document w-5 h-5 text-[var(--text-secondary)]" />
-              </span>
-            </div>
-
-            <div class="mt-3 flex flex-wrap items-center gap-2">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-700 bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.10)] text-[var(--text-secondary)]">
-                {{ label(p.type) }}
-              </span>
-              <span :class="badgeClass('visibility', p.visibility)">
-                {{ label(p.visibility) }}
-              </span>
-              <span :class="badgeClass('status', p.status)">
-                {{ label(p.status) }}
-              </span>
-            </div>
-
-            <div class="mt-4 flex items-center gap-2">
-              <NuxtLink
-                :to="`/admin/posts/${p.id}`"
-                class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full text-sm text-[var(--text-secondary)] border border-[var(--glass-border)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--text-primary)] transition"
-              >
-                <span class="i-carbon-edit w-4 h-4" />
-                编辑
-              </NuxtLink>
-              <button
-                class="inline-flex items-center justify-center w-11 h-11 rounded-full border border-[var(--glass-border)] text-[var(--text-secondary)] hover:bg-[rgba(236,72,153,0.14)] hover:border-[rgba(236,72,153,0.30)] hover:text-[var(--text-primary)] transition"
-                @click="remove(p.id)"
-              >
-                <span class="i-carbon-trash-can w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
+
+<style scoped>
+.admin-content-page { display: grid; gap: 0; }
+.admin-content-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-bottom: 28px; border-bottom: 1px solid var(--rule-strong); }
+.admin-content-head h1 { margin-top: 7px; font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 500; letter-spacing: -0.055em; }
+.admin-content-head > div > p:last-child { margin: 12px 0 0; color: var(--ink-secondary); }
+.admin-content-create { display: inline-flex; min-height: 42px; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--accent-terracotta-dark); border-radius: var(--radius-sm); background: var(--accent-terracotta); color: var(--paper-surface); font-size: 0.78rem; font-weight: 700; }
+.admin-content-toolbar { display: flex; min-height: 56px; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--rule-color); color: var(--ink-muted); font-size: 0.72rem; }
+.admin-content-toolbar button { display: inline-flex; min-height: 38px; align-items: center; gap: 7px; padding: 6px 10px; color: var(--ink-secondary); }
+.admin-content-table-wrap { overflow-x: auto; }
+.admin-content-table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 0.8rem; }
+.admin-content-table th { padding: 13px 14px; color: var(--ink-muted); font-size: 0.67rem; font-weight: 650; letter-spacing: 0.08em; text-align: left; }
+.admin-content-table td { padding: 17px 14px; border-top: 1px solid var(--rule-color); vertical-align: middle; }
+.admin-content-table tbody tr:hover { background: rgba(233, 222, 204, 0.35); }
+.admin-content-table td:first-child a { display: block; font-family: var(--font-display); font-size: 0.98rem; font-weight: 600; }
+.admin-content-table td:first-child a:hover { color: var(--accent-terracotta-dark); }
+.admin-content-table td:first-child small { display: block; margin-top: 4px; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.62rem; }
+.admin-type { color: var(--ink-secondary); }
+.admin-badge { display: inline-flex; min-height: 24px; align-items: center; padding: 3px 8px; border: 1px solid var(--rule-color); border-radius: var(--radius-full); color: var(--ink-secondary); font-size: 0.67rem; }
+.admin-badge.is-published,
+.admin-badge.is-public { border-color: rgba(102, 118, 83, 0.38); background: var(--accent-moss-soft); color: #4f5e3e; }
+.admin-badge.is-draft,
+.admin-badge.is-private { background: var(--paper-muted); }
+.admin-row-actions { display: flex; align-items: center; gap: 8px; }
+.admin-row-actions a,
+.admin-row-actions button { display: inline-flex; min-height: 36px; align-items: center; gap: 6px; padding: 6px 9px; border: 1px solid var(--rule-color); border-radius: var(--radius-sm); color: var(--ink-secondary); font-size: 0.7rem; }
+.admin-row-actions a:hover { border-color: var(--accent-moss); color: var(--accent-moss); }
+.admin-row-actions button:hover { border-color: var(--accent-terracotta); color: var(--accent-terracotta-dark); }
+.admin-content-state { display: flex; min-height: 180px; align-items: center; justify-content: center; gap: 14px; padding: 30px; border-bottom: 1px solid var(--rule-color); color: var(--ink-secondary); text-align: left; }
+.admin-content-state p { margin: 3px 0 0; color: var(--ink-muted); font-size: 0.74rem; }
+.admin-content-state a { color: var(--accent-terracotta-dark); text-decoration: underline; text-underline-offset: 3px; }
+.admin-spin { animation: admin-spin 0.9s linear infinite; }
+@keyframes admin-spin { to { transform: rotate(360deg); } }
+@media (max-width: 600px) {
+  .admin-content-head { align-items: start; flex-direction: column; }
+}
+</style>
