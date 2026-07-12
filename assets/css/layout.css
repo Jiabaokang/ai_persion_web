@@ -194,10 +194,18 @@
 }
 
 .reading-aside__links a {
+  display: grid;
+  gap: 0.15rem;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--rule-color);
   color: var(--ink-secondary);
   font-size: 0.84rem;
+}
+
+.reading-aside__links small {
+  color: var(--accent-moss);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
 }
 
 .reading-aside__links a:hover {

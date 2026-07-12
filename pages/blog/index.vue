@@ -5,44 +5,26 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=blog&status=pu
 </script>
 
 <template>
-  <div class="container section">
-    <h1 class="text-3xl font-bold mb-6">
-      博客
-    </h1>
-    <div class="stack-lg">
-      <article
-        v-for="p in posts"
-        :key="p.slug"
-        class="glass p-6 hover:translate-y-[-2px] transition"
-      >
-        <h3 class="text-xl font-display font-semibold mb-2 text-ink">
-          <NuxtLink
-            :to="`/blog/${p.slug}`"
-            class="hover:text-cyan transition"
-          >
-            {{ p.title }}
-          </NuxtLink>
-        </h3>
-        <p
-          v-if="p.summary"
-          class="text-ink-2 mb-3"
-        >
-          {{ p.summary }}
+  <!-- 博客索引：长文以编辑部目录行连续排列。 -->
+  <div class="editorial-index">
+    <header class="editorial-index__header">
+      <div>
+        <p class="paper-kicker">
+          Long-form writing
         </p>
-        <div class="text-sm text-ink-2">
-          {{ p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : '' }}
-          <span
-            v-if="p.readingTime"
-            class="ml-2"
-          >· {{ p.readingTime }} 分钟</span>
-        </div>
-      </article>
-    </div>
-    <div
+        <h1>博客</h1>
+      </div>
+      <p>完整展开一个问题，也记录答案生成之前的犹疑与路径。</p>
+    </header>
+    <ContentContentList
+      v-if="posts.length"
+      :items="posts"
+    />
+    <p
       v-if="!posts.length"
-      class="text-center py-12 text-ink-2"
+      class="editorial-empty"
     >
       还没有博客文章
-    </div>
+    </p>
   </div>
 </template>

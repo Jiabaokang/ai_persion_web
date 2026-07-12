@@ -5,37 +5,27 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=note&status=pu
 </script>
 
 <template>
-  <div class="container section">
-    <h1 class="text-3xl font-bold mb-6">
-      笔记
-    </h1>
-    <div class="stack-lg">
-      <article
-        v-for="p in posts"
-        :key="p.slug"
-        class="glass p-6 hover:translate-y-[-2px] transition"
-      >
-        <h3 class="text-xl font-display font-semibold mb-2 text-ink">
-          <NuxtLink
-            :to="`/notes/${p.slug}`"
-            class="hover:text-cyan transition"
-          >
-            {{ p.title }}
-          </NuxtLink>
-        </h3>
-        <p
-          v-if="p.summary"
-          class="text-ink-2 mb-3"
-        >
-          {{ p.summary }}
+  <!-- 笔记索引：用更紧凑的行距承载高密度知识条目。 -->
+  <div class="editorial-index">
+    <header class="editorial-index__header">
+      <div>
+        <p class="paper-kicker">
+          Working notes
         </p>
-      </article>
-    </div>
-    <div
+        <h1>笔记</h1>
+      </div>
+      <p>仍在生长的知识切片，短、密、方便再次找到。</p>
+    </header>
+    <ContentContentList
+      v-if="posts.length"
+      :items="posts"
+      density="compact"
+    />
+    <p
       v-if="!posts.length"
-      class="text-center py-12 text-ink-2"
+      class="editorial-empty"
     >
       还没有笔记
-    </div>
+    </p>
   </div>
 </template>

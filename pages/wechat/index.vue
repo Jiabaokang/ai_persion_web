@@ -5,44 +5,26 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=wechat&status=
 </script>
 
 <template>
-  <div class="container section">
-    <h1 class="text-3xl font-bold mb-6">
-      公众号文章
-    </h1>
-    <div class="stack-lg">
-      <article
-        v-for="p in posts"
-        :key="p.slug"
-        class="glass p-6 hover:translate-y-[-2px] transition"
-      >
-        <h3 class="text-xl font-display font-semibold mb-2 text-ink">
-          <NuxtLink
-            :to="`/wechat/${p.slug}`"
-            class="hover:text-cyan transition"
-          >
-            {{ p.title }}
-          </NuxtLink>
-        </h3>
-        <p
-          v-if="p.summary"
-          class="text-ink-2 mb-3"
-        >
-          {{ p.summary }}
+  <!-- 公众号索引：保留刊物语义，并复用编辑部行列表。 -->
+  <div class="editorial-index">
+    <header class="editorial-index__header">
+      <div>
+        <p class="paper-kicker">
+          Published elsewhere
         </p>
-        <div class="text-sm text-ink-2">
-          {{ p.publishedAt ? new Date(p.publishedAt).toLocaleDateString() : '' }}
-          <span
-            v-if="p.readingTime"
-            class="ml-2"
-          >· {{ p.readingTime }} 分钟</span>
-        </div>
-      </article>
-    </div>
-    <div
+        <h1>公众号</h1>
+      </div>
+      <p>从公众号归档回来的文章，在这里保持可检索与可重读。</p>
+    </header>
+    <ContentContentList
+      v-if="posts.length"
+      :items="posts"
+    />
+    <p
       v-if="!posts.length"
-      class="text-center py-12 text-ink-2"
+      class="editorial-empty"
     >
       还没有公众号文章
-    </div>
+    </p>
   </div>
 </template>
