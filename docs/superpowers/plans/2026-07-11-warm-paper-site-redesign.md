@@ -158,7 +158,7 @@ git commit -m "feat: 完善 Markdown 安全渲染"
 - 修改：`tests/unit/css/tokens.test.ts`
 - 修改：`tests/unit/config/shortcuts.test.ts`
 
-- [ ] **步骤 1：生成并检查两个真实图片资源**
+- [x] **步骤 1：生成并检查两个真实图片资源**
 
 使用选定视觉稿作为风格参考生成：
 
@@ -167,7 +167,7 @@ git commit -m "feat: 完善 Markdown 安全渲染"
 
 用图片查看工具检查资源没有文字、边缘断裂和明显重复图案。
 
-- [ ] **步骤 2：先更新失败的令牌测试**
+- [x] **步骤 2：先更新失败的令牌测试**
 
 测试需断言：
 
@@ -178,13 +178,13 @@ expect(tokens).toContain('--accent-terracotta: #B85C38')
 expect(tokens).not.toContain('--gradient-aurora')
 ```
 
-- [ ] **步骤 3：运行测试确认失败**
+- [x] **步骤 3：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/css/tokens.test.ts tests/unit/config/shortcuts.test.ts`
 
 预期：FAIL，当前仍为极光令牌。
 
-- [ ] **步骤 4：实现纸面令牌**
+- [x] **步骤 4：实现纸面令牌**
 
 在 `tokens.css` 中建立：
 
@@ -208,11 +208,11 @@ expect(tokens).not.toContain('--gradient-aurora')
 
 `paper.css` 使用真实纹理作为背景，不以 CSS 噪声或渐变替代资源。
 
-- [ ] **步骤 5：注册全局 CSS 与语义快捷方式**
+- [x] **步骤 5：注册全局 CSS 与语义快捷方式**
 
 `nuxt.config.ts` 中按 `tokens.css`、`paper.css`、`markdown.css`、`main.css`、`layout.css` 的顺序注册。UnoCSS 快捷方式新增 `paper-surface`、`paper-rule`、`paper-focus`，删除视觉层面的 `glass` 和 `gradient-text` 使用入口。
 
-- [ ] **步骤 6：运行测试和静态检查**
+- [x] **步骤 6：运行测试和静态检查**
 
 运行：
 
@@ -223,7 +223,7 @@ git diff --check
 
 预期：全部通过，无空白错误。
 
-- [ ] **步骤 7：Commit**
+- [x] **步骤 7：Commit**
 
 ```bash
 git add assets/css public/images nuxt.config.ts uno.config.ts tests/unit/css/tokens.test.ts tests/unit/config/shortcuts.test.ts
@@ -242,7 +242,7 @@ git commit -m "feat: 建立暖纸视觉系统"
 - 创建：`tests/unit/layout/paper-layout.test.ts`
 - 修改：`tests/unit/components/AppDrawer.test.ts`
 
-- [ ] **步骤 1：编写失败的布局测试**
+- [x] **步骤 1：编写失败的布局测试**
 
 ```ts
 it('defines the public paper shell and navigation', () => {
@@ -255,13 +255,13 @@ it('defines the public paper shell and navigation', () => {
 
 同时断言侧栏包含首页、博客、笔记、灵感、AI 导航和公众号的稳定路由。
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/layout/paper-layout.test.ts tests/unit/components/AppDrawer.test.ts`
 
 预期：FAIL，公共布局仍使用 `AppAuroraBackground + AppHeader`。
 
-- [ ] **步骤 3：实现桌面三栏骨架**
+- [x] **步骤 3：实现桌面三栏骨架**
 
 `layouts/default.vue` 结构应保持简单：
 
@@ -277,17 +277,17 @@ it('defines the public paper shell and navigation', () => {
 
 右栏通过插槽/路由元信息展示内容；没有辅助内容时保持窄栏或隐藏，不填充无关卡片。
 
-- [ ] **步骤 4：实现移动导航**
+- [x] **步骤 4：实现移动导航**
 
 小于 900px 时：隐藏桌面侧栏和右栏，展示 64px 顶部品牌栏；抽屉使用现有 `useDrawer`，具备焦点管理、Esc 关闭和 44px 触控目标。
 
-- [ ] **步骤 5：运行测试**
+- [x] **步骤 5：运行测试**
 
 运行：`pnpm vitest run tests/unit/layout/paper-layout.test.ts tests/unit/components/AppDrawer.test.ts tests/unit/components/AppFooter.test.ts`
 
 预期：全部 PASS。
 
-- [ ] **步骤 6：Commit**
+- [x] **步骤 6：Commit**
 
 ```bash
 git add layouts/default.vue components/layout components/AppDrawer.vue components/AppHeader.vue components/AppFooter.vue tests/unit/layout tests/unit/components
@@ -305,7 +305,7 @@ git commit -m "feat: 重构整站纸面布局"
 - 修改：`pages/wechat/[slug].vue`
 - 修改：`pages/inspiration/[slug].vue`
 
-- [ ] **步骤 1：编写失败的组件测试**
+- [x] **步骤 1：编写失败的组件测试**
 
 ```ts
 it('renders sanitized html inside the shared prose boundary', () => {
@@ -315,13 +315,13 @@ it('renders sanitized html inside the shared prose boundary', () => {
 })
 ```
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/components/MarkdownContent.test.ts`
 
 预期：FAIL，组件不存在。
 
-- [ ] **步骤 3：实现展示组件和样式**
+- [x] **步骤 3：实现展示组件和样式**
 
 组件只负责稳定展示边界：
 
@@ -337,7 +337,7 @@ defineProps<{ html: string }>()
 
 `markdown.css` 完整覆盖标题、段落、链接、列表、任务列表、引用、表格、图片、行内代码和代码块；正文 `max-width` 保持约 65ch；表格外层允许横向滚动。
 
-- [ ] **步骤 4：替换所有详情页直接 `v-html`**
+- [x] **步骤 4：替换所有详情页直接 `v-html`**
 
 每个详情页统一使用：
 
@@ -347,13 +347,13 @@ defineProps<{ html: string }>()
 
 不要在页面文件中复制 Markdown 样式。
 
-- [ ] **步骤 5：运行测试**
+- [x] **步骤 5：运行测试**
 
 运行：`pnpm vitest run tests/unit/components/MarkdownContent.test.ts tests/unit/pages`
 
 预期：全部 PASS。
 
-- [ ] **步骤 6：Commit**
+- [x] **步骤 6：Commit**
 
 ```bash
 git add assets/css/markdown.css components/content/MarkdownContent.vue pages tests/unit/components/MarkdownContent.test.ts
