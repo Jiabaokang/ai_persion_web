@@ -68,35 +68,40 @@ function handleImportError(message: string) {
 <template>
   <!-- 灵感编辑表单：保留快速记录流程并复用统一 Markdown 工作台。 -->
   <form
-    class="space-y-4 bg-white p-6 rounded shadow"
+    class="inspiration-form"
     @submit.prevent="save"
   >
-    <div>
-      <label class="block text-sm font-medium mb-1">标题</label>
-      <UiInput
-        v-model="form.title"
-        name="title"
-        placeholder="一句话记下灵感"
-      />
+    <div class="inspiration-form__grid">
+      <label class="inspiration-field">
+        <span>标题</span>
+        <UiInput
+          v-model="form.title"
+          name="title"
+          placeholder="一句话记下灵感"
+          class="inspiration-field__control"
+        />
+      </label>
+      <label class="inspiration-field">
+        <span>摘要</span>
+        <UiInput
+          v-model="form.summary"
+          name="summary"
+          placeholder="（可选）"
+          class="inspiration-field__control"
+        />
+      </label>
     </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">摘要</label>
-      <UiInput
-        v-model="form.summary"
-        name="summary"
-        placeholder="（可选）"
-      />
-    </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">标签（逗号分隔）</label>
+    <label class="inspiration-field">
+      <span>标签（逗号分隔）</span>
       <UiInput
         v-model="form.tagNamesInput"
         name="tags"
         placeholder="产品,交互,写作"
+        class="inspiration-field__control"
       />
-    </div>
-    <div>
-      <label class="block text-sm font-medium mb-1">内容</label>
+    </label>
+    <div class="inspiration-field">
+      <span>内容</span>
       <ClientOnly>
         <ContentMarkdownEditor
           v-model="form.contentMd"
@@ -111,7 +116,7 @@ function handleImportError(message: string) {
         <template #fallback>
           <textarea
             v-model="form.contentMd"
-            class="w-full px-3 py-2 border border-gray-300 rounded font-mono text-sm min-h-[300px]"
+            class="inspiration-field__fallback"
             placeholder="支持 Markdown 语法"
           />
         </template>
@@ -124,37 +129,65 @@ function handleImportError(message: string) {
         {{ importMessage }}
       </p>
     </div>
-    <div class="flex items-center gap-4">
-      <label class="text-sm"><input
+    <fieldset class="inspiration-status">
+      <legend>整理状态</legend>
+      <label><input
         v-model="form.status"
         type="radio"
         value="draft"
       > 碎片</label>
-      <label class="text-sm"><input
+      <label><input
         v-model="form.status"
         type="radio"
         value="published"
       > 已整理</label>
-    </div>
+    </fieldset>
     <p
       v-if="error"
-      class="text-red-500 text-sm"
+      class="inspiration-error"
+      role="alert"
     >
       {{ error }}
     </p>
-    <div class="flex gap-2">
-      <UiButton
+    <div class="inspiration-form__actions">
+      <button
         type="submit"
+        class="inspiration-save"
         :disabled="saving"
       >
-        {{ saving ? '保存中…' : '保存' }}
-      </UiButton>
+        {{ saving ? '保存中…' : '保存灵感' }}
+      </button>
       <NuxtLink
         to="/inspiration"
-        class="px-4 py-2 border border-gray-300 rounded"
+        class="inspiration-cancel"
       >
         取消
       </NuxtLink>
     </div>
   </form>
 </template>
+
+<style scoped>
+.inspiration-form { display: grid; gap: 22px; }
+.inspiration-form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.inspiration-field { display: grid; gap: 8px; color: var(--ink-secondary); font-size: 0.8rem; font-weight: 650; }
+.inspiration-field__control,
+.inspiration-field__fallback {
+  width: 100%; padding: 11px 13px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm);
+  outline: 0; background: var(--paper-surface); color: var(--ink-primary); font: inherit;
+}
+.inspiration-field__fallback { min-height: 360px; font-family: var(--font-mono); }
+.inspiration-field__control:focus,
+.inspiration-field__fallback:focus { border-color: var(--accent-terracotta); box-shadow: 0 0 0 3px var(--focus-ring); }
+.inspiration-status { display: flex; align-items: center; gap: 18px; margin: 0; padding: 16px 0; border: 0; border-top: 1px solid var(--rule-color); border-bottom: 1px solid var(--rule-color); color: var(--ink-secondary); font-size: 0.82rem; }
+.inspiration-status legend { float: left; margin-right: auto; font-weight: 700; }
+.inspiration-status label { display: inline-flex; align-items: center; gap: 6px; }
+.inspiration-status input { accent-color: var(--accent-moss); }
+.inspiration-error { margin: 0; color: var(--accent-terracotta-dark); font-size: 0.82rem; }
+.inspiration-form__actions { display: flex; align-items: center; gap: 18px; }
+.inspiration-save { min-height: 44px; padding: 9px 18px; border: 1px solid var(--accent-terracotta-dark); border-radius: var(--radius-sm); background: var(--accent-terracotta); color: var(--paper-surface); font-weight: 700; }
+.inspiration-save:disabled { cursor: wait; opacity: 0.6; }
+.inspiration-cancel { color: var(--ink-secondary); font-size: 0.85rem; }
+.inspiration-cancel:hover { color: var(--accent-terracotta); }
+@media (max-width: 640px) { .inspiration-form__grid { grid-template-columns: 1fr; } }
+</style>

@@ -10,10 +10,14 @@ if (!post.value || post.value.type !== 'inspiration') {
 </script>
 
 <template>
-  <div class="container section">
-    <h1 class="text-3xl font-bold mb-6">
-      编辑灵感
-    </h1>
+  <!-- 编辑灵感工作区：复用统一表单且保留当前内容数据。 -->
+  <div class="inspiration-workspace">
+    <header>
+      <p class="paper-kicker">
+        Refine a fragment
+      </p>
+      <h1>编辑灵感</h1>
+    </header>
     <InspirationForm
       :id="Number(route.params.id)"
       :initial="post"
@@ -21,3 +25,8 @@ if (!post.value || post.value.type !== 'inspiration') {
   </div>
 </template>
 
+<style scoped>
+.inspiration-workspace { padding: 24px 0 72px; }
+.inspiration-workspace > header { margin-bottom: 30px; padding-bottom: 22px; border-bottom: 1px solid var(--rule-strong); }
+.inspiration-workspace h1 { margin-top: 6px; font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 500; }
+</style>
