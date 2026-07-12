@@ -448,17 +448,17 @@ git commit -m "feat: 支持 Markdown 编辑预览与本地导入"
 - 修改：`pages/wechat/index.vue`
 - 修改：`tests/unit/pages`
 
-- [ ] **步骤 1：编写失败的首页结构测试**
+- [x] **步骤 1：编写失败的首页结构测试**
 
 断言首页包含站点宣言、`ContentList`、写文章、导入 Markdown 和右栏近期内容数据，不包含 `glass`、`gradient-text`。
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/pages`
 
 预期：FAIL，页面仍使用玻璃卡片。
 
-- [ ] **步骤 3：实现 ContentList**
+- [x] **步骤 3：实现 ContentList**
 
 组件输入：
 
@@ -471,21 +471,21 @@ defineProps<{
 
 博客/公众号使用 `editorial`，笔记使用 `compact`。使用行分隔线，不给每一项单独厚重卡片。
 
-- [ ] **步骤 4：实现第二版首页**
+- [x] **步骤 4：实现第二版首页**
 
 中栏只保留站点宣言、最新文章流和一个主要写作动作；右栏展示近期笔记/灵感。使用 `ink-plant.webp` 作为克制装饰，不在 CSS 中绘制植物。
 
-- [ ] **步骤 5：迁移三个列表页**
+- [x] **步骤 5：迁移三个列表页**
 
 将博客、笔记、公众号列表统一迁移至 `ContentList`，页面只负责查询、标题和辅助信息。
 
-- [ ] **步骤 6：运行测试**
+- [x] **步骤 6：运行测试**
 
 运行：`pnpm vitest run tests/unit/pages tests/unit/components`
 
 预期：全部 PASS。
 
-- [ ] **步骤 7：Commit**
+- [x] **步骤 7：Commit**
 
 ```bash
 git add components/content/ContentList.vue pages/index.vue pages/blog/index.vue pages/notes/index.vue pages/wechat/index.vue tests/unit/pages
