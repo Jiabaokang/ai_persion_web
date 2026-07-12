@@ -371,7 +371,7 @@ git commit -m "feat: 统一 Markdown 阅读体验"
 - 创建：`tests/unit/components/MarkdownEditor.test.ts`
 - 修改：`components/admin/PostForm.vue`
 
-- [ ] **步骤 1：编写失败的导入逻辑测试**
+- [x] **步骤 1：编写失败的导入逻辑测试**
 
 ```ts
 describe('readMarkdownFile', () => {
@@ -387,13 +387,13 @@ describe('readMarkdownFile', () => {
 })
 ```
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/markdown-import.test.ts`
 
 预期：FAIL，导入函数不存在。
 
-- [ ] **步骤 3：实现无 UI 的文件读取**
+- [x] **步骤 3：实现无 UI 的文件读取**
 
 ```ts
 export async function readMarkdownFile(file: File) {
@@ -404,15 +404,15 @@ export async function readMarkdownFile(file: File) {
 }
 ```
 
-- [ ] **步骤 4：实现导入按钮**
+- [x] **步骤 4：实现导入按钮**
 
 使用隐藏的 `<input type="file" accept=".md,.markdown,text/markdown">`。组件只发出 `{ content, suggestedTitle }`，覆盖确认由拥有当前表单状态的 `PostForm` 负责。
 
-- [ ] **步骤 5：实现 MarkdownEditor**
+- [x] **步骤 5：实现 MarkdownEditor**
 
 使用 `ClientOnly` 包裹第三方编辑器，`v-model` 直接绑定 Markdown 字符串。桌面默认分屏，小屏默认编辑模式；暴露 `mode`，提供编辑/分屏/预览切换和导入插槽。
 
-- [ ] **步骤 6：接入 PostForm 覆盖确认**
+- [x] **步骤 6：接入 PostForm 覆盖确认**
 
 ```ts
 function applyImportedMarkdown(payload: { content: string, suggestedTitle: string }) {
@@ -425,13 +425,13 @@ function applyImportedMarkdown(payload: { content: string, suggestedTitle: strin
 
 导入不调用 API，不自动保存。
 
-- [ ] **步骤 7：运行测试**
+- [x] **步骤 7：运行测试**
 
 运行：`pnpm vitest run tests/unit/markdown-import.test.ts tests/unit/components/MarkdownEditor.test.ts tests/unit/pages`
 
 预期：全部 PASS。
 
-- [ ] **步骤 8：Commit**
+- [x] **步骤 8：Commit**
 
 ```bash
 git add components/content components/admin/PostForm.vue composables/useMarkdownImport.ts tests/unit/markdown-import.test.ts tests/unit/components/MarkdownEditor.test.ts
