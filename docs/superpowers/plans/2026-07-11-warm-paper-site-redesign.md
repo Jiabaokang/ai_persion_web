@@ -503,35 +503,35 @@ git commit -m "feat: 重构首页与内容列表"
 - 修改：`tests/unit/pages/ai.test.ts`
 - 创建/修改：相关页面测试
 
-- [ ] **步骤 1：更新失败的页面测试**
+- [x] **步骤 1：更新失败的页面测试**
 
 测试要求：灵感列表使用时间线/行结构；AI 导航保留搜索和分类；登录页包含可见标签、暖纸表面和真实水墨图片，且不包含 Aurora 背景。
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/pages/ai.test.ts tests/unit/pages`
 
 预期：FAIL，现有页面仍使用旧视觉结构。
 
-- [ ] **步骤 3：迁移灵感流程**
+- [x] **步骤 3：迁移灵感流程**
 
 保持私密、创建、编辑和保存行为不变，只更换为纸面时间线和统一 Markdown 编辑组件。
 
-- [ ] **步骤 4：迁移 AI 导航**
+- [x] **步骤 4：迁移 AI 导航**
 
 保留现有数据查询、分类和搜索 composable。工具改为紧凑行/书架分组；类别用苔藓绿或陶土红小标记，不使用渐变卡片。
 
-- [ ] **步骤 5：迁移登录页**
+- [x] **步骤 5：迁移登录页**
 
 使用单张纸面表单，真实水墨植物位于辅助区。保持用户名、密码、显示密码和提交行为；完善聚焦、错误和禁用状态。
 
-- [ ] **步骤 6：运行测试**
+- [x] **步骤 6：运行测试**
 
 运行：`pnpm vitest run tests/unit/pages tests/unit/components`
 
 预期：全部 PASS。
 
-- [ ] **步骤 7：Commit**
+- [x] **步骤 7：Commit**
 
 ```bash
 git add pages/inspiration pages/ai.vue pages/login.vue tests/unit/pages
