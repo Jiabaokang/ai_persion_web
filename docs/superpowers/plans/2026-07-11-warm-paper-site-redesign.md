@@ -549,35 +549,35 @@ git commit -m "feat: 迁移灵感导航与登录页面"
 - 修改：`pages/admin/posts/[id].vue`
 - 创建/修改：后台页面测试
 
-- [ ] **步骤 1：编写失败的后台结构测试**
+- [x] **步骤 1：编写失败的后台结构测试**
 
 断言后台布局包含同源纸面侧栏、仪表盘工作区、内容行列表、正文主编辑区和右侧粘性发布设置，并且不包含 `gradient-text` 或 `glass`。
 
-- [ ] **步骤 2：运行测试确认失败**
+- [x] **步骤 2：运行测试确认失败**
 
 运行：`pnpm vitest run tests/unit/pages tests/unit/components`
 
 预期：FAIL，后台仍使用深色极光样式。
 
-- [ ] **步骤 3：实现后台纸面布局**
+- [x] **步骤 3：实现后台纸面布局**
 
 后台侧栏使用“概览、内容、标签、返回网站”任务导航；移动端使用抽屉。保持中间内容区域最大宽度适合表单。
 
-- [ ] **步骤 4：迁移仪表盘和内容列表**
+- [x] **步骤 4：迁移仪表盘和内容列表**
 
 统计信息用编辑部摘要行表达，内容列表使用表格/行列表；保证编辑、删除和新建入口可见且键盘可达。
 
-- [ ] **步骤 5：完成 PostForm 纸面样式**
+- [x] **步骤 5：完成 PostForm 纸面样式**
 
 正文编辑器占主栏，发布设置在桌面右侧粘性显示；标题、摘要和标签使用可见标签；保存状态、导入结果和错误信息靠近对应操作。
 
-- [ ] **步骤 6：运行测试**
+- [x] **步骤 6：运行测试**
 
 运行：`pnpm vitest run tests/unit/pages tests/unit/components`
 
 预期：全部 PASS。
 
-- [ ] **步骤 7：Commit**
+- [x] **步骤 7：Commit**
 
 ```bash
 git add layouts/admin.vue pages/admin components/admin/PostForm.vue tests/unit
