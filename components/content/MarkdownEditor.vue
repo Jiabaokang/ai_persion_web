@@ -177,6 +177,17 @@ function setMode(mode: EditorMode) {
   background: var(--paper-surface);
 }
 
+/* 编辑模式保持第三方实例稳定，只收起预览列，避免异步挂载期间重建组件。 */
+.markdown-editor[data-mode='edit'] :deep(.md-editor-content-wrapper > .md-editor-custom-scrollbar:first-child) {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+}
+
+.markdown-editor[data-mode='edit'] :deep(.md-editor-content-wrapper > .md-editor-custom-scrollbar:last-child),
+.markdown-editor[data-mode='edit'] :deep(.md-editor-resize-operate) {
+  display: none !important;
+}
+
 @media (max-width: 720px) {
   .markdown-editor__bar {
     align-items: flex-start;

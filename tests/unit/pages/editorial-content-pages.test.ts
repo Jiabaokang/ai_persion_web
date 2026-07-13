@@ -8,7 +8,7 @@ describe('编辑部首页与内容列表', () => {
   it('首页包含宣言、写作动作、导入入口和真实植物资源', () => {
     const source = read('pages/index.vue')
     expect(source).toContain('home-manifesto')
-    expect(source).toContain('<ContentContentList')
+    expect(source).toContain('<ContentList')
     expect(source).toContain('写一篇文章')
     expect(source).toContain('导入 Markdown')
     expect(source).toContain('/images/ink-plant.webp')
@@ -16,7 +16,7 @@ describe('编辑部首页与内容列表', () => {
 
   it.each(['pages/blog/index.vue', 'pages/notes/index.vue', 'pages/wechat/index.vue'])('%s 共用行列表', (path) => {
     const source = read(path)
-    expect(source).toContain('<ContentContentList')
+    expect(source).toContain('<ContentList')
     expect(source).toContain('editorial-index')
   })
 

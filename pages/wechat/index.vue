@@ -16,7 +16,7 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=wechat&status=
       </div>
       <p>从公众号归档回来的文章，在这里保持可检索与可重读。</p>
     </header>
-    <ContentContentList
+    <ContentList
       v-if="posts.length"
       :items="posts"
     />

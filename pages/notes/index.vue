@@ -16,7 +16,7 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=note&status=pu
       </div>
       <p>仍在生长的知识切片，短、密、方便再次找到。</p>
     </header>
-    <ContentContentList
+    <ContentList
       v-if="posts.length"
       :items="posts"
       density="compact"

@@ -1,11 +1,12 @@
 # 智识花园 (AI Personal Web)
 
-个人网站：笔记 / 灵感 / 博客 / 公众号。Nuxt 3 全栈 + SQLite + 玻璃感设计。
+个人网站：笔记 / 灵感 / 博客 / 公众号。Nuxt 3 全栈 + SQLite + 暖纸编辑部设计。
 
 ## 技术栈
 
 - **前端**：Nuxt 3 + Vue 3 + TypeScript + UnoCSS + VueUse
 - **后端**：Nitro（Nuxt 内置）+ Drizzle ORM + better-sqlite3 + Zod
+- **Markdown**：markdown-it + sanitize-html + md-editor-v3
 - **测试**：Vitest + happy-dom + @nuxt/test-utils
 - **部署**：阿里云 ECS（Ubuntu 24.04）+ systemd + nginx + Let's Encrypt + GitHub Actions
 - **在线**：<https://jbksy.cn>
@@ -81,11 +82,11 @@ curl http://localhost:3000/api/health
 | `components/` | **Vue 组件**（自动导入，带目录前缀） | `AppHeader.vue` → `<AppHeader>`；`ui/Input.vue` → `<UiInput>` |
 | `layouts/` | **布局组件** | `default.vue`（默认）、`admin.vue`（后台） |
 | `composables/` | **组合式函数**（自动导入，命名以 `use` 开头） | `useAuth.ts`、`useTheme.ts`、`useDrawer.ts`、`useScrollSpy.ts`、`useTagFilter.ts` |
-| `assets/css/` | **CSS 资源**（被 Vite 处理） | `tokens.css`、`main.css`、`aurora.css`、`layout.css` |
-| `assets/` | **其他资源**（图片、字体、SVG） | 站点 logo、装饰图等 |
-| `public/` | **静态资源**（直接复制到构建输出） | `favicon.ico`、`robots.txt` |
+| `assets/css/` | **CSS 资源**（被 Vite 处理） | `tokens.css`、`paper.css`、`markdown.css`、`main.css`、`layout.css` |
+| `assets/` | **其他资源** | 全局样式与构建期资源 |
+| `public/` | **静态资源**（直接复制到构建输出） | 纸纹、水墨植物等 WebP 资源 |
 
-> **Nuxt 自动导入机制**：`components/` 嵌套目录会形成组件名前缀（`components/ui/Input.vue` → `<UiInput>`）；`composables/` 平铺即可直接使用。
+> **Nuxt 自动导入机制**：`components/` 嵌套目录通常形成组件名前缀（`components/ui/Input.vue` → `<UiInput>`）；目录名与文件名重复时会去重，例如 `components/content/ContentList.vue` 为 `<ContentList>`，不是 `<ContentContentList>`。`composables/` 可直接使用。
 
 ### 🛠️ 后端 (BE) 目录
 
@@ -120,16 +121,15 @@ curl http://localhost:3000/api/health
   - 服务端字段：只在 `server/` 可见
   - `public` 字段：暴露到客户端
 - **nitro**：服务端配置（部署目标、存储）
-- **routeRules**（任务 1+）：精细控制 SSR/SSG/ISR
+- 当前以 Nitro Node Server 运行 SSR 页面与 API
 
 ### `uno.config.ts`（UnoCSS 配置）
 
 - **presets**：原子化预设
   - `presetUno()`：Tailwind 兼容语法
   - `presetIcons()`：Iconify 图标
-  - `presetWebFonts()`：Google Fonts 自托管
 - **theme.colors**：主题色（与 tokens.css 同步）
-- **shortcuts**：`glass` / `glass-strong`（玻璃拟态）、`gradient-text`（渐变文字）、`container`、`section`、`stack` 等复合工具类
+- **shortcuts**：`paper-surface`、`paper-rule`、`paper-focus`、`container`、`section`、`stack` 等复合工具类
 
 ### `vitest.config.ts`（测试配置）
 
@@ -165,11 +165,13 @@ curl http://localhost:3000/api/health
 | 首页 | `/` | 站点入口，最新文章列表 |
 | 博客 | `/blog`、`/blog/:slug` | 长文 |
 | 笔记 | `/notes`、`/notes/:slug` | 短笔记 |
-| 灵感 | `/inspiration` | 灵感碎片 |
+| 灵感 | `/inspiration`、`/inspiration/:slug` | 私密灵感时间线与详情 |
 | AI 导航 | `/ai` | 134 个 AI 工具站点（按分类组织 + 实时搜索） |
 | 公众号 | `/wechat` | 文章索引 |
-| 登录 | `/login` | 极光玻璃风登录页 |
-| 管理后台 | `/admin/*` | 内容 / 标签管理（需登录） |
+| 登录 | `/login` | 暖纸写作桌登录页 |
+| 管理后台 | `/admin/*` | 内容 / 标签管理与 Markdown 工作台（需登录） |
+
+Markdown 源文保存在 `contents.contentMd`，服务端渲染并清理后的 HTML 保存在 `contents.contentHtml`。后台支持编辑、分屏、预览和本地 `.md` / `.markdown` 导入；本地文件只在浏览器读取，不会自动上传或保存。
 
 ### AI 导航数据更新
 
@@ -199,8 +201,10 @@ git push                # CI 自动部署
 ## 文档
 
 - [部署与运维手册](docs/deployment.md) — 架构、命令速查、CI/CD、故障排查
-- [设计规格](docs/superpowers/specs/2026-06-17-ai-personal-website-design.md) — 需求、架构、风险、验收标准
-- [实现计划](docs/superpowers/plans/2026-06-22-nuxt-mvp-full-plan.md) — 25 MVP 任务 + 7 增强路线图（TDD 步骤）
+- [暖纸改造接力清单](docs/20260711115524+暖纸风整站改造任务接力清单.md) — 当前任务状态与验证证据
+- [暖纸设计规格](docs/superpowers/specs/2026-07-11-warm-paper-site-redesign-design.md) — 全站视觉与交互约束
+- [暖纸实现计划](docs/superpowers/plans/2026-07-11-warm-paper-site-redesign.md) — 10 个 TDD 任务与验收门禁
+- [设计 QA](design-qa.md) — 桌面、移动和参考图对照结果
 - [进度追踪](docs/progress.md) — 任务状态 + commit hash + 恢复指南
 
 ## License

@@ -22,6 +22,9 @@ if (!post.value) throw createError({ statusCode: 404 })
         {{ post.title }}
       </h1>
     </header>
-    <ContentMarkdownContent :html="post.contentHtml || ''" />
+    <ContentMarkdownContent
+      :html="post.contentHtml || ''"
+      :title="post.title"
+    />
   </article>
 </template>

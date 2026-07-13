@@ -4,7 +4,7 @@
 // 模块级 ref 确保 AppHeader 和 AppDrawer 引用同一状态
 // ESC 键关闭、body 滚动锁定
 
-import { ref } from 'vue'
+import { nextTick, onScopeDispose, ref } from 'vue'
 
 const isOpen = ref(false)
 
@@ -14,9 +14,12 @@ export function useDrawer() {
     document.body.style.overflow = 'hidden'
   }
 
-  function close() {
+  function close(options: { restoreFocus?: boolean } = {}) {
     isOpen.value = false
     document.body.style.overflow = ''
+    if (options.restoreFocus) {
+      nextTick(() => document.querySelector<HTMLElement>('[data-menu-toggle]')?.focus())
+    }
   }
 
   function toggle() {
@@ -25,11 +28,15 @@ export function useDrawer() {
   }
 
   const onKeydown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && isOpen.value) close()
+    if (e.key === 'Escape' && isOpen.value) close({ restoreFocus: true })
   }
 
   if (typeof window !== 'undefined') {
     document.addEventListener('keydown', onKeydown)
+    onScopeDispose(() => {
+      document.removeEventListener('keydown', onKeydown)
+      if (isOpen.value) close()
+    })
   }
 
   return { isOpen, open, close, toggle }

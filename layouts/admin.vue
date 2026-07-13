@@ -11,8 +11,9 @@ const links = [
   { to: '/admin/posts?focus=tags', label: '标签', icon: 'i-carbon-tag-group' },
 ]
 
-// 判断管理导航是否对应当前页面，查询参数入口归入内容管理。
+// 判断管理导航是否对应当前页面，查询参数入口只在完整地址匹配时高亮。
 function isActive(path: string) {
+  if (path.includes('?')) return route.fullPath === path
   const pathname = path.split('?')[0]
   if (pathname === '/admin') return route.path === '/admin'
   return route.path === pathname || route.path.startsWith(`${pathname}/`)

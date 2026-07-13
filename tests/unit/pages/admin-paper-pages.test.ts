@@ -10,6 +10,7 @@ describe('暖纸管理后台', () => {
     expect(source).toContain('admin-mobile-nav')
     expect(source).toContain('返回网站')
     expect(source).toContain('标签')
+    expect(source).toContain('if (path.includes(\'?\')) return route.fullPath === path')
   })
 
   it('仪表盘使用编辑部摘要行', () => {
@@ -32,5 +33,7 @@ describe('暖纸管理后台', () => {
     expect(source).toContain('post-settings is-sticky')
     expect(source).toContain('<ContentMarkdownEditor')
     expect(source).toContain('<ContentImportMarkdownButton')
+    expect(source).toContain('.post-form__aside { order: initial; }')
+    expect(source).toMatch(/\.post-panel\s*\{[^}]*min-width:\s*0/)
   })
 })

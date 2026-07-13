@@ -222,7 +222,7 @@ onBeforeUnmount(() => observer.value?.disconnect())
         </button>
       </aside>
 
-      <main class="ai-main">
+      <section class="ai-main">
         <section
           v-for="(group, groupIndex) in filteredGroups"
           :id="`group-${group.id}`"
@@ -279,7 +279,7 @@ onBeforeUnmount(() => observer.value?.disconnect())
           >tool.lu</a>
           · 离线静态整理
         </footer>
-      </main>
+      </section>
     </div>
   </div>
 </template>

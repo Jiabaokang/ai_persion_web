@@ -1,7 +1,7 @@
 // 智识花园 - Nuxt 配置
 //
 // 架构概览：
-//   - SSR 模式（默认），公开页面用 routeRules 切到 SSG
+//   - SSR 模式（默认），由 Nitro Node Server 提供页面与 API
 //   - UnoCSS 处理样式，VueUse 提供常用工具
 //   - 密钥通过 runtimeConfig + 环境变量注入，public 字段才会暴露到客户端
 //

@@ -1,6 +1,7 @@
-import { and, desc, eq, type SQL } from 'drizzle-orm'
+import { and, desc, eq, inArray, type SQL } from 'drizzle-orm'
 import { useDB } from '~/server/utils/db'
-import { contents } from '~/server/utils/schema'
+import { attachTagsToContents } from '~/server/utils/content-list'
+import { contents, contentTags, tags } from '~/server/utils/schema'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -18,5 +19,21 @@ export default defineEventHandler(async (event) => {
   if (query.status) conds.push(eq(contents.status, query.status as typeof contents.status._.data))
 
   const where = conds.length ? and(...conds) : undefined
-  return useDB().select().from(contents).where(where).orderBy(desc(contents.createdAt)).all()
+  const db = useDB()
+  const contentRows = db.select().from(contents).where(where).orderBy(desc(contents.createdAt)).all()
+  if (!contentRows.length) return []
+
+  const tagRows = db.select({
+    contentId: contentTags.contentId,
+    id: tags.id,
+    name: tags.name,
+    slug: tags.slug,
+    color: tags.color,
+  })
+    .from(contentTags)
+    .innerJoin(tags, eq(contentTags.tagId, tags.id))
+    .where(inArray(contentTags.contentId, contentRows.map(content => content.id)))
+    .all()
+
+  return attachTagsToContents(contentRows, tagRows)
 })

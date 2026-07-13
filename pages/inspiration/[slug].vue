@@ -51,6 +51,9 @@ async function remove() {
         {{ post.title }}
       </h1>
     </header>
-    <ContentMarkdownContent :html="post.contentHtml || ''" />
+    <ContentMarkdownContent
+      :html="post.contentHtml || ''"
+      :title="post.title"
+    />
   </article>
 </template>

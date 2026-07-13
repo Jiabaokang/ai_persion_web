@@ -4,13 +4,15 @@
 
 ## 当前接力任务（2026-07-11）
 
-暖纸风整站改造已经完成视觉定稿、设计规格和实现计划，代码实现尚未开始。
+暖纸风整站改造任务 1–9 已完成并提交；任务 10 已完成桌面端、移动端、Markdown 主流程和参考图视觉 QA，当前等待最终全量门禁与提交。
 
 - 高层状态与接力规则：[`20260711115524+暖纸风整站改造任务接力清单.md`](20260711115524+暖纸风整站改造任务接力清单.md)
 - 设计规格：[`superpowers/specs/2026-07-11-warm-paper-site-redesign-design.md`](superpowers/specs/2026-07-11-warm-paper-site-redesign-design.md)
 - 详细计划：[`superpowers/plans/2026-07-11-warm-paper-site-redesign.md`](superpowers/plans/2026-07-11-warm-paper-site-redesign.md)
 
-后续执行者每完成一个暖纸改造任务，必须同步更新接力清单总表和详细计划复选框。
+任务 10 收尾时必须同步更新接力清单总表、详细计划复选框、`design-qa.md` 最终结果和实际 commit hash。
+
+> 下方 I0 等极光/玻璃视觉条目属于 2026-06 的历史实现记录，已经被 2026-07 暖纸“编辑手记”改造取代，不是当前运行时设计基线。
 
 ## 格式
 

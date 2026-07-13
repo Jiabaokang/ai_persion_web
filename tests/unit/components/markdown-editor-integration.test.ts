@@ -3,6 +3,14 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 describe('Markdown 编辑器表单集成', () => {
+  it('编辑模式通过稳定样式关闭分屏，避免第三方组件重挂载竞态', () => {
+    const source = readFileSync(resolve(process.cwd(), 'components/content/MarkdownEditor.vue'), 'utf8')
+    expect(source).not.toContain(':key="`editor-${currentMode}`"')
+    expect(source).toContain('.markdown-editor[data-mode=\'edit\']')
+    expect(source).toContain('.md-editor-custom-scrollbar:first-child')
+    expect(source).toContain('.md-editor-custom-scrollbar:last-child')
+  })
+
   it('提供本地文件入口并在覆盖已有正文前确认', () => {
     const source = readFileSync(resolve(process.cwd(), 'components/admin/PostForm.vue'), 'utf8')
     expect(source).toContain('<ContentMarkdownEditor')

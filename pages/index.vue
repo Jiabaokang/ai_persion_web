@@ -61,7 +61,7 @@ const latest = computed(() => posts.value?.slice(0, 6) ?? [])
           class="paper-link"
         >查看全部</NuxtLink>
       </div>
-      <ContentContentList
+      <ContentList
         v-if="latest.length"
         :items="latest"
       />

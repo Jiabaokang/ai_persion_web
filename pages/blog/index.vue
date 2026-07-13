@@ -16,7 +16,7 @@ const { data: posts } = await useFetch<any[]>('/api/contents?type=blog&status=pu
       </div>
       <p>完整展开一个问题，也记录答案生成之前的犹疑与路径。</p>
     </header>
-    <ContentContentList
+    <ContentList
       v-if="posts.length"
       :items="posts"
     />

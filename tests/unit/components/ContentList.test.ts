@@ -25,4 +25,16 @@ describe('ContentList', () => {
     })
     expect(wrapper.get('.content-list').classes()).toContain('content-list--compact')
   })
+
+  it('展示列表接口返回的前两个标签', () => {
+    const wrapper = mount(ContentList, {
+      props: {
+        items: [{ ...items[0], tags: [{ name: 'Markdown' }, { name: '设计' }, { name: '忽略' }] }],
+      },
+      global: { stubs: { NuxtLink: { template: '<a><slot /></a>' } } },
+    })
+    expect(wrapper.text()).toContain('# Markdown')
+    expect(wrapper.text()).toContain('# 设计')
+    expect(wrapper.text()).not.toContain('# 忽略')
+  })
 })
