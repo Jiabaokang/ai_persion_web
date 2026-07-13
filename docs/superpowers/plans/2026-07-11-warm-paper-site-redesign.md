@@ -691,7 +691,7 @@ git diff --check
 
 预期：全部退出码 0。
 
-- [ ] **步骤 8：Commit**
+- [x] **步骤 8：Commit**
 
 ```bash
 git add design-qa.md assets components layouts pages tests
