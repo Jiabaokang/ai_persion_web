@@ -24,8 +24,8 @@ export default defineNuxtConfig({
   ],
   imports: { dirs: ['composables/**'] },
 
-  // 开发工具：浏览器中访问 /__nuxt_devtools__
-  devtools: { enabled: true },
+  // 开发工具绝不随生产产物暴露。
+  devtools: { enabled: process.env.NODE_ENV !== 'production' },
 
   // ========== 站点元信息 ==========
   app: {

@@ -26,4 +26,14 @@ describe('LoginRateLimiter', () => {
     for (let i = 0; i < 4; i++) rl.recordFailure('user')
     expect(rl.isLocked('user')).toBe(false)
   })
+
+  it('bounds tracked usernames to prevent memory exhaustion', () => {
+    const rl = new LoginRateLimiter({ maxEntries: 2 })
+    rl.recordFailure('one')
+    rl.recordFailure('two')
+    rl.recordFailure('three')
+
+    expect(rl.size).toBe(2)
+    expect(rl.has('one')).toBe(false)
+  })
 })

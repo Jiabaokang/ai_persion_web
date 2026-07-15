@@ -28,6 +28,13 @@ GitHub push main
   Internet → nginx :443 (Let's Encrypt) → 127.0.0.1:3000 (Nuxt)
 ```
 
+### 上线前安全基线
+
+- `/etc/jbksy.env` 必须设置非默认的 `ADMIN_USERNAME` 和至少 16 位随机 `ADMIN_PASSWORD`；生产进程会拒绝使用缺失或默认凭据启动。
+- Nginx 必须覆盖而不是追加 `X-Forwarded-For`，避免客户端伪造来源 IP：`proxy_set_header X-Forwarded-For $remote_addr;`。
+- 在 `server` 块设置 `client_max_body_size 256k;`、`limit_req_zone $binary_remote_addr zone=jbksy_api:10m rate=30r/m;`，并对 `/api/` 使用 `limit_req zone=jbksy_api burst=20 nodelay;`。应用内仍会校验来源、JSON 类型和 API 限流。
+- 关闭 Nginx 版本暴露：主配置使用 `server_tokens off;`；站点配置添加 `proxy_hide_header X-Powered-By;`。
+
 ### 关键约定
 
 - 数据库**独立于代码目录**，部署不会覆盖业务数据
