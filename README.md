@@ -181,10 +181,10 @@ Markdown 源文保存在 `contents.contentMd`，服务端渲染并清理后的 H
 
 ## 部署
 
-生产环境部署在阿里云 ECS（`jbksy.cn` / `47.112.105.92`），通过 GitHub Actions + 服务器 `deploy.sh` 实现：
+生产环境部署在阿里云 ECS（`jbksy.cn` / `47.112.105.92`），通过 GitHub Actions 构建并原子发布：
 
-- **自动**：`git push origin main` → CI 触发服务器拉取 + 构建 + 重启 systemd
-- **手动兜底**：`ssh aliyun-jbk "/opt/jbksy/deploy.sh"`
+- **自动**：`git push origin main` → CI 验证并构建 `.output` → 上传服务器 → 健康检查后完成切换
+- **手动兜底**：在 GitHub Actions 中手动运行“部署到生产环境”；服务器不再执行高负载构建
 
 完整的部署架构、运维命令、故障排查、SSH 隧道访问数据库、CI/CD 配置等见 **[docs/deployment.md](docs/deployment.md)**。
 

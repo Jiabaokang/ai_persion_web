@@ -11,13 +11,13 @@
 
 ```
 GitHub push main
-      ├─→ A: ssh aliyun-jbk "/opt/jbksy/deploy.sh"     ← 手动随时部署
-      └─→ B: GitHub Actions 自动 ssh 执行 deploy.sh    ← 提交即部署
+      └─→ GitHub Actions 验证 + 构建 .output
+                    └─→ SCP 上传 + 原子切换 + 健康检查回滚
 
 服务器 <server-ip>
   ├─ /opt/jbksy/                      代码（git clone）
   ├─ /opt/jbksy/.output/              Nuxt 构建产物
-  ├─ /opt/jbksy/deploy.sh             部署脚本（A / B 共用）
+  ├─ /opt/jbksy/.output.previous.*    上一次可回滚产物
   ├─ /etc/jbksy.env                   生产环境变量（不进 git）
   ├─ /etc/systemd/system/jbksy.service systemd 服务单元
   ├─ /etc/nginx/conf.d/jbksy.conf     nginx 反代 + HTTPS
@@ -62,37 +62,20 @@ GitHub push main
 
 ## 三、日常发布流程
 
-### 方案 A：手动部署（兜底）
+### 方案 A：手动触发 CI（兜底）
 
-```bash
-# 拉最新 main 部署
-ssh aliyun-jbk "/opt/jbksy/deploy.sh"
-
-# 部署到指定 commit（回滚 / 灰度）
-ssh aliyun-jbk "/opt/jbksy/deploy.sh --ref <sha>"
-
-# 不拉代码，仅重建（本地手动改了代码后想测试）
-ssh aliyun-jbk "/opt/jbksy/deploy.sh --no-pull"
-```
-
-`deploy.sh` 内部流程：
-
-1. `git fetch + reset --hard origin/main`（直连失败自动切 ghfast.top 镜像）
-2. `pnpm install --frozen-lockfile`
-3. `pnpm build`（限制 1.5G 内存，避免 OOM）
-4. `systemctl restart jbksy`
-5. 健康检查 `curl 127.0.0.1:3000`
+进入 GitHub Actions → “部署到生产环境” → “Run workflow”。不要在 2G ECS 上执行 `pnpm build`。
 
 ### 方案 B：CI 自动部署（默认）
 
 ```bash
 git push origin main
-# GitHub Actions 自动 SSH 调用 /opt/jbksy/deploy.sh
+# GitHub Actions 自动构建并上传服务产物
 ```
 
 查看 CI 日志：<https://github.com/Jiabaokang/ai_persion_web/actions>
 
-两种方式**互不冲突，可同时使用**。
+CI 会先运行类型检查、测试和构建，再上传 Linux 产物。服务器只校验入口、原子切换目录、重启服务；健康检查失败会恢复上一份产物。
 
 ---
 
@@ -233,32 +216,15 @@ ssh aliyun-jbk "journalctl -u jbksy -n 50 --no-pager"
 
 常见原因：
 
-- 构建产物 `.output/server/index.mjs` 缺失 → 重跑 `deploy.sh`
+- 构建产物 `.output/server/index.mjs` 缺失 → 在 GitHub Actions 手动重跑部署
 - `.env` 缺关键变量 → 检查 `/etc/jbksy.env`
 - DB 文件无权限 → `chmod -R u+rw /var/lib/jbksy/`
 
 ### 2. 构建 OOM（内存不足）
 
-服务器只有 1.6G 内存，已配 2G swap。如果还是 OOM：
+构建固定在 GitHub Actions 运行，服务器不再执行 `pnpm build`。如果 CI 构建失败，直接查看 Actions 日志，不要把构建转移回生产机。
 
-```bash
-# 临时加更多 swap
-ssh aliyun-jbk "swapoff /swapfile && fallocate -l 4G /swapfile && mkswap /swapfile && swapon /swapfile"
-```
-
-或在 `deploy.sh` 里调整 `NODE_OPTIONS="--max-old-space-size=1024"`。
-
-### 3. GitHub 直连失败
-
-`deploy.sh` 已内置 fallback：直连失败自动切 `ghfast.top` 镜像，不需要人工处理。
-
-如果想强制走镜像：
-
-```bash
-ssh aliyun-jbk "cd /opt/jbksy && git remote set-url origin https://ghfast.top/https://github.com/Jiabaokang/ai_persion_web.git"
-```
-
-### 4. HTTPS 证书过期
+### 3. HTTPS 证书过期
 
 正常不会发生（自动续期）。万一过期：
 
@@ -266,17 +232,15 @@ ssh aliyun-jbk "cd /opt/jbksy && git remote set-url origin https://ghfast.top/ht
 ssh aliyun-jbk "certbot renew --force-renewal && systemctl reload nginx"
 ```
 
-### 5. 想看上次部署的版本
+### 4. 想看当前运行版本
 
 ```bash
-ssh aliyun-jbk "cd /opt/jbksy && git log -1 --format='%h %s (%ar)'"
+ssh aliyun-jbk "cat /opt/jbksy/.output/DEPLOYED_SHA"
 ```
 
-### 6. 紧急回滚到上一版本
+### 5. 紧急回滚到上一版本
 
-```bash
-ssh aliyun-jbk "cd /opt/jbksy && /opt/jbksy/deploy.sh --ref HEAD~1"
-```
+保留的 `/opt/jbksy/.output.previous.*` 是最近一次切换前的完整产物。回滚时先停止服务，再将目标目录切换为 `.output` 并启动服务。
 
 ---
 
@@ -296,7 +260,7 @@ on:
 - **触发**：推送到 `main` 分支自动跑
 - **手动触发**：仓库 → Actions → `部署到生产环境` → `Run workflow`
 - **并发控制**：同时只有一个部署在跑，新触发会排队（防止竞态）
-- **超时**：20 分钟
+- **超时**：30 分钟
 
 ### 必须的 GitHub Secrets
 
@@ -333,7 +297,7 @@ ssh aliyun-jbk "mv /root/.ssh/github_deploy_new /root/.ssh/github_deploy"
 |---|---|---|
 | `/opt/jbksy/` | 项目代码（git） | root:root 755 |
 | `/opt/jbksy/.output/` | Nuxt 产物 | root:root 755 |
-| `/opt/jbksy/deploy.sh` | 部署脚本 | root:root 755 |
+| `/opt/jbksy/.output.previous.*` | 最近的回滚产物 | root:root 755 |
 | `/etc/jbksy.env` | 环境变量 | root:root **600** |
 | `/etc/systemd/system/jbksy.service` | systemd 单元 | root:root 644 |
 | `/etc/systemd/system/sqlite-web.service` | sqlite-web 单元 | root:root 644 |

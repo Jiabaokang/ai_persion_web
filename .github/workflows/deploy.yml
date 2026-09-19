@@ -11,11 +11,37 @@ concurrency:
 
 jobs:
   deploy:
-    name: SSH 部署
+    name: 构建并部署
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    permissions:
+      contents: read
 
     steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 验证并构建
+        run: |
+          pnpm typecheck
+          pnpm test:run
+          pnpm build
+
+      - name: 打包服务产物
+        run: tar -C .output -czf "/tmp/jbksy-output-${GITHUB_SHA}.tar.gz" .
+
       - name: 配置 SSH
         run: |
           mkdir -p ~/.ssh
@@ -24,14 +50,22 @@ jobs:
           echo "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-      - name: 触发服务器部署
+      - name: 上传服务产物
+        run: |
+          scp -i ~/.ssh/deploy_key \
+              -o ConnectTimeout=15 \
+              "/tmp/jbksy-output-${GITHUB_SHA}.tar.gz" \
+              scripts/deploy-artifact.sh \
+              root@${{ secrets.DEPLOY_HOST }}:/tmp/
+
+      - name: 原子切换并健康检查
         run: |
           ssh -i ~/.ssh/deploy_key \
               -o ConnectTimeout=15 \
               -o ServerAliveInterval=30 \
               -o ServerAliveCountMax=10 \
               root@${{ secrets.DEPLOY_HOST }} \
-              "/opt/jbksy/deploy.sh"
+              "bash /tmp/deploy-artifact.sh --artifact /tmp/jbksy-output-${GITHUB_SHA}.tar.gz --sha ${GITHUB_SHA}"
 
       - name: 部署完成
         if: success()
