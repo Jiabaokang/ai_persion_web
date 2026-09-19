@@ -1,157 +1,138 @@
 <script setup lang="ts">
-interface NavLink {
-  name: string
-  description: string
-  url: string
-  icon: string
-}
-
-interface NavGroup {
+interface AihotItem {
   id: string
   title: string
-  links: NavLink[]
+  summary: string
+  source: string
+  href: string
+  originalHref: string
+  publishedAt: string
+  category: string
+  score: number | null
+  reason: string
 }
 
-interface NavData {
-  source: string
-  scrapedAt: string
-  groups: NavGroup[]
-  totalLinks: number
+interface AihotHotTopic {
+  rank: number
+  id: string
+  title: string
+  href: string
+  sourceCount: number
 }
+
+interface AihotNavigationData {
+  source: string
+  fetchedAt: string
+  items: AihotItem[]
+  hotTopics: AihotHotTopic[]
+}
+
+const categories = [
+  { value: '', label: '全部资讯' },
+  { value: 'ai-models', label: '模型' },
+  { value: 'ai-products', label: '产品' },
+  { value: 'industry', label: '行业' },
+  { value: 'paper', label: '论文' },
+  { value: 'tip', label: '教程' },
+  { value: 'opinion', label: '观点' },
+]
+
+const categoryLabels = Object.fromEntries(categories.map(item => [item.value, item.label]))
 
 useHead({
   title: 'AI 导航 · 智识花园',
   meta: [
-    { name: 'description', content: '精选 AI 工具、模型、社区与学习资源导航。' },
+    { name: 'description', content: '来自 AIHOT 的 AI 行业精选、热点与每日动态。' },
   ],
 })
 
-const tutorialLink = {
-  title: 'AI教程',
-  description: '系统化学习 AI 工具、工作流与落地实践，适合快速补齐知识路径。',
-  href: 'https://ai.codefather.cn/library/2010994846520700929',
-}
-
-const { data, pending, error } = await useFetch<NavData>('/api/ai-nav', {
-  default: () => ({ source: '', scrapedAt: '', groups: [], totalLinks: 0 }),
+const { data, pending, error } = await useFetch<AihotNavigationData>('/api/ai-nav', {
+  default: () => ({ source: 'https://aihot.news/', fetchedAt: '', items: [], hotTopics: [] }),
 })
 
+const activeCategory = ref('')
 const query = ref('')
-const activeGroup = ref('')
-const observer = ref<IntersectionObserver | null>(null)
 
-const filteredGroups = computed<NavGroup[]>(() => {
-  const groups = data.value?.groups ?? []
-  const keyword = query.value.trim().toLowerCase()
-  if (!keyword) return groups
-
-  return groups
-    .map(group => ({
-      ...group,
-      links: group.links.filter(link =>
-        link.name.toLowerCase().includes(keyword)
-        || link.description.toLowerCase().includes(keyword),
-      ),
-    }))
-    .filter(group => group.links.length)
-})
-
-const totalAfterFilter = computed(() =>
-  filteredGroups.value.reduce((total, group) => total + group.links.length, 0),
-)
-
-const updatedAt = computed(() => {
-  if (!data.value?.scrapedAt) return ''
-  return new Intl.DateTimeFormat('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).format(new Date(data.value.scrapedAt))
-})
-
-// 平滑滚动到所选工具分类，并预留移动顶部栏空间。
-function scrollToGroup(id: string) {
-  const target = document.getElementById(`group-${id}`)
-  if (!target) return
-  window.scrollTo({
-    top: target.getBoundingClientRect().top + window.scrollY - 88,
-    behavior: 'smooth',
+const filteredItems = computed(() => {
+  const keyword = query.value.trim().toLocaleLowerCase()
+  return (data.value?.items ?? []).filter((item) => {
+    const matchesCategory = !activeCategory.value || item.category === activeCategory.value
+    const matchesKeyword = !keyword
+      || `${item.title} ${item.summary} ${item.source}`.toLocaleLowerCase().includes(keyword)
+    return matchesCategory && matchesKeyword
   })
+})
+
+const updatedAt = computed(() => formatDate(data.value?.fetchedAt, {
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+}))
+
+// 将接口时间转换为本地中文日期，异常值直接隐藏。
+function formatDate(value: string | undefined, options: Intl.DateTimeFormatOptions) {
+  if (!value) return ''
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat('zh-CN', options).format(date)
 }
 
-// 隐藏加载失败的站点图标，让底层通用应用图标自然显露。
-function onIconError(event: Event) {
-  const image = event.target as HTMLImageElement
-  image.hidden = true
-}
-
-// 清除关键词并恢复完整工具书架。
+// 清除搜索词并恢复当前分类下的完整资讯。
 function clearQuery() {
   query.value = ''
 }
-
-onMounted(() => {
-  if (!('IntersectionObserver' in window)) return
-  observer.value = new IntersectionObserver((entries) => {
-    const current = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]
-    if (current) activeGroup.value = (current.target as HTMLElement).dataset.groupId ?? ''
-  }, { rootMargin: '-90px 0px -65% 0px' })
-
-  document.querySelectorAll('[data-group-id]').forEach((element) => {
-    observer.value?.observe(element)
-  })
-})
-
-onBeforeUnmount(() => observer.value?.disconnect())
 </script>
 
 <template>
-  <!-- AI 工具书架：保留搜索和分类行为，以纸面索引替代发光卡片。 -->
-  <div class="ai-library">
+  <!-- AI 导航主体：沿用暖纸视觉，采用分类、热点与时间流布局。 -->
+  <div class="ai-news">
     <header class="ai-head">
-      <div class="ai-head__title">
+      <div>
         <p class="paper-kicker">
-          Curated tool index
+          AI intelligence desk
         </p>
-        <h1>AI 工具导航</h1>
+        <h1>AI 导航</h1>
+        <p class="ai-head__intro">
+          聚合值得关注的模型、产品、论文与行业动态。
+        </p>
       </div>
-      <div class="ai-head__meta">
-        <strong>{{ data?.totalLinks ?? 0 }}</strong>
-        <span>个精选站点</span>
+      <p class="ai-head__meta">
+        <span>{{ data?.items.length ?? 0 }} 条精选</span>
         <small v-if="updatedAt">更新于 {{ updatedAt }}</small>
-      </div>
+      </p>
     </header>
 
-    <a
-      :href="tutorialLink.href"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="ai-tutorial"
-      data-ai-tutorial
+    <!-- 分类与搜索区域 -->
+    <section
+      class="ai-controls"
+      aria-label="资讯筛选"
     >
-      <span class="ai-tutorial__number">Editor's pick · 01</span>
-      <span class="ai-tutorial__copy">
-        <strong>{{ tutorialLink.title }}</strong>
-        <small>{{ tutorialLink.description }}</small>
-      </span>
-      <span class="ai-tutorial__action">立即查看教程 ↗</span>
-    </a>
-
-    <div class="ai-search-wrap">
+      <div
+        class="ai-categories"
+        role="group"
+        aria-label="资讯分类"
+      >
+        <button
+          v-for="category in categories"
+          :key="category.value"
+          type="button"
+          :class="{ 'is-active': activeCategory === category.value }"
+          @click="activeCategory = category.value"
+        >
+          {{ category.label }}
+        </button>
+      </div>
       <label class="ai-search">
         <span
           class="i-carbon-search"
           aria-hidden="true"
         />
-        <span class="sr-only">搜索 AI 工具</span>
+        <span class="sr-only">搜索 AI 资讯</span>
         <input
           v-model="query"
           type="search"
-          placeholder="搜索 ChatGPT、Cursor、图像生成……"
+          placeholder="搜索标题、摘要或来源"
           autocomplete="off"
-          spellcheck="false"
         >
         <button
           v-if="query"
@@ -165,185 +146,213 @@ onBeforeUnmount(() => observer.value?.disconnect())
           />
         </button>
       </label>
-      <p v-if="query">
-        找到 {{ totalAfterFilter }} 个结果
-      </p>
-    </div>
+    </section>
 
     <div
       v-if="error"
       class="ai-state"
       role="alert"
     >
-      <strong>工具目录暂时无法读取</strong>
-      <span>{{ error.statusMessage || '请稍后重试' }}</span>
+      <strong>AI 资讯暂时无法读取</strong>
+      <span>请稍后刷新页面。</span>
     </div>
     <div
-      v-else-if="pending && !data?.groups?.length"
+      v-else-if="pending && !data?.items.length"
       class="ai-state"
     >
       <span
         class="i-carbon-progress-bar-round ai-spin"
         aria-hidden="true"
       />
-      <span>正在整理工具目录……</span>
-    </div>
-    <div
-      v-else-if="query && !totalAfterFilter"
-      class="ai-state"
-    >
-      <strong>没有找到「{{ query }}」</strong>
-      <button
-        type="button"
-        @click="clearQuery"
-      >
-        清空搜索
-      </button>
+      <span>正在整理今日 AI 动态……</span>
     </div>
 
-    <div
-      v-else
-      class="ai-layout"
-    >
-      <aside
-        class="ai-catalog"
-        aria-label="AI 工具分类"
+    <template v-else>
+      <!-- 当前热点榜 -->
+      <section
+        v-if="data?.hotTopics.length"
+        class="ai-hot"
+        aria-labelledby="ai-hot-heading"
       >
-        <p>分类索引</p>
-        <button
-          v-for="group in filteredGroups"
-          :key="group.id"
-          type="button"
-          :class="{ 'is-active': activeGroup === group.id }"
-          @click="scrollToGroup(group.id)"
-        >
-          <span>{{ group.title }}</span>
-          <small>{{ group.links.length }}</small>
-        </button>
-      </aside>
-
-      <section class="ai-main">
-        <section
-          v-for="(group, groupIndex) in filteredGroups"
-          :id="`group-${group.id}`"
-          :key="group.id"
-          :data-group-id="group.id"
-          class="ai-group"
-        >
-          <header class="ai-group__head">
-            <span>{{ String(groupIndex + 1).padStart(2, '0') }}</span>
-            <h2>{{ group.title }}</h2>
-            <small>{{ group.links.length }} entries</small>
-          </header>
-          <div class="ai-shelf">
-            <a
-              v-for="link in group.links"
-              :key="link.url"
-              :href="link.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="ai-tool"
-            >
-              <span class="ai-tool__icon">
-                <span
-                  class="i-carbon-application-web"
-                  aria-hidden="true"
-                />
-                <img
-                  v-if="link.icon"
-                  :src="link.icon"
-                  :alt="`${link.name} 图标`"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"
-                  @error="onIconError"
-                >
-              </span>
-              <span class="ai-tool__copy">
-                <strong>{{ link.name }}</strong>
-                <small>{{ link.description || '暂无描述' }}</small>
-              </span>
-              <span
-                class="ai-tool__arrow"
-                aria-hidden="true"
-              >↗</span>
-            </a>
-          </div>
-        </section>
-
-        <footer class="ai-footer">
-          数据来源：
+        <header class="ai-section-head">
+          <h2 id="ai-hot-heading">
+            当前热点
+          </h2>
           <a
-            :href="data?.source || 'https://tool.lu/nav/'"
+            href="https://aihot.news/hot"
             target="_blank"
             rel="noopener noreferrer"
-          >tool.lu</a>
-          · 离线静态整理
-        </footer>
+          >完整榜单 ↗</a>
+        </header>
+        <ol>
+          <li
+            v-for="topic in data.hotTopics"
+            :key="topic.id"
+          >
+            <span class="ai-hot__rank">{{ topic.rank }}</span>
+            <a
+              :href="topic.href"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ topic.title }}
+            </a>
+            <small>{{ topic.sourceCount }} 个信源</small>
+          </li>
+        </ol>
       </section>
-    </div>
+
+      <!-- AI 资讯时间流 -->
+      <section
+        class="ai-feed"
+        aria-labelledby="ai-feed-heading"
+      >
+        <header class="ai-section-head ai-feed__head">
+          <div>
+            <p class="paper-kicker">
+              Selected timeline
+            </p>
+            <h2 id="ai-feed-heading">
+              精选动态
+            </h2>
+          </div>
+          <span>{{ filteredItems.length }} 条</span>
+        </header>
+
+        <article
+          v-for="item in filteredItems"
+          :key="item.id"
+          class="ai-item"
+        >
+          <time :datetime="item.publishedAt">
+            {{ formatDate(item.publishedAt, { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }}
+          </time>
+          <span
+            class="ai-item__rail"
+            aria-hidden="true"
+          />
+          <div class="ai-item__body">
+            <header class="ai-item__meta">
+              <span>{{ item.source }}</span>
+              <span
+                v-if="item.category"
+                class="ai-item__category"
+              >
+                {{ categoryLabels[item.category] || '其他' }}
+              </span>
+              <span
+                v-if="item.score !== null"
+                class="ai-item__score"
+              >AI 评分 {{ item.score }}/100</span>
+            </header>
+            <a
+              :href="item.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ai-item__title"
+            >{{ item.title }}</a>
+            <p
+              v-if="item.summary"
+              class="ai-item__summary"
+            >
+              {{ item.summary }}
+            </p>
+            <p
+              v-if="item.reason"
+              class="ai-item__reason"
+            >
+              <strong>推荐理由：</strong>{{ item.reason }}
+            </p>
+          </div>
+        </article>
+
+        <div
+          v-if="!filteredItems.length"
+          class="ai-state"
+        >
+          <strong>没有找到匹配资讯</strong>
+          <button
+            type="button"
+            @click="clearQuery"
+          >
+            清空搜索
+          </button>
+        </div>
+      </section>
+    </template>
+
+    <footer class="ai-footer">
+      数据来源：AIHOT · 内容版权归原作者所有
+      <a
+        :href="data?.source || 'https://aihot.news/'"
+        target="_blank"
+        rel="noopener noreferrer"
+      >访问原站 ↗</a>
+    </footer>
   </div>
 </template>
 
 <style scoped>
-.ai-library { padding: 26px 0 72px; }
-.ai-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; padding-bottom: 30px; border-bottom: 1px solid var(--rule-strong); }
-.ai-head h1 { margin-top: 7px; font-size: clamp(3rem, 8vw, 6rem); font-weight: 500; letter-spacing: -0.055em; }
-.ai-head__meta { display: grid; justify-items: end; padding-bottom: 8px; color: var(--ink-muted); }
-.ai-head__meta strong { color: var(--accent-terracotta); font-family: var(--font-display); font-size: 2.6rem; font-weight: 500; line-height: 1; }
-.ai-head__meta span { color: var(--ink-secondary); font-size: 0.8rem; }
-.ai-head__meta small { margin-top: 5px; font-size: 0.66rem; }
-.ai-tutorial { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; gap: 20px; align-items: center; margin-top: 24px; padding: 18px 0; border-top: 1px solid var(--rule-color); border-bottom: 1px solid var(--rule-color); }
-.ai-tutorial__number { color: var(--accent-moss); font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; }
-.ai-tutorial__copy { display: grid; gap: 4px; }
-.ai-tutorial__copy strong { font-family: var(--font-display); font-size: 1.35rem; }
-.ai-tutorial__copy small { color: var(--ink-secondary); line-height: 1.65; }
-.ai-tutorial__action { color: var(--accent-terracotta-dark); font-size: 0.78rem; font-weight: 700; }
-.ai-tutorial:hover .ai-tutorial__copy strong { color: var(--accent-terracotta-dark); }
-.ai-search-wrap { margin: 34px 0 44px; }
-.ai-search { display: flex; max-width: 680px; min-height: 50px; align-items: center; gap: 11px; padding: 0 14px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm); background: var(--paper-surface); }
+.ai-news { padding: 24px 0 72px; }
+.ai-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--rule-strong); }
+.ai-head h1 { margin-top: 6px; font-size: clamp(3rem, 8vw, 6rem); font-weight: 500; letter-spacing: -0.055em; }
+.ai-head__intro { max-width: 38em; margin-top: 14px; color: var(--ink-secondary); line-height: 1.75; }
+.ai-head__meta { display: grid; justify-items: end; gap: 4px; padding-bottom: 8px; color: var(--accent-terracotta-dark); font-family: var(--font-mono); font-size: 0.72rem; }
+.ai-head__meta small { color: var(--ink-muted); }
+.ai-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 340px); gap: 22px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule-color); }
+.ai-categories { display: flex; flex-wrap: wrap; gap: 4px; }
+.ai-categories button { min-height: 40px; padding: 8px 12px; border-bottom: 2px solid transparent; color: var(--ink-secondary); font-size: 0.78rem; }
+.ai-categories button:hover,
+.ai-categories button.is-active { border-color: var(--accent-terracotta); color: var(--accent-terracotta-dark); }
+.ai-search { display: flex; min-height: 44px; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm); background: var(--paper-surface); }
 .ai-search:focus-within { border-color: var(--accent-terracotta); box-shadow: 0 0 0 3px var(--focus-ring); }
 .ai-search input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: var(--ink-primary); }
-.ai-search button { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; color: var(--ink-muted); }
-.ai-search-wrap > p { margin: 8px 0 0; color: var(--ink-muted); font-size: 0.72rem; }
-.ai-layout { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: clamp(26px, 5vw, 58px); align-items: start; }
-.ai-catalog { position: sticky; top: 24px; display: grid; border-top: 1px solid var(--rule-strong); }
-.ai-catalog > p { margin: 0; padding: 13px 4px; color: var(--ink-muted); font-size: 0.68rem; letter-spacing: 0.1em; }
-.ai-catalog button { display: flex; min-height: 40px; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 4px; border-top: 1px solid var(--rule-color); color: var(--ink-secondary); text-align: left; font-size: 0.77rem; }
-.ai-catalog button.is-active,
-.ai-catalog button:hover { color: var(--accent-terracotta-dark); }
-.ai-catalog small { color: var(--ink-faint); font-family: var(--font-mono); }
-.ai-group + .ai-group { margin-top: 56px; }
-.ai-group__head { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding-bottom: 13px; border-bottom: 1px solid var(--rule-strong); }
-.ai-group__head > span,
-.ai-group__head small { color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.64rem; }
-.ai-group__head h2 { font-size: 1.5rem; font-weight: 600; }
-.ai-shelf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.ai-tool { display: grid; grid-template-columns: 36px minmax(0, 1fr) 16px; gap: 12px; align-items: start; min-height: 92px; padding: 18px 12px 18px 0; border-bottom: 1px solid var(--rule-color); }
-.ai-tool:nth-child(odd) { padding-right: 22px; border-right: 1px solid var(--rule-color); }
-.ai-tool:nth-child(even) { padding-left: 22px; }
-.ai-tool:hover { background: rgba(233, 222, 204, 0.32); }
-.ai-tool__icon { position: relative; display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 1.25rem; }
-.ai-tool__icon img { position: absolute; inset: 3px; width: 28px; height: 28px; object-fit: contain; }
-.ai-tool__copy { display: grid; gap: 4px; min-width: 0; }
-.ai-tool__copy strong { font-family: var(--font-display); font-size: 0.98rem; }
-.ai-tool__copy small { display: -webkit-box; overflow: hidden; color: var(--ink-secondary); font-size: 0.72rem; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.ai-tool__arrow { color: var(--accent-terracotta); font-size: 0.72rem; }
-.ai-state { display: grid; justify-items: center; gap: 10px; padding: 72px 20px; border-top: 1px solid var(--rule-color); border-bottom: 1px solid var(--rule-color); color: var(--ink-secondary); text-align: center; }
+.ai-search button { display: inline-flex; width: 32px; height: 32px; align-items: center; justify-content: center; color: var(--ink-muted); }
+.ai-hot { margin-top: 28px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm); background: rgba(248, 242, 231, 0.55); }
+.ai-section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 14px 18px; border-bottom: 1px solid var(--rule-color); }
+.ai-section-head h2 { font-size: 1.15rem; font-weight: 600; }
+.ai-section-head > a { color: var(--accent-moss); font-size: 0.72rem; font-weight: 700; }
+.ai-hot ol { margin: 0; padding: 0; list-style: none; }
+.ai-hot li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 18px; border-top: 1px solid var(--rule-color); }
+.ai-hot li:first-child { border-top: 0; }
+.ai-hot__rank { color: var(--accent-terracotta); font-family: var(--font-mono); font-weight: 700; }
+.ai-hot a { font-family: var(--font-display); font-size: 0.92rem; line-height: 1.45; }
+.ai-hot small { color: var(--ink-muted); font-size: 0.68rem; }
+.ai-feed { margin-top: 54px; }
+.ai-feed__head { padding-right: 0; padding-left: 0; border-bottom-color: var(--rule-strong); }
+.ai-feed__head h2 { margin-top: 4px; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 500; }
+.ai-feed__head > span { color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.7rem; }
+.ai-item { display: grid; grid-template-columns: 86px 16px minmax(0, 1fr); align-items: stretch; }
+.ai-item > time { padding: 24px 12px 0 0; color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.66rem; text-align: right; }
+.ai-item__rail { position: relative; border-left: 1px solid var(--rule-strong); }
+.ai-item__rail::before { position: absolute; top: 28px; left: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-terracotta); content: ''; }
+.ai-item__body { padding: 22px 0 26px 18px; border-bottom: 1px solid var(--rule-color); }
+.ai-item__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--ink-muted); font-size: 0.68rem; }
+.ai-item__category { padding: 2px 7px; border: 1px solid var(--rule-color); color: var(--accent-moss); }
+.ai-item__score { margin-left: auto; color: var(--accent-moss); font-family: var(--font-mono); }
+.ai-item__title { display: block; margin-top: 12px; font-family: var(--font-display); font-size: clamp(1.08rem, 2.2vw, 1.34rem); font-weight: 600; line-height: 1.5; }
+.ai-item__title:hover { color: var(--accent-terracotta-dark); }
+.ai-item__summary { margin-top: 9px; color: var(--ink-secondary); font-size: 0.83rem; line-height: 1.75; }
+.ai-item__reason { margin-top: 11px; padding: 10px 12px; border-left: 2px solid var(--accent-moss); background: rgba(102, 118, 83, 0.07); color: var(--ink-secondary); font-size: 0.74rem; line-height: 1.65; }
+.ai-item__reason strong { color: var(--accent-moss); }
+.ai-state { display: grid; justify-items: center; gap: 10px; padding: 68px 20px; border-bottom: 1px solid var(--rule-color); color: var(--ink-secondary); text-align: center; }
 .ai-state button { color: var(--accent-terracotta-dark); text-decoration: underline; text-underline-offset: 3px; }
 .ai-spin { animation: ai-spin 0.9s linear infinite; }
 @keyframes ai-spin { to { transform: rotate(360deg); } }
-.ai-footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule-strong); color: var(--ink-muted); font-size: 0.68rem; }
-.ai-footer a { color: var(--accent-terracotta-dark); text-decoration: underline; }
-@media (max-width: 720px) {
+.ai-footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--rule-strong); color: var(--ink-muted); font-size: 0.68rem; }
+.ai-footer a { margin-left: 8px; color: var(--accent-terracotta-dark); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 760px) {
   .ai-head { align-items: start; flex-direction: column; }
   .ai-head__meta { justify-items: start; }
-  .ai-tutorial { grid-template-columns: 1fr; gap: 8px; }
-  .ai-layout { grid-template-columns: 1fr; }
-  .ai-catalog { position: static; display: flex; overflow-x: auto; border-bottom: 1px solid var(--rule-color); }
-  .ai-catalog > p { display: none; }
-  .ai-catalog button { flex: 0 0 auto; gap: 10px; padding: 10px 12px; border-top: 0; }
-  .ai-shelf { grid-template-columns: 1fr; }
-  .ai-tool:nth-child(odd),
-  .ai-tool:nth-child(even) { padding-right: 0; padding-left: 0; border-right: 0; }
+  .ai-controls { grid-template-columns: 1fr; }
+  .ai-categories { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .ai-categories button { flex: 0 0 auto; min-height: 44px; }
+  .ai-hot li { grid-template-columns: 22px minmax(0, 1fr); }
+  .ai-hot small { grid-column: 2; }
+  .ai-item { grid-template-columns: 16px minmax(0, 1fr); }
+  .ai-item > time { grid-column: 2; padding: 20px 0 0 14px; text-align: left; }
+  .ai-item__rail { grid-row: 1 / span 2; }
+  .ai-item__body { padding-top: 8px; padding-left: 14px; }
+  .ai-item__score { width: 100%; margin-left: 0; }
 }
 </style>

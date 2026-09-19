@@ -29,10 +29,12 @@ describe('AppFooter', () => {
     expect(wrapper.text()).toContain(year)
   })
 
-  it('渲染 5 个页脚链接', () => {
+  it('首页与博客合并后只保留一个博客入口', () => {
     const wrapper = mountFooter()
     const links = wrapper.findAll('.footer-links a')
-    expect(links.length).toBe(5)
+    expect(links.length).toBe(4)
+    expect(links[0]?.text()).toBe('博客')
+    expect(links[0]?.attributes('href')).toBe('/')
   })
 
   it('使用 <footer> 语义化标签', () => {

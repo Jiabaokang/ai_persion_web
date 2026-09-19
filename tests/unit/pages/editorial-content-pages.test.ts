@@ -5,16 +5,20 @@ import { describe, expect, it } from 'vitest'
 const read = (path: string) => readFileSync(resolve(process.cwd(), path), 'utf8')
 
 describe('编辑部首页与内容列表', () => {
-  it('首页包含宣言、写作动作、导入入口和真实植物资源', () => {
+  it('首页就是博客列表，不再保留独立首页宣言', () => {
     const source = read('pages/index.vue')
-    expect(source).toContain('home-manifesto')
+    expect(source).toContain('type=blog')
+    expect(source).toContain('<h1>博客</h1>')
     expect(source).toContain('<ContentList')
-    expect(source).toContain('写一篇文章')
-    expect(source).toContain('导入 Markdown')
-    expect(source).toContain('/images/ink-plant.webp')
+    expect(source).not.toContain('home-manifesto')
   })
 
-  it.each(['pages/blog/index.vue', 'pages/notes/index.vue', 'pages/wechat/index.vue'])('%s 共用行列表', (path) => {
+  it('旧博客列表地址永久跳转到首页', () => {
+    const source = read('pages/blog/index.vue')
+    expect(source).toContain('navigateTo(\'/\', { redirectCode: 301')
+  })
+
+  it.each(['pages/index.vue', 'pages/notes/index.vue', 'pages/wechat/index.vue'])('%s 共用行列表', (path) => {
     const source = read(path)
     expect(source).toContain('<ContentList')
     expect(source).toContain('editorial-index')

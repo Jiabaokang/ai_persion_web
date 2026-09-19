@@ -45,7 +45,6 @@ curl http://localhost:3000/api/health
 | `pnpm typecheck` | TypeScript 类型检查 |
 | `pnpm test` | 运行测试（监听模式） |
 | `pnpm test:run` | 运行测试（一次性） |
-| `pnpm scrape:ai` | 抓取 tool.lu AI 导航数据，生成 `data/ai-nav.json` |
 | `pnpm lint` | ESLint 检查 |
 | `pnpm lint:fix` | ESLint 自动修复 |
 | `pnpm format` | Prettier 格式化 |
@@ -78,7 +77,7 @@ curl http://localhost:3000/api/health
 |---|---|---|
 | `app.vue` | Nuxt 根组件 | 包含 `<NuxtLayout><NuxtPage/></NuxtLayout>` |
 | `error.vue` | 全局错误页 | 处理 404、500 等 |
-| `pages/` | **路由页面**（文件式路由） | `index.vue` → `/`；`blog/index.vue` → `/blog`；`ai.vue` → `/ai`；`login.vue` → `/login` |
+| `pages/` | **路由页面**（文件式路由） | `index.vue` → 博客列表；`blog/index.vue` → `/` 重定向；`ai.vue` → `/ai`；`login.vue` → `/login` |
 | `components/` | **Vue 组件**（自动导入，带目录前缀） | `AppHeader.vue` → `<AppHeader>`；`ui/Input.vue` → `<UiInput>` |
 | `layouts/` | **布局组件** | `default.vue`（默认）、`admin.vue`（后台） |
 | `composables/` | **组合式函数**（自动导入，命名以 `use` 开头） | `useAuth.ts`、`useTheme.ts`、`useDrawer.ts`、`useScrollSpy.ts`、`useTagFilter.ts` |
@@ -104,8 +103,7 @@ curl http://localhost:3000/api/health
 | 目录/文件 | 作用 | 内容示例 |
 |---|---|---|
 | `tests/` | **测试** | Vitest 单测 + 集成测试 |
-| `scripts/` | **运维 / 数据脚本** | `scrape-ai-nav.mjs`（抓取 tool.lu AI 导航数据） |
-| `data/` | **运行时数据** | `db.sqlite`（gitignored）、`ai-nav.json`（gitignore 例外，随代码提交） |
+| `data/` | **运行时数据** | `db.sqlite`（gitignored） |
 | `docs/` | **项目文档** | `deployment.md`（部署/运维手册）、`progress.md`（任务进度）、`superpowers/`（设计与计划） |
 | `.github/workflows/` | **CI** | `deploy.yml`（push main 自动部署到生产） |
 
@@ -162,28 +160,19 @@ curl http://localhost:3000/api/health
 
 | 页面 | 路径 | 说明 |
 |---|---|---|
-| 首页 | `/` | 站点入口，最新文章列表 |
-| 博客 | `/blog`、`/blog/:slug` | 长文 |
+| 博客 | `/`、`/blog/:slug` | 长文列表与详情；`/blog` 永久跳转到 `/` |
 | 笔记 | `/notes`、`/notes/:slug` | 短笔记 |
 | 灵感 | `/inspiration`、`/inspiration/:slug` | 私密灵感时间线与详情 |
-| AI 导航 | `/ai` | 134 个 AI 工具站点（按分类组织 + 实时搜索） |
+| AI 导航 | `/ai` | AIHOT 精选资讯、当前热点、分类与搜索 |
 | 公众号 | `/wechat` | 文章索引 |
 | 登录 | `/login` | 暖纸写作桌登录页 |
 | 管理后台 | `/admin/*` | 内容 / 标签管理与 Markdown 工作台（需登录） |
 
 Markdown 源文保存在 `contents.contentMd`，服务端渲染并清理后的 HTML 保存在 `contents.contentHtml`。后台支持编辑、分屏、预览和本地 `.md` / `.markdown` 导入；本地文件只在浏览器读取，不会自动上传或保存。
 
-### AI 导航数据更新
+### AI 导航数据来源
 
-`/ai` 页面数据来自 `data/ai-nav.json`，由本地脚本离线抓取 `tool.lu/nav/?node_id=27`：
-
-```bash
-pnpm scrape:ai          # 重新抓取并覆盖 data/ai-nav.json
-git add data/ai-nav.json && git commit -m "chore: 更新 AI 导航数据"
-git push                # CI 自动部署
-```
-
-生产环境**不在线抓取**，避免反爬和外部依赖。
+`/ai` 通过服务端 `/api/ai-nav` 接入 [AIHOT Public API](https://aihot.news/agent?tab=api)，并按官方缓存周期缓存精选资讯与热点榜。页面保留 AIHOT 来源署名，外链仅允许 HTTPS。
 
 ---
 

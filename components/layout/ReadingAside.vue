@@ -143,7 +143,7 @@ function contentPath(item: { type: string, slug: string }) {
         v-else
         class="reading-aside__links"
       >
-        <NuxtLink to="/blog">查看最新长文</NuxtLink>
+        <NuxtLink to="/">查看最新长文</NuxtLink>
         <NuxtLink to="/notes">翻阅知识笔记</NuxtLink>
         <NuxtLink to="/inspiration">拾取灵感碎片</NuxtLink>
       </nav>

@@ -1,30 +1,7 @@
 <script setup lang="ts">
-const { data: posts } = await useFetch<any[]>('/api/contents?type=blog&status=published&visibility=public', {
-  default: () => [],
-})
+await navigateTo('/', { redirectCode: 301, replace: true })
 </script>
 
 <template>
-  <!-- 博客索引：长文以编辑部目录行连续排列。 -->
-  <div class="editorial-index">
-    <header class="editorial-index__header">
-      <div>
-        <p class="paper-kicker">
-          Long-form writing
-        </p>
-        <h1>博客</h1>
-      </div>
-      <p>完整展开一个问题，也记录答案生成之前的犹疑与路径。</p>
-    </header>
-    <ContentList
-      v-if="posts.length"
-      :items="posts"
-    />
-    <p
-      v-if="!posts.length"
-      class="editorial-empty"
-    >
-      还没有博客文章
-    </p>
-  </div>
+  <div />
 </template>

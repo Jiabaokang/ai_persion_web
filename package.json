@@ -13,7 +13,6 @@
     "typecheck": "nuxt typecheck",
     "test": "vitest",
     "test:run": "vitest run",
-    "scrape:ai": "node scripts/scrape-ai-nav.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."

@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { publicNavigation } from '../../../composables/usePublicNavigation'
 
 const layoutSource = readFileSync(resolve(process.cwd(), 'layouts/default.vue'), 'utf-8')
-const navigationSource = readFileSync(resolve(process.cwd(), 'composables/usePublicNavigation.ts'), 'utf-8')
 const asideSource = readFileSync(resolve(process.cwd(), 'components/layout/ReadingAside.vue'), 'utf-8')
 
 describe('暖纸公共布局', () => {
@@ -14,10 +14,14 @@ describe('暖纸公共布局', () => {
     expect(layoutSource).toContain('<AppHeader')
   })
 
-  it('侧栏包含全部公共主路由', () => {
-    for (const path of ['/', '/blog', '/notes', '/inspiration', '/ai', '/wechat']) {
-      expect(navigationSource).toContain(`to: '${path}'`)
-    }
+  it('AI 导航位于首位且首页统一命名为博客', () => {
+    expect(publicNavigation.map(item => [item.to, item.label])).toEqual([
+      ['/ai', 'AI 导航'],
+      ['/', '博客'],
+      ['/notes', '笔记'],
+      ['/inspiration', '灵感'],
+      ['/wechat', '公众号'],
+    ])
   })
 
   it('右栏提供日期、近期入口和知识摘录', () => {

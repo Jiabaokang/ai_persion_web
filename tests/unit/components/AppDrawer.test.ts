@@ -35,10 +35,11 @@ describe('AppDrawer', () => {
     expect(wrapper.emitted('update:open')).toEqual([[false]])
   })
 
-  it('渲染全部 6 个公共导航链接', () => {
+  it('渲染全部 5 个公共导航链接', () => {
     const wrapper = mountDrawer({ open: true })
     const links = wrapper.findAll('.drawer-link')
-    expect(links).toHaveLength(6)
+    expect(links).toHaveLength(5)
+    expect(links[0]?.text()).toContain('AI 导航')
     expect(wrapper.text()).toContain('灵感')
   })
 
