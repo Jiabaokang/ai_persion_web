@@ -53,6 +53,8 @@ Thumbs.db
 # ---------- 测试 / 覆盖率 ----------
 coverage/
 .vitest-cache/
+# Vitest 重新生成配置时留下的临时产物
+vitest.config.ts.timestamp-*.mjs
 
 # ---------- 杂项 ----------
 .cache/

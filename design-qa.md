@@ -85,3 +85,53 @@ final result: passed
 - `pnpm build`：退出码 0；仅保留既有第三方编辑器分块体积提示。
 
 final result: passed
+
+## 2026-09-19 AIHOT 全量接入与本站详情页复验
+
+验收方式：生产构建产物 `node .output/server/index.mjs`（127.0.0.1:3100）+ 系统 Chrome 无头浏览器实测。
+
+### 9 个端点接入
+
+`/api/v1/items`、`/codex-resets`、`/hot-topics`、`/stories/{publicId}`、`/dailies`、`/dailies/latest`、`/dailies/{date}`、`/selected/snapshot`、`/selected/changes` 全部打通，服务端统一收敛在 `server/api/ai-nav.get.ts`。
+
+实测中发现并与真实响应对齐的契约细节：
+
+- `/dailies/latest` 的 `report.lead` 实测为 `null`，`flashes` 存在但常为空数组；日报标题退回稳定的 `YYYY-MM-DD AI 日报`。
+- `/selected/snapshot` 的 `count` 是当前页条数而非总量（`limit=1` 时为 1），因此不再对外暴露为“同步总量”，页脚改为展示同步水位与本轮变化数。
+- `/hot-topics` 的 `links.story` 域名是 `aihot.virxact.com`，story id 可直接用于 `aihot.news/api/v1/stories/{id}`。
+- `/items` 没有单条查询端点；热点条目可能已滑出最近 100 条精选，改用 `mode=all&q=<标题>` 回查补齐摘要、评分与推荐理由。
+
+### 页面实测
+
+| 路由 | 视口 | 结果 |
+| --- | --- | --- |
+| `/ai` | 390 × 844 | HTTP 200，列表页内容正确，横向溢出 0 |
+| `/ai/{id}` | 390 × 844 / 1440 × 900 | HTTP 200，含 AI 导读、AI 评分、推荐理由、查看原始信源 |
+| `/ai/{hotId}` | 390 × 844 | HTTP 200，含事件追踪、事件时间线（实测 4 篇报道）、一手信源标记、进行中状态 |
+| `/ai/daily` | 390 × 844 | HTTP 200，日报归档页内容正确 |
+| `/ai/daily/2026-09-19` | 1440 × 900 | HTTP 200，日报详情含分区与快讯 |
+| `/ai/items/{id}` | — | HTTP 301 跳转到 `/ai/{id}` |
+| `/ai/__nope__` | — | HTTP 404 |
+| `/api/ai-dailies/2026-99-99` | — | HTTP 400 |
+
+5 条热点跳转详情页全部带摘要与评分，其中 2 条标签类条目按设计不显示推荐理由；浏览器控制台错误与页面异常均为 0。
+
+### 修复的 P0 问题
+
+| 等级 | 问题 | 处理结果 |
+| --- | --- | --- |
+| P0 | `pages/ai.vue` 作为 `pages/ai/**` 的父路由且缺少 `<NuxtPage />`，导致 `/ai/daily`、`/ai/daily/:date`、`/ai/:id` 全部渲染成列表页 | 下沉为 `pages/ai/index.vue`，并补“父子路由不得并存”回归测试 |
+| P1 | 热点条目滑出精选窗口后详情页只剩标题 | 增加 `/items?mode=all&q=<标题>` 回查，失败时降级为热点快照而非报错 |
+| P2 | 页脚“N 条同步记录”取自 snapshot 单页条数，恒为 1 | 改为展示精选同步水位与本轮变化数 |
+| P2 | 分类栏存在 AIHOT 不返回的 `opinion` 死标签 | 移除该筛选项 |
+
+### 自动化门禁
+
+| 门禁 | 结果 |
+| --- | --- |
+| `pnpm lint` | 通过，退出码 0 |
+| `pnpm typecheck` | 通过，退出码 0 |
+| `pnpm test:run` | 34 个测试文件、121/121 测试通过 |
+| `pnpm build` | 通过，Nitro Node Server 产物；仅保留既有第三方编辑器分块体积提示 |
+
+final result: passed

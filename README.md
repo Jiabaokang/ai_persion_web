@@ -163,7 +163,8 @@ curl http://localhost:3000/api/health
 | 博客 | `/`、`/blog/:slug` | 长文列表与详情；`/blog` 永久跳转到 `/` |
 | 笔记 | `/notes`、`/notes/:slug` | 短笔记 |
 | 灵感 | `/inspiration`、`/inspiration/:slug` | 私密灵感时间线与详情 |
-| AI 导航 | `/ai` | AIHOT 精选资讯、当前热点、分类与搜索 |
+| AI 导航 | `/ai`、`/ai/:id` | AIHOT 精选资讯、当前热点、分类与搜索；详情阅读留在站内 |
+| AI 日报 | `/ai/daily`、`/ai/daily/:date` | AIHOT 日报归档与单日日报 |
 | 公众号 | `/wechat` | 文章索引 |
 | 登录 | `/login` | 暖纸写作桌登录页 |
 | 管理后台 | `/admin/*` | 内容 / 标签管理与 Markdown 工作台（需登录） |
@@ -172,7 +173,9 @@ Markdown 源文保存在 `contents.contentMd`，服务端渲染并清理后的 H
 
 ### AI 导航数据来源
 
-`/ai` 通过服务端 `/api/ai-nav` 接入 [AIHOT Public API](https://aihot.news/agent?tab=api)，并按官方缓存周期缓存精选资讯与热点榜。页面保留 AIHOT 来源署名，外链仅允许 HTTPS。
+`/ai` 通过服务端接入 [AIHOT REST API v1](https://aihot.news/agent?tab=api) 的全部 9 个端点：`items`、`hot-topics`、`stories/{publicId}`、`dailies`、`dailies/latest`、`dailies/{date}`、`codex-resets`、`selected/snapshot`、`selected/changes`。服务端统一收敛在 `server/api/ai-nav.get.ts`，按官方缓存周期缓存并过滤非 HTTPS 外链；`snapshot` + `changes` 仅用作服务端精选同步能力，不对外暴露页面。
+
+列表点击进入本站详情页 `/ai/:id`，展示 AI 导读、评分、推荐理由、来源与热点事件时间线；只有原始新闻来源会外链，AIHOT 站内页面不作为详情入口。页面保留「数据来源：AIHOT」署名，内容版权归原作者所有。旧入口 `/ai/items/:id` 以 301 跳转到新地址。
 
 ---
 

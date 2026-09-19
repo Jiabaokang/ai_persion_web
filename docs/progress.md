@@ -10,6 +10,17 @@
 - ✅ 新增 `dev` 开发分支、`main` 发布与递增 annotated Tag 的长期协作规则。
 - ✅ 本地 API、桌面端、390 × 844 移动端、114 项测试和生产构建验证通过；详细记录见根目录 `design-qa.md`。
 
+## 2026-09-19 AIHOT 全量接入与本站详情页
+
+- ✅ 补齐 AIHOT REST API v1 全部 9 个端点：`items`、`hot-topics`、`stories/{publicId}`、`dailies`、`dailies/latest`、`dailies/{date}`、`codex-resets`、`selected/snapshot`、`selected/changes`。
+- ✅ 新增本站详情页 `pages/ai/[id].vue`，展示 AI 导读、评分、推荐理由、来源与热点事件时间线；列表与热点点击不再跳转 AIHOT。
+- ✅ 新增日报归档 `pages/ai/daily/index.vue` 与单日日报 `pages/ai/daily/[date].vue`。
+- ✅ 首页按功能分区展示：分类筛选与搜索、当前热点、AI 日报卡、Codex 重置动态、精选时间流；`snapshot` + `changes` 仅作服务端同步能力。
+- ✅ 保留「数据来源：AIHOT」署名；详情页只外链原始新闻来源。旧入口 `/ai/items/:id` 以 301 跳转到 `/ai/:id`。
+- ✅ 修复 P0：`pages/ai.vue` 作为父路由吞掉 `/ai/**` 子页面，下沉为 `pages/ai/index.vue` 并补回归测试。
+- ✅ 热点条目滑出精选窗口时用 `mode=all&q=<标题>` 回查补齐摘要与评分。
+- ✅ `pnpm lint`、`pnpm typecheck`、`pnpm test:run`（34 文件 / 121 项）、`pnpm build` 全部通过；实测证据见根目录 `design-qa.md`。
+
 ## 当前接力任务（2026-07-11）
 
 暖纸风整站改造任务 1–10 已全部完成并提交；任务 10 commit 为 `49ec365`，桌面端、移动端、Markdown 主流程、参考图视觉 QA 和最终全量门禁均已通过。

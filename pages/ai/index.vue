@@ -16,8 +16,26 @@ interface AihotHotTopic {
   rank: number
   id: string
   title: string
-  href: string
   sourceCount: number
+  storyId: string
+}
+
+interface AihotDaily {
+  date: string
+  generatedAt: string
+  title: string
+  leadParagraph: string
+  sections: Array<{ label: string, items: unknown[] }>
+  flashes: unknown[]
+}
+
+interface AihotReset {
+  id: string
+  title: string
+  label: string
+  status: string
+  updatedAt: string
+  occurredOn: string
 }
 
 interface AihotNavigationData {
@@ -25,6 +43,9 @@ interface AihotNavigationData {
   fetchedAt: string
   items: AihotItem[]
   hotTopics: AihotHotTopic[]
+  latestDaily: AihotDaily
+  resets: AihotReset[]
+  sync: { asOf: string, changeCount: number }
 }
 
 const categories = [
@@ -34,7 +55,6 @@ const categories = [
   { value: 'industry', label: '行业' },
   { value: 'paper', label: '论文' },
   { value: 'tip', label: '教程' },
-  { value: 'opinion', label: '观点' },
 ]
 
 const categoryLabels = Object.fromEntries(categories.map(item => [item.value, item.label]))
@@ -47,7 +67,15 @@ useHead({
 })
 
 const { data, pending, error } = await useFetch<AihotNavigationData>('/api/ai-nav', {
-  default: () => ({ source: 'https://aihot.news/', fetchedAt: '', items: [], hotTopics: [] }),
+  default: () => ({
+    source: 'https://aihot.news/',
+    fetchedAt: '',
+    items: [],
+    hotTopics: [],
+    latestDaily: { date: '', generatedAt: '', title: '', leadParagraph: '', sections: [], flashes: [] },
+    resets: [],
+    sync: { asOf: '', changeCount: 0 },
+  }),
 })
 
 const activeCategory = ref('')
@@ -64,6 +92,17 @@ const filteredItems = computed(() => {
 })
 
 const updatedAt = computed(() => formatDate(data.value?.fetchedAt, {
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+}))
+
+const dailyCount = computed(() => (data.value?.latestDaily.sections ?? [])
+  .reduce((count, section) => count + section.items.length, data.value?.latestDaily.flashes.length ?? 0))
+
+// 精选快照的同步水位，用于展示服务端增量同步到哪一刻。
+const syncedAt = computed(() => formatDate(data.value?.sync.asOf, {
   month: '2-digit',
   day: '2-digit',
   hour: '2-digit',
@@ -178,11 +217,7 @@ function clearQuery() {
           <h2 id="ai-hot-heading">
             当前热点
           </h2>
-          <a
-            href="https://aihot.news/hot"
-            target="_blank"
-            rel="noopener noreferrer"
-          >完整榜单 ↗</a>
+          <NuxtLink to="/ai/daily">AI 日报归档 →</NuxtLink>
         </header>
         <ol>
           <li
@@ -190,16 +225,65 @@ function clearQuery() {
             :key="topic.id"
           >
             <span class="ai-hot__rank">{{ topic.rank }}</span>
-            <a
-              :href="topic.href"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <NuxtLink :to="`/ai/${topic.id}`">
               {{ topic.title }}
-            </a>
+            </NuxtLink>
             <small>{{ topic.sourceCount }} 个信源</small>
           </li>
         </ol>
+      </section>
+
+      <!-- 日报与 Codex 重置信息面板 -->
+      <section
+        class="ai-briefs"
+        aria-label="AIHOT 专题信息"
+      >
+        <article
+          v-if="data?.latestDaily.date"
+          class="ai-brief"
+        >
+          <p class="paper-kicker">
+            Daily briefing
+          </p>
+          <h2>AI 日报</h2>
+          <time :datetime="data.latestDaily.date">{{ data.latestDaily.date }}</time>
+          <h3>{{ data.latestDaily.title }}</h3>
+          <p v-if="data.latestDaily.leadParagraph">
+            {{ data.latestDaily.leadParagraph }}
+          </p>
+          <footer>
+            <span>{{ dailyCount }} 条动态</span>
+            <NuxtLink :to="`/ai/daily/${data.latestDaily.date}`">阅读日报 →</NuxtLink>
+          </footer>
+        </article>
+
+        <article class="ai-brief">
+          <p class="paper-kicker">
+            Codex resets
+          </p>
+          <h2>Codex 重置动态</h2>
+          <ul
+            v-if="data?.resets.length"
+            class="ai-resets"
+          >
+            <li
+              v-for="reset in data.resets"
+              :key="reset.id"
+            >
+              <span>{{ reset.label || reset.status }}</span>
+              <strong>{{ reset.title }}</strong>
+              <time :datetime="reset.updatedAt || reset.occurredOn">
+                {{ formatDate(reset.updatedAt || reset.occurredOn, { month: '2-digit', day: '2-digit' }) }}
+              </time>
+            </li>
+          </ul>
+          <p
+            v-else
+            class="ai-brief__empty"
+          >
+            暂无重置动态
+          </p>
+        </article>
       </section>
 
       <!-- AI 资讯时间流 -->
@@ -245,12 +329,10 @@ function clearQuery() {
                 class="ai-item__score"
               >AI 评分 {{ item.score }}/100</span>
             </header>
-            <a
-              :href="item.href"
-              target="_blank"
-              rel="noopener noreferrer"
+            <NuxtLink
+              :to="`/ai/${item.id}`"
               class="ai-item__title"
-            >{{ item.title }}</a>
+            >{{ item.title }}</NuxtLink>
             <p
               v-if="item.summary"
               class="ai-item__summary"
@@ -282,7 +364,10 @@ function clearQuery() {
     </template>
 
     <footer class="ai-footer">
-      数据来源：AIHOT · 内容版权归原作者所有
+      数据来源：AIHOT
+      <span v-if="syncedAt"> · 精选同步于 {{ syncedAt }}</span>
+      <span v-if="data?.sync.changeCount"> · 本轮 {{ data.sync.changeCount }} 项变化</span>
+      · 内容版权归原作者所有
       <a
         :href="data?.source || 'https://aihot.news/'"
         target="_blank"
@@ -318,6 +403,20 @@ function clearQuery() {
 .ai-hot__rank { color: var(--accent-terracotta); font-family: var(--font-mono); font-weight: 700; }
 .ai-hot a { font-family: var(--font-display); font-size: 0.92rem; line-height: 1.45; }
 .ai-hot small { color: var(--ink-muted); font-size: 0.68rem; }
+.ai-briefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 24px; }
+.ai-brief { padding: 22px; border: 1px solid var(--rule-strong); border-radius: var(--radius-sm); background: rgba(248, 242, 231, 0.38); }
+.ai-brief h2 { margin-top: 5px; font-size: 1.35rem; font-weight: 600; }
+.ai-brief > time { display: block; margin-top: 18px; color: var(--accent-terracotta-dark); font-family: var(--font-mono); font-size: 0.7rem; }
+.ai-brief h3 { margin-top: 8px; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.5; }
+.ai-brief > p:not(.paper-kicker, .ai-brief__empty) { margin-top: 10px; color: var(--ink-secondary); font-size: 0.78rem; line-height: 1.7; }
+.ai-brief footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule-color); color: var(--ink-muted); font-size: 0.7rem; }
+.ai-brief footer a { color: var(--accent-moss); font-weight: 700; }
+.ai-resets { margin: 14px 0 0; padding: 0; list-style: none; }
+.ai-resets li { display: grid; grid-template-columns: minmax(74px, auto) minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--rule-color); font-size: 0.72rem; }
+.ai-resets span { color: var(--accent-moss); }
+.ai-resets strong { font-weight: 500; }
+.ai-resets time,
+.ai-brief__empty { color: var(--ink-muted); font-family: var(--font-mono); font-size: 0.66rem; }
 .ai-feed { margin-top: 54px; }
 .ai-feed__head { padding-right: 0; padding-left: 0; border-bottom-color: var(--rule-strong); }
 .ai-feed__head h2 { margin-top: 4px; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 500; }
@@ -349,6 +448,9 @@ function clearQuery() {
   .ai-categories button { flex: 0 0 auto; min-height: 44px; }
   .ai-hot li { grid-template-columns: 22px minmax(0, 1fr); }
   .ai-hot small { grid-column: 2; }
+  .ai-briefs { grid-template-columns: 1fr; }
+  .ai-resets li { grid-template-columns: minmax(70px, auto) minmax(0, 1fr); }
+  .ai-resets time { grid-column: 2; }
   .ai-item { grid-template-columns: 16px minmax(0, 1fr); }
   .ai-item > time { grid-column: 2; padding: 20px 0 0 14px; text-align: left; }
   .ai-item__rail { grid-row: 1 / span 2; }
