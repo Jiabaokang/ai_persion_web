@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="小安翻译隐私政策：了解设备端翻译、本地记录、Google ML Kit、系统语音和分享功能如何处理数据。">
+  <title>小安翻译隐私政策</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f8f5ed; color: #312e29; }
+    * { box-sizing: border-box; }
+    body { margin: 0; line-height: 1.8; }
+    a { color: #8c452d; text-underline-offset: .18em; }
+    a:focus-visible { outline: 2px solid #8c452d; outline-offset: 3px; }
+    header, main, footer { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+    header { padding-top: 46px; padding-bottom: 30px; border-bottom: 1px solid #d9d0c1; }
+    main { padding-top: 28px; padding-bottom: 52px; }
+    footer { padding-top: 18px; padding-bottom: 32px; border-top: 1px solid #d9d0c1; color: #665f55; font-size: .9rem; }
+    h1 { font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.25; margin: 8px 0 12px; }
+    h2 { font-size: 1.32rem; margin: 36px 0 10px; }
+    p, ul { margin: 10px 0; }
+    ul { padding-left: 1.4em; }
+    .eyebrow { color: #8c452d; font-size: .82rem; font-weight: 700; letter-spacing: .12em; }
+    .meta { color: #665f55; font-size: .9rem; }
+    .summary { border-left: 3px solid #a7583c; padding: 12px 18px; background: #f0e8da; }
+    .contents { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 24px; font-size: .9rem; }
+    @media (max-width: 600px) { header { padding-top: 30px; } main { padding-top: 16px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">小安翻译 · 用户隐私</div>
+    <h1>隐私政策</h1>
+    <p class="meta">生效日期：2026 年 9 月 26 日　|　适用应用：小安翻译（Android，包名 com.jbk.xiaoants）</p>
+    <p class="summary">小安翻译在设备上识别语言和翻译文字，历史与收藏保存在本机。首次使用语言模型需要联网；Google ML Kit 也会收集设备、应用和使用情况等诊断数据。下文说明各类数据的去向和删除方式。</p>
+    <nav class="contents" aria-label="本页目录">
+      <a href="#data">处理的数据</a><a href="#third-parties">第三方</a><a href="#storage">保存与删除</a><a href="#security">安全与权限</a><a href="#contact">联系我们</a>
+    </nav>
+  </header>
+  <main>
+    <section aria-labelledby="scope">
+      <h2 id="scope">1. 适用范围</h2>
+      <p>本政策适用于“小安翻译”应用，由开发者贾宝康提供。应用无需注册或登录，不建立用户账号。我们不会运营用于接收翻译原文、译文、历史记录或收藏的服务器，也不使用这些内容投放广告或出售用户数据。</p>
+    </section>
+
+    <section aria-labelledby="data">
+      <h2 id="data">2. 应用处理的数据</h2>
+      <ul>
+        <li><strong>翻译内容：</strong>你输入或粘贴的文字、自动识别或手动选择的语言、译文在设备端处理。Google ML Kit 的语言识别与翻译 API 在设备上运行，原文和译文不会因这些 API 而发送到 Google 服务器；应用本身也不将其上传到我们的服务器。</li>
+        <li><strong>本地记录与偏好：</strong>成功翻译后，应用把原文、译文、语言、时间、收藏状态与翻译引擎标记保存到设备上的本地数据库；主题与默认目标语言等设置也保存在本机。搜索历史在本机完成。</li>
+        <li><strong>语言模型与网络：</strong>首次翻译某种语言或你主动管理离线语言包时，ML Kit 会从 Google 下载、更新或删除相应模型。已下载模型留在设备上，供后续设备端翻译使用。</li>
+        <li><strong>诊断与使用数据：</strong>Google ML Kit SDK 可能向 Google 发送设备型号、系统版本、可用加速器、应用包名与版本、安装标识符、性能指标、调用事件、错误码、输入与输出的长度、识别出的语言，以及配置的源语言和目标语言，用于诊断、统计、维护和改进 ML Kit。Google 表示这些数据通过 HTTPS 传输。具体范围取决于实际使用的 ML Kit 功能与 SDK 版本。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="third-parties">
+      <h2 id="third-parties">3. 第三方及主动分享</h2>
+      <ul>
+        <li><strong>Google：</strong>我们集成 Google ML Kit 的语言识别、设备端翻译及模型管理能力。Google 处理上述模型请求和 SDK 诊断数据；翻译原文和译文由 ML Kit 在本机处理。详情见 <a href="https://developers.google.com/ml-kit/terms">ML Kit 条款与隐私说明</a>、<a href="https://developers.google.com/ml-kit/android-data-disclosure">ML Kit 数据披露说明</a>和 <a href="https://policies.google.com/privacy">Google 隐私权政策</a>。</li>
+        <li><strong>设备语音服务：</strong>你主动使用朗读时，文字交由设备已安装的语音引擎处理。该引擎可能由设备厂商或第三方提供；是否联网、如何处理朗读文字，取决于你设备上的语音引擎及其隐私政策。</li>
+        <li><strong>剪贴板与分享对象：</strong>你主动点击复制或分享后，相应文字进入系统剪贴板或系统分享面板；只有在你选择接收应用后，分享内容才交给该应用。接收应用按其自己的隐私政策处理内容。</li>
+      </ul>
+      <p>除上述 SDK 行为和你主动使用的系统功能外，应用不主动向其他第三方发送翻译内容，也不接入广告 SDK 或独立的行为分析服务。</p>
+    </section>
+
+    <section aria-labelledby="storage">
+      <h2 id="storage">4. 保存、管理与删除</h2>
+      <p>本地翻译记录、收藏和设置会保留在设备中，直到你删除或卸载应用。你可以在“历史”页面逐条删除记录，或在“设置”中清空全部翻译历史；清空历史也会删除收藏。离线语言包可在“设置 → 离线语言包”中删除。Android 版本已关闭应用系统备份。</p>
+      <p>卸载应用会由操作系统删除应用本地数据。我们没有应用账号或自有翻译数据服务器，因此无法远程查看或删除设备中的记录。Google、设备语音引擎及你选择的分享应用各自保存的数据，适用其各自的政策和删除方式。</p>
+    </section>
+
+    <section aria-labelledby="security">
+      <h2 id="security">5. 安全与权限</h2>
+      <p>应用的历史记录保存在 Android 应用私有存储空间，访问受设备系统权限保护。ML Kit 的网络数据按 Google 的说明使用 HTTPS 传输。应用使用网络权限下载语言模型和访问其 SDK 服务；当前版本不申请麦克风、相机、位置、通讯录或设备文件的广泛访问权限。请勿在需要保密的翻译内容上使用不受信任的语音引擎或分享应用。</p>
+    </section>
+
+    <section aria-labelledby="children">
+      <h2 id="children">6. 儿童</h2>
+      <p>小安翻译不专门面向儿童，不建立账号，也不提供定向广告。若你对儿童使用本应用时的数据处理有疑问，请通过下方方式联系。</p>
+    </section>
+
+    <section aria-labelledby="updates">
+      <h2 id="updates">7. 政策更新</h2>
+      <p>当应用功能、SDK 或数据处理方式发生变化时，我们会更新本页面及生效日期。重大变化会在适用时通过应用内方式告知。</p>
+    </section>
+
+    <section aria-labelledby="contact">
+      <h2 id="contact">8. 联系我们</h2>
+      <p>隐私问题、数据处理疑问或请求，请联系开发者贾宝康：<a href="mailto:jiabaokangsy@gmail.com">jiabaokangsy@gmail.com</a>。</p>
+    </section>
+  </main>
+  <footer>© 2026 小安翻译 · <a href="https://jbksy.cn/">智识花园</a></footer>
+</body>
+</html>
