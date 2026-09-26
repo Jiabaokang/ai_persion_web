@@ -29,12 +29,12 @@ describe('AppFooter', () => {
     expect(wrapper.text()).toContain(year)
   })
 
-  it('首页与博客合并后只保留一个博客入口', () => {
+  it('页脚优先展示 AI 资讯入口', () => {
     const wrapper = mountFooter()
     const links = wrapper.findAll('.footer-links a')
     expect(links.length).toBe(4)
-    expect(links[0]?.text()).toBe('博客')
-    expect(links[0]?.attributes('href')).toBe('/')
+    expect(links[0]?.text()).toBe('AI 资讯')
+    expect(links[0]?.attributes('href')).toBe('/ai')
   })
 
   it('使用 <footer> 语义化标签', () => {

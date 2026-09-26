@@ -11,7 +11,6 @@ describe('pages/ai', () => {
     expect(aiPageSource).toContain('当前热点')
     expect(aiPageSource).toContain('全部资讯')
     expect(aiPageSource).toContain('ai-feed')
-    expect(aiPageSource).toContain('AI 评分')
   })
 
   it('资讯和热点详情均使用本站 /ai/:id 路由', () => {
@@ -58,6 +57,7 @@ describe('pages/ai', () => {
     const dailyIndexSource = readFileSync(dailyIndexPath, 'utf-8')
     const dailyDetailSource = readFileSync(dailyDetailPath, 'utf-8')
     expect(detailSource).toContain('/api/ai-items/')
+    expect(detailSource).toContain('AI 评分')
     expect(detailSource).toContain('推荐理由')
     expect(detailSource).toContain('事件时间线')
     expect(detailSource).toContain('数据来源：AIHOT')

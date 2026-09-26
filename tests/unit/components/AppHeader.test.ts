@@ -51,6 +51,16 @@ describe('AppHeader', () => {
     expect(wrapper.find('[data-menu-toggle]').exists()).toBe(true)
   })
 
+  it('手机底栏优先进入 AI 资讯，并能打开更多导航', async () => {
+    const wrapper = mountHeader()
+    const links = wrapper.findAll('.paper-bottom-nav a')
+    expect(links.map(link => link.attributes('href'))).toEqual(['/ai', '/notes', '/blog'])
+    expect(links[0]?.text()).toContain('AI 资讯')
+    await wrapper.find('.paper-bottom-nav button').trigger('click')
+    expect(wrapper.find('[data-drawer]').exists()).toBe(true)
+    wrapper.unmount()
+  })
+
   it('使用移动暖纸头部且不包含内联 SVG', () => {
     const wrapper = mountHeader()
     expect(wrapper.find('.paper-mobile-header').exists()).toBe(true)

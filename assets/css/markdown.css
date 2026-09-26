@@ -2,7 +2,7 @@
 .reading-page {
   width: min(100%, 860px);
   margin-inline: auto;
-  padding: clamp(40px, 7vw, 92px) clamp(20px, 5vw, 72px) 96px;
+  padding: 12px 0 48px;
 }
 
 .reading-article {
@@ -18,9 +18,9 @@
 
 .reading-header h1 {
   margin: 0;
-  font-size: clamp(2.15rem, 6vw, 4.6rem);
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.4;
   letter-spacing: -0.045em;
 }
 
@@ -208,7 +208,7 @@
 }
 
 @media (max-width: 640px) {
-  .reading-page { padding-top: 32px; }
-  .reading-header h1 { font-size: clamp(2rem, 12vw, 3.25rem); }
+  .reading-page { padding-top: 0; }
+  .reading-header h1 { font-size: clamp(1.6rem, 6vw, 2rem); }
   .markdown-content { line-height: 1.82; }
 }

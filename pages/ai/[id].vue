@@ -83,7 +83,7 @@ function formatDate(value: string) {
       <NuxtLink
         to="/ai"
         class="ai-detail__back"
-      >← 返回 AI 导航</NuxtLink>
+      >← 返回 AI 资讯</NuxtLink>
       <NuxtLink
         v-if="story"
         to="/ai/daily"
@@ -215,16 +215,16 @@ function formatDate(value: string) {
 </template>
 
 <style scoped>
-.ai-detail { max-width: 860px; padding: 30px 0 80px; }
+.ai-detail { max-width: 860px; padding: 0 0 40px; }
 .ai-detail__nav { display: flex; min-height: 44px; align-items: center; justify-content: space-between; gap: 20px; }
 .ai-detail__back { display: inline-flex; min-height: 44px; align-items: center; color: var(--accent-moss); font-size: 0.76rem; font-weight: 700; }
-.ai-detail__head { padding: 38px 0 34px; border-bottom: 1px solid var(--rule-strong); }
+.ai-detail__head { padding: 20px 0 24px; border-bottom: 1px solid var(--rule-strong); }
 .ai-detail__badges { display: flex; flex-wrap: wrap; gap: 8px; }
 .ai-detail__badges span { padding: 4px 8px; border: 1px solid var(--rule-color); color: var(--accent-terracotta-dark); font-family: var(--font-mono); font-size: 0.66rem; }
-.ai-detail h1 { max-width: 17em; margin-top: 18px; font-size: clamp(2.1rem, 6vw, 4.4rem); font-weight: 500; letter-spacing: -0.045em; line-height: 1.18; }
+.ai-detail h1 { max-width: 17em; margin-top: 18px; font-size: clamp(1.7rem, 3.4vw, 3rem); font-weight: 500; letter-spacing: -0.045em; line-height: 1.18; }
 .ai-detail__meta { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 22px; color: var(--ink-muted); font-size: 0.72rem; }
 .ai-detail__meta a { color: var(--accent-moss); font-weight: 700; }
-.ai-detail__lead { margin-top: 42px; padding: 28px; border: 1px solid var(--rule-strong); background: rgba(248, 242, 231, 0.5); }
+.ai-detail__lead { margin-top: 24px; padding: 28px; border: 1px solid var(--rule-strong); background: rgba(248, 242, 231, 0.5); }
 .ai-detail__lead h2,
 .ai-story h2 { margin-top: 6px; font-size: 1.55rem; font-weight: 600; }
 .ai-detail__lead > p:last-child { margin-top: 18px; font-family: var(--font-display); font-size: 1.08rem; line-height: 1.9; }
@@ -245,7 +245,7 @@ function formatDate(value: string) {
 .ai-timeline__source { color: var(--accent-moss); font-size: 0.7rem; }
 .ai-timeline__source span { margin-left: 8px; padding: 2px 5px; border: 1px solid var(--accent-moss); }
 .ai-timeline h4 { margin-top: 6px; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.5; }
-.ai-timeline div > p:not(.ai-timeline__source) { margin-top: 8px; color: var(--ink-secondary); font-size: 0.82rem; line-height: 1.75; }
+.ai-timeline div > p:not(.ai-timeline__source) { margin-top: 8px; color: var(--ink-secondary); font-size: 1rem; line-height: 1.75; }
 .ai-timeline a { display: inline-block; margin-top: 10px; color: var(--accent-terracotta-dark); font-size: 0.72rem; text-decoration: underline; text-underline-offset: 3px; }
 .ai-detail__foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule-strong); color: var(--ink-muted); font-size: 0.68rem; }
 .ai-detail__foot a { margin-left: 6px; color: var(--accent-terracotta-dark); text-decoration: underline; text-underline-offset: 3px; }

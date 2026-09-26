@@ -95,9 +95,10 @@ function itemDate(item: ContentListItem) {
 
 .content-list__index {
   padding-top: 0.35rem;
-  color: var(--ink-faint);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  color: var(--accent-terracotta-dark);
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-style: italic;
 }
 
 .content-list__meta {
@@ -105,13 +106,13 @@ function itemDate(item: ContentListItem) {
   flex-wrap: wrap;
   gap: 6px 14px;
   margin-bottom: 9px;
-  color: var(--ink-muted);
-  font-size: 0.7rem;
+  color: var(--ink-secondary);
+  font-size: 0.75rem;
   letter-spacing: 0.06em;
 }
 
 .content-list h2 {
-  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
   font-weight: 600;
   letter-spacing: -0.025em;
 }
@@ -156,12 +157,12 @@ function itemDate(item: ContentListItem) {
 
 .content-list--compact .content-list__body > p {
   margin-top: 6px;
-  font-size: 0.85rem;
+  font-size: 1rem;
 }
 
 @media (max-width: 560px) {
   .content-list__item {
-    grid-template-columns: 26px minmax(0, 1fr);
+    grid-template-columns: 30px minmax(0, 1fr);
     gap: 10px;
   }
 

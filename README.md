@@ -1,6 +1,6 @@
 # 智识花园 (AI Personal Web)
 
-个人网站：笔记 / 灵感 / 博客 / 公众号。Nuxt 3 全栈 + SQLite + 暖纸编辑部设计。
+个人网站：笔记 / 灵感 / 博客 / 公众号。Nuxt 3 全栈 + SQLite + 暖纸个人知识花园设计（AI 资讯优先）。
 
 ## 技术栈
 
@@ -77,7 +77,7 @@ curl http://localhost:3000/api/health
 |---|---|---|
 | `app.vue` | Nuxt 根组件 | 包含 `<NuxtLayout><NuxtPage/></NuxtLayout>` |
 | `error.vue` | 全局错误页 | 处理 404、500 等 |
-| `pages/` | **路由页面**（文件式路由） | `index.vue` → 博客列表；`blog/index.vue` → `/` 重定向；`ai.vue` → `/ai`；`login.vue` → `/login` |
+| `pages/` | **路由页面**（文件式路由） | `index.vue` → 阅读首页；`blog/index.vue` → 文章列表；`ai/index.vue` → `/ai`；`login.vue` → `/login` |
 | `components/` | **Vue 组件**（自动导入，带目录前缀） | `AppHeader.vue` → `<AppHeader>`；`ui/Input.vue` → `<UiInput>` |
 | `layouts/` | **布局组件** | `default.vue`（默认）、`admin.vue`（后台） |
 | `composables/` | **组合式函数**（自动导入，命名以 `use` 开头） | `useAuth.ts`、`useTheme.ts`、`useDrawer.ts`、`useScrollSpy.ts`、`useTagFilter.ts` |
@@ -160,10 +160,11 @@ curl http://localhost:3000/api/health
 
 | 页面 | 路径 | 说明 |
 |---|---|---|
-| 博客 | `/`、`/blog/:slug` | 长文列表与详情；`/blog` 永久跳转到 `/` |
+| 阅读首页 | `/` | AI 资讯、公开笔记与近期文章 |
+| 文章 | `/blog`、`/blog/:slug` | 完整长文列表与详情 |
 | 笔记 | `/notes`、`/notes/:slug` | 短笔记 |
 | 灵感 | `/inspiration`、`/inspiration/:slug` | 私密灵感时间线与详情 |
-| AI 导航 | `/ai`、`/ai/:id` | AIHOT 精选资讯、当前热点、分类与搜索；详情阅读留在站内 |
+| AI 资讯 | `/ai`、`/ai/:id` | AIHOT 精选资讯、当前热点、分类与搜索；详情阅读留在站内 |
 | AI 日报 | `/ai/daily`、`/ai/daily/:date` | AIHOT 日报归档与单日日报 |
 | 公众号 | `/wechat` | 文章索引 |
 | 登录 | `/login` | 暖纸写作桌登录页 |

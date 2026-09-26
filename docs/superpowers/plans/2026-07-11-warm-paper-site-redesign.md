@@ -1,5 +1,19 @@
 # 智识花园暖纸风整站重设计实现计划
 
+## 2026-09-21 追加：生长中的笔记，AI 资讯优先
+
+用户已选定第三版并授权布局调整，保留暖纸配色。沿用 Nuxt、现有 API、Carbon 图标和 WebP 图片，在 `dev` 内实现；不改数据库、服务端权限或后台工作流。笔记前端路由允许访客读取已有公开内容，私密内容继续由服务端过滤。
+
+- [x] 公共布局：`layouts/default.vue`、`components/AppHeader.vue`、`components/layout/PaperSidebar.vue`、`composables/usePublicNavigation.ts` 与 `assets/css/layout.css`。桌面收为窄侧栏和正文，手机底栏按 AI 资讯、笔记、文章、更多排列，详情保留可折叠阅读目录。
+- [x] 首页与内容：`pages/index.vue` 按 AI 资讯、公开笔记、文章组织；`pages/blog/index.vue` 恢复完整博客列表；所有首页内容明确请求 published/public，接口失败分别提示且可重试。
+- [x] 资讯与阅读：`pages/ai/index.vue` 把精选列表前置，热点和日报采用折叠辅助区；保留搜索、分类、站内详情和来源。调整公共列表与正文样式，手机使用完整宽度和可读字号。
+- [x] 验证：先运行 `pnpm test:run tests/unit/components/AppHeader.test.ts`，已确认新增底栏行为测试失败；实现后依次运行 `pnpm typecheck`、`pnpm lint`、`pnpm test:run`、`pnpm build`。浏览器检查首页、资讯筛选/详情、文章、笔记和抽屉，覆盖 1440px、768px、390px、320px。
+- [x] 收尾：截图与选定稿对照，更新 `design-qa.md`、接力清单和 `docs/progress.md`，运行 `git diff --check`；已有 FTS 迁移改动不纳入本次设计实现。
+
+完成时间：2026-09-22。35 个测试文件 / 122 项通过，typecheck、lint、build 与浏览器验收通过；证据见根目录 `design-qa.md`。本轮改动尚未提交或部署。
+
+以下为 2026-07 历史实施记录，布局以本次追加任务为准。
+
 > **面向 AI 代理的工作者：** 必需子技能：使用 superpowers:subagent-driven-development（推荐）或 superpowers:executing-plans 逐任务实现此计划。步骤使用复选框（`- [ ]`）语法来跟踪进度。
 
 **目标：** 将智识花园全部公开页面、登录页和管理后台统一改造成第二版“编辑手记”暖纸风，并完成安全、完整的 Markdown 阅读、编辑、预览和本地文件导入能力。

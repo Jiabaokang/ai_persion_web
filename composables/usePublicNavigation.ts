@@ -7,9 +7,9 @@ export type PublicNavigationItem = {
 }
 
 export const publicNavigation: PublicNavigationItem[] = [
-  { to: '/ai', label: 'AI 导航', icon: 'i-carbon-ibm-watson-discovery' },
-  { to: '/', label: '博客', icon: 'i-carbon-document' },
+  { to: '/ai', label: 'AI 资讯', icon: 'i-carbon-ibm-watson-discovery' },
   { to: '/notes', label: '笔记', icon: 'i-carbon-notebook' },
+  { to: '/blog', label: '文章', icon: 'i-carbon-document' },
   { to: '/inspiration', label: '灵感', icon: 'i-carbon-idea' },
   { to: '/wechat', label: '公众号', icon: 'i-carbon-chat' },
 ]
@@ -20,7 +20,7 @@ export function usePublicNavigation() {
 
   // 判断导航项是否覆盖当前页面或其子页面
   function isActive(path: string) {
-    if (path === '/') return route.path === '/' || route.path.startsWith('/blog/')
+    if (path === '/ai' && route.path === '/') return true
     return route.path === path || route.path.startsWith(`${path}/`)
   }
 

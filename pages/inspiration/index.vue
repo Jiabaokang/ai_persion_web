@@ -136,7 +136,7 @@ async function remove(id: number) {
 </template>
 
 <style scoped>
-.inspiration-index { padding: 26px 0 72px; }
+.inspiration-index { padding: 0 0 40px; }
 .inspiration-index__header {
   display: flex;
   align-items: end;
@@ -145,7 +145,7 @@ async function remove(id: number) {
   padding-bottom: 32px;
   border-bottom: 1px solid var(--rule-strong);
 }
-.inspiration-index__header h1 { margin-top: 6px; font-size: clamp(3rem, 8vw, 6rem); font-weight: 500; }
+.inspiration-index__header h1 { margin-top: 6px; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; }
 .inspiration-index__header p:not(.paper-kicker) { max-width: 36em; margin: 14px 0 0; color: var(--ink-secondary); }
 .inspiration-create {
   display: inline-flex; min-height: 44px; align-items: center; gap: 8px; padding: 9px 16px;

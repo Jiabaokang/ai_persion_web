@@ -18,7 +18,7 @@ const { links, isActive } = usePublicNavigation()
       >智</span>
       <span class="paper-brand__copy">
         <strong>智识花园</strong>
-        <small>Editorial Notebook</small>
+        <small>阅读、实践、留下笔记</small>
       </span>
     </NuxtLink>
 
@@ -29,6 +29,7 @@ const { links, isActive } = usePublicNavigation()
         :to="item.to"
         class="paper-sidebar__link"
         :class="{ 'is-active': isActive(item.to) }"
+        :aria-current="isActive(item.to) ? 'page' : undefined"
       >
         <span
           :class="item.icon"

@@ -4,6 +4,7 @@ import {
   presetIcons,
   presetUno,
 } from 'unocss'
+import { publicNavigation } from './composables/usePublicNavigation'
 
 export const shortcuts: [string, string][] = [
   [
@@ -41,6 +42,8 @@ export const theme = {
 }
 
 export default defineConfig({
+  // 导航图标来自共享数据，显式纳入生成，避免动态 class 被模板扫描遗漏。
+  safelist: publicNavigation.map(item => item.icon),
   presets: [
     presetUno(),
     presetIcons({

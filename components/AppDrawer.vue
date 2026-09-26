@@ -10,6 +10,22 @@ const links = publicNavigation
 const { close: closeDrawer } = useDrawer()
 const closeButton = ref<HTMLButtonElement | null>(null)
 
+// 将键盘焦点限制在打开的导航内，避免进入遮罩后的页面。
+function trapFocus(event: KeyboardEvent) {
+  const dialog = event.currentTarget as HTMLElement
+  const items = Array.from(dialog.querySelectorAll<HTMLElement>('a[href], button'))
+  const first = items[0]
+  const last = items[items.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last?.focus()
+  }
+  else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first?.focus()
+  }
+}
+
 // 关闭抽屉并把键盘焦点交还给菜单按钮
 function close() {
   emit('update:open', false)
@@ -44,6 +60,7 @@ watch(() => props.open, (open) => {
       role="dialog"
       aria-modal="true"
       aria-label="移动端导航"
+      @keydown.tab="trapFocus"
     >
       <div class="drawer-header">
         <NuxtLink
@@ -86,6 +103,13 @@ watch(() => props.open, (open) => {
           <span>{{ item.label }}</span>
         </NuxtLink>
       </nav>
+      <div class="drawer-account">
+        <NuxtLink
+          to="/login"
+          class="drawer-link"
+          @click="close"
+        >进入写作后台</NuxtLink>
+      </div>
     </aside>
   </Teleport>
 </template>

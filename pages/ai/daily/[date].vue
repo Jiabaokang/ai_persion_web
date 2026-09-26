@@ -38,7 +38,7 @@ useHead({ title: () => `${data.value?.date || ''} AI 日报 · 智识花园` })
       class="daily-detail__nav"
       aria-label="返回链接"
     >
-      <NuxtLink to="/ai">← AI 导航</NuxtLink>
+      <NuxtLink to="/ai">← AI 资讯</NuxtLink>
       <NuxtLink to="/ai/daily">日报归档</NuxtLink>
     </nav>
 
@@ -124,18 +124,18 @@ useHead({ title: () => `${data.value?.date || ''} AI 日报 · 智识花园` })
 </template>
 
 <style scoped>
-.daily-detail { max-width: 860px; padding: 30px 0 80px; }
+.daily-detail { max-width: 860px; padding: 0 0 40px; }
 .daily-detail__nav { display: flex; min-height: 44px; align-items: center; justify-content: space-between; gap: 20px; color: var(--accent-moss); font-size: 0.76rem; font-weight: 700; }
-.daily-detail__head { padding: 42px 0 36px; border-bottom: 1px solid var(--rule-strong); }
+.daily-detail__head { padding: 20px 0 24px; border-bottom: 1px solid var(--rule-strong); }
 .daily-detail__head time { display: block; margin-top: 18px; color: var(--accent-terracotta-dark); font-family: var(--font-mono); font-size: 0.75rem; }
-.daily-detail h1 { max-width: 18em; margin-top: 10px; font-size: clamp(2rem, 6vw, 4rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1.2; }
+.daily-detail h1 { max-width: 18em; margin-top: 10px; font-size: clamp(1.7rem, 3.4vw, 3rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1.2; }
 .daily-detail__head > p:last-child { max-width: 44em; margin-top: 18px; color: var(--ink-secondary); font-family: var(--font-display); font-size: 1.02rem; line-height: 1.8; }
 .daily-section { margin-top: 48px; }
 .daily-section > h2 { padding-bottom: 12px; border-bottom: 1px solid var(--rule-strong); font-size: 1.45rem; font-weight: 600; }
 .daily-item { padding: 24px 0; border-bottom: 1px solid var(--rule-color); }
 .daily-item__source { color: var(--accent-moss); font-size: 0.7rem; }
 .daily-item h3 { margin-top: 7px; font-family: var(--font-display); font-size: 1.14rem; line-height: 1.5; }
-.daily-item > p:not(.daily-item__source) { margin-top: 8px; color: var(--ink-secondary); font-size: 0.84rem; line-height: 1.75; }
+.daily-item > p:not(.daily-item__source) { margin-top: 8px; color: var(--ink-secondary); font-size: 1rem; line-height: 1.75; }
 .daily-item > a { display: inline-block; margin-top: 10px; color: var(--accent-terracotta-dark); font-size: 0.72rem; text-decoration: underline; text-underline-offset: 3px; }
 .daily-detail__foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule-strong); color: var(--ink-muted); font-size: 0.68rem; }
 .daily-detail__foot a { margin-left: 6px; color: var(--accent-terracotta-dark); text-decoration: underline; text-underline-offset: 3px; }

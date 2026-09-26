@@ -3,7 +3,8 @@ import { resolve } from 'node:path'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { createGenerator, presetUno } from 'unocss'
 import type { UnoGenerator } from 'unocss'
-import { shortcuts, theme } from '../../../uno.config'
+import config, { shortcuts, theme } from '../../../uno.config'
+import { publicNavigation } from '../../../composables/usePublicNavigation'
 
 const unoSource = readFileSync(resolve(process.cwd(), 'uno.config.ts'), 'utf8')
 
@@ -18,6 +19,11 @@ beforeAll(async () => {
 })
 
 describe('UnoCSS 暖纸语义快捷方式', () => {
+  it('动态公共导航无需出现在模板中也会生成图标', async () => {
+    const icons = await createGenerator(config as any)
+    const { css } = await icons.generate('')
+    for (const item of publicNavigation) expect(css).toContain(`.${item.icon}`)
+  })
   it('paper-surface 生成纸面背景、边框和克制圆角', async () => {
     const { css } = await generator.generate('paper-surface')
     expect(css).toContain('background-color')

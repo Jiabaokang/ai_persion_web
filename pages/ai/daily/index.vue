@@ -21,7 +21,7 @@ const { data, error } = await useFetch<DailyArchive>('/api/ai-dailies', {
     <NuxtLink
       to="/ai"
       class="daily-index__back"
-    >← 返回 AI 导航</NuxtLink>
+    >← 返回 AI 资讯</NuxtLink>
     <header>
       <p class="paper-kicker">
         Daily archive
@@ -70,16 +70,16 @@ const { data, error } = await useFetch<DailyArchive>('/api/ai-dailies', {
 </template>
 
 <style scoped>
-.daily-index { padding: 30px 0 80px; }
+.daily-index { padding: 0 0 40px; }
 .daily-index__back { display: inline-flex; min-height: 44px; align-items: center; color: var(--accent-moss); font-size: 0.76rem; font-weight: 700; }
 .daily-index > header { padding: 34px 0 30px; border-bottom: 1px solid var(--rule-strong); }
-.daily-index h1 { margin-top: 6px; font-size: clamp(2.8rem, 8vw, 5.4rem); font-weight: 500; letter-spacing: -0.05em; }
+.daily-index h1 { margin-top: 6px; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -0.05em; }
 .daily-index > header > p:last-child { margin-top: 12px; color: var(--ink-secondary); }
 .daily-list { margin: 0; padding: 0; list-style: none; }
 .daily-list li { display: grid; grid-template-columns: 110px minmax(0, 1fr) 30px; gap: 22px; align-items: start; padding: 26px 0; border-bottom: 1px solid var(--rule-color); }
 .daily-list time { color: var(--accent-terracotta-dark); font-family: var(--font-mono); font-size: 0.72rem; }
 .daily-list h2 { font-family: var(--font-display); font-size: 1.16rem; line-height: 1.5; }
-.daily-list p { margin-top: 8px; color: var(--ink-secondary); font-size: 0.82rem; line-height: 1.7; }
+.daily-list p { margin-top: 8px; color: var(--ink-secondary); font-size: 1rem; line-height: 1.7; }
 .daily-list li > a { color: var(--accent-moss); font-size: 1.2rem; }
 .daily-index__state { padding: 60px 0; color: var(--ink-secondary); text-align: center; }
 .daily-index__foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule-strong); color: var(--ink-muted); font-size: 0.68rem; }
