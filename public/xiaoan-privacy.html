@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
   <meta name="description" content="小安翻译隐私政策：了解设备端翻译、本地记录、Google ML Kit、系统语音和分享功能如何处理数据。">
+  <link rel="alternate" hreflang="zh-CN" href="https://jbksy.cn/xiaoan-privacy.html">
+  <link rel="alternate" hreflang="en" href="https://jbksy.cn/xiaoan-privacy-en.html">
   <title>小安翻译隐私政策</title>
   <style>
     :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f8f5ed; color: #312e29; }
@@ -24,11 +26,14 @@
     .meta { color: #665f55; font-size: .9rem; }
     .summary { border-left: 3px solid #a7583c; padding: 12px 18px; background: #f0e8da; }
     .contents { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 24px; font-size: .9rem; }
+    .languages { text-align: right; font-size: .9rem; }
+    .languages [aria-current] { font-weight: 700; text-decoration: none; color: inherit; }
     @media (max-width: 600px) { header { padding-top: 30px; } main { padding-top: 16px; } }
   </style>
 </head>
 <body>
   <header>
+    <nav class="languages" aria-label="语言选择"><a href="/xiaoan-privacy.html" lang="zh-CN" aria-current="page">中文</a> · <a href="/xiaoan-privacy-en.html" lang="en">English</a></nav>
     <div class="eyebrow">小安翻译 · 用户隐私</div>
     <h1>隐私政策</h1>
     <p class="meta">生效日期：2026 年 9 月 26 日　|　适用应用：小安翻译（Android，包名 com.jbk.xiaoants）</p>
@@ -40,15 +45,15 @@
   <main>
     <section aria-labelledby="scope">
       <h2 id="scope">1. 适用范围</h2>
-      <p>本政策适用于“小安翻译”应用，由开发者贾宝康提供。应用无需注册或登录，不建立用户账号。我们不会运营用于接收翻译原文、译文、历史记录或收藏的服务器，也不使用这些内容投放广告或出售用户数据。</p>
+      <p>本政策适用于“小安翻译”应用，由开发者贾保康提供。应用无需注册或登录，不建立用户账号。我们不会运营用于接收翻译原文、译文、历史记录或收藏的服务器，也不使用这些内容投放广告或出售用户数据。</p>
     </section>
 
     <section aria-labelledby="data">
       <h2 id="data">2. 应用处理的数据</h2>
       <ul>
         <li><strong>翻译内容：</strong>你输入或粘贴的文字、自动识别或手动选择的语言、译文在设备端处理。Google ML Kit 的语言识别与翻译 API 在设备上运行，原文和译文不会因这些 API 而发送到 Google 服务器；应用本身也不将其上传到我们的服务器。</li>
-        <li><strong>本地记录与偏好：</strong>成功翻译后，应用把原文、译文、语言、时间、收藏状态与翻译引擎标记保存到设备上的本地数据库；主题与默认目标语言等设置也保存在本机。搜索历史在本机完成。</li>
-        <li><strong>语言模型与网络：</strong>首次翻译某种语言或你主动管理离线语言包时，ML Kit 会从 Google 下载、更新或删除相应模型。已下载模型留在设备上，供后续设备端翻译使用。</li>
+        <li><strong>本地记录与偏好：</strong>成功翻译后，应用把原文、译文、语言、时间、收藏状态与翻译引擎标记保存到设备上的本地数据库；主题、默认目标语言和界面语言偏好也保存在本机。搜索历史在本机完成。</li>
+        <li><strong>语言模型与网络：</strong>首次使用尚未安装的语言模型时，应用通过 Google ML Kit 下载模型；模型或 SDK 更新也可能访问 Google 服务。默认仅在 Wi-Fi 下下载；下载失败后，你可以明确选择使用移动数据。你也可以在应用内查看或删除已下载的语言模型。</li>
         <li><strong>诊断与使用数据：</strong>Google ML Kit SDK 可能向 Google 发送设备型号、系统版本、可用加速器、应用包名与版本、安装标识符、性能指标、调用事件、错误码、输入与输出的长度、识别出的语言，以及配置的源语言和目标语言，用于诊断、统计、维护和改进 ML Kit。Google 表示这些数据通过 HTTPS 传输。具体范围取决于实际使用的 ML Kit 功能与 SDK 版本。</li>
       </ul>
     </section>
@@ -60,7 +65,7 @@
         <li><strong>设备语音服务：</strong>你主动使用朗读时，文字交由设备已安装的语音引擎处理。该引擎可能由设备厂商或第三方提供；是否联网、如何处理朗读文字，取决于你设备上的语音引擎及其隐私政策。</li>
         <li><strong>剪贴板与分享对象：</strong>你主动点击复制或分享后，相应文字进入系统剪贴板或系统分享面板；只有在你选择接收应用后，分享内容才交给该应用。接收应用按其自己的隐私政策处理内容。</li>
       </ul>
-      <p>除上述 SDK 行为和你主动使用的系统功能外，应用不主动向其他第三方发送翻译内容，也不接入广告 SDK 或独立的行为分析服务。</p>
+      <p>除上述 SDK 行为和你主动使用的系统功能外，应用不主动向其他第三方发送翻译内容，也不接入广告 SDK 或独立的行为分析服务。如果你通过邮件联系我们，我们会收到你提供的邮箱地址和邮件内容，用于回复你的问题。</p>
     </section>
 
     <section aria-labelledby="storage">
@@ -86,7 +91,7 @@
 
     <section aria-labelledby="contact">
       <h2 id="contact">8. 联系我们</h2>
-      <p>隐私问题、数据处理疑问或请求，请联系开发者贾宝康：<a href="mailto:jiabaokangsy@gmail.com">jiabaokangsy@gmail.com</a>。</p>
+      <p>隐私问题、数据处理疑问或删除联系邮件的请求，请联系开发者贾保康：<a href="mailto:jiabaokangsy@gmail.com">jiabaokangsy@gmail.com</a>。</p>
     </section>
   </main>
   <footer>© 2026 小安翻译 · <a href="https://jbksy.cn/">智识花园</a></footer>
