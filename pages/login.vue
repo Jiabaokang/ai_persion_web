@@ -3,7 +3,14 @@ definePageMeta({ layout: false })
 
 useHead({ title: '登录 · 智识花园' })
 
-const { login } = useAuth()
+// 已登录用户访问 /login 时直接跳转到写作后台，避免重复登录。
+const { user, fetchMe, login } = useAuth()
+if (!user.value) await fetchMe()
+if (user.value) {
+  const route = useRoute()
+  const target = (route.query.redirect as string) || '/admin'
+  await navigateTo(target, { replace: true })
+}
 const username = ref('')
 const password = ref('')
 const showPassword = ref(false)
