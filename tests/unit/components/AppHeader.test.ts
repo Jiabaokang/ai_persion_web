@@ -48,7 +48,9 @@ describe('AppHeader', () => {
 
   it('渲染移动端菜单按钮', () => {
     const wrapper = mountHeader()
-    expect(wrapper.find('[data-menu-toggle]').exists()).toBe(true)
+    const header = wrapper.find('.paper-mobile-header')
+    expect(header.element.firstElementChild).toBe(wrapper.find('[data-menu-toggle]').element)
+    expect(wrapper.find('[data-menu-toggle] .i-carbon-menu').exists()).toBe(true)
   })
 
   it('手机底栏优先进入 AI 资讯，并能打开更多导航', async () => {

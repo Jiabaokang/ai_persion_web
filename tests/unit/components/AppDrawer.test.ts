@@ -35,12 +35,14 @@ describe('AppDrawer', () => {
     expect(wrapper.emitted('update:open')).toEqual([[false]])
   })
 
-  it('渲染全部 5 个公共导航链接', () => {
+  it('全部 5 个栏目和后台入口都提供标题与简介', () => {
     const wrapper = mountDrawer({ open: true })
     const links = wrapper.findAll('.drawer-links .drawer-link')
     expect(links).toHaveLength(5)
-    expect(links[0]?.text()).toContain('AI 资讯')
-    expect(wrapper.text()).toContain('灵感')
+    expect(links.map(link => link.find('strong').text())).toEqual(['AI 资讯', '笔记', '文章', '灵感', '公众号'])
+    for (const link of [...links, wrapper.find('.drawer-account .drawer-link')]) {
+      expect(link.find('small').text().length).toBeGreaterThan(0)
+    }
   })
 
   it('抽屉使用暖纸语义且不包含内联 SVG', () => {
