@@ -3,7 +3,6 @@ const props = defineProps<{ initial?: any, id?: number }>()
 
 const form = reactive({
   title: props.initial?.title ?? '',
-  summary: props.initial?.summary ?? '',
   contentMd: props.initial?.contentMd ?? '',
   status: props.initial?.status ?? 'draft',
   tagNamesInput: props.initial?.tags?.map((tag: any) => tag.name).join(', ') ?? '',
@@ -23,7 +22,6 @@ function buildPayload() {
     type: 'inspiration',
     visibility: 'private',
     title: form.title,
-    summary: form.summary,
     contentMd: form.contentMd,
     status: form.status,
     tagNames,
@@ -78,15 +76,6 @@ function handleImportError(message: string) {
           v-model="form.title"
           name="title"
           placeholder="一句话记下灵感"
-          class="inspiration-field__control"
-        />
-      </label>
-      <label class="inspiration-field">
-        <span>摘要</span>
-        <UiInput
-          v-model="form.summary"
-          name="summary"
-          placeholder="（可选）"
           class="inspiration-field__control"
         />
       </label>
