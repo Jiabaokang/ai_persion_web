@@ -9,17 +9,7 @@ const { links, isActive } = usePublicNavigation()
 <template>
   <!-- 移动端顶部品牌栏，桌面端由侧栏承载导航 -->
   <header class="paper-mobile-header">
-    <NuxtLink
-      to="/"
-      class="nav-brand"
-    >
-      <span
-        class="nav-brand-mark"
-        aria-hidden="true"
-      >智</span>
-      <span class="nav-brand-copy">智识花园<small>阅读、实践、留下笔记</small></span>
-    </NuxtLink>
-
+    <!-- 菜单入口靠左，与从左侧展开的抽屉保持方向一致。 -->
     <button
       class="paper-icon-button"
       data-menu-toggle
@@ -32,6 +22,17 @@ const { links, isActive } = usePublicNavigation()
         aria-hidden="true"
       />
     </button>
+
+    <NuxtLink
+      to="/"
+      class="nav-brand"
+    >
+      <span
+        class="nav-brand-mark"
+        aria-hidden="true"
+      >智</span>
+      <span class="nav-brand-copy">智识花园<small>阅读、实践、留下笔记</small></span>
+    </NuxtLink>
   </header>
 
   <AppDrawer v-model:open="isOpen" />
