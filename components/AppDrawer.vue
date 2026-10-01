@@ -77,7 +77,7 @@ watch(() => props.open, (open) => {
             >智</span>
             <span class="drawer-brand-copy">
               <strong>智识花园</strong>
-              <small>阅读、实践、留下笔记</small>
+              <small>阅读 · 实践 · 笔记</small>
             </span>
           </NuxtLink>
           <button
