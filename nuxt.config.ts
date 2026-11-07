@@ -40,6 +40,15 @@ export default defineNuxtConfig({
         { name: 'description', content: '个人网站：笔记 / 灵感 / 博客 / 公众号' },
         { name: 'color-scheme', content: 'light' },
       ],
+      // 浏览器标签栏与站点图标配置
+      link: [
+        // 现代浏览器矢量图标（自适应高分屏）
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        // 经典图标备用（兼容旧浏览器）
+        { rel: 'alternate icon', href: '/favicon.ico' },
+        // 移动端快捷方式与书签图标
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
     },
   },
 
