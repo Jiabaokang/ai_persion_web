@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <!-- 右叶渐变：明快苔藓绿 -->
+    <linearGradient id="leafRight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4E653C" />
+      <stop offset="100%" stop-color="#6F8856" />
+    </linearGradient>
+    <!-- 左叶渐变：深邃水墨绿 -->
+    <linearGradient id="leafLeft" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#3F5331" />
+      <stop offset="100%" stop-color="#5B7446" />
+    </linearGradient>
+    <!-- 暖纸卡片质感背景渐变 -->
+    <linearGradient id="paperBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF5EC" />
+      <stop offset="100%" stop-color="#F2E8D7" />
+    </linearGradient>
+  </defs>
+
+  <!-- 暖纸印章质感底衬（圆角矩形） -->
+  <rect x="1" y="1" width="30" height="30" rx="6.5" fill="url(#paperBg)" stroke="#D8CAB5" stroke-width="1.2"/>
+
+  <!-- 底部陶土红墨核/种子（微拱生根） -->
+  <path d="M 11.5 26.5 C 12.5 24.2 19.5 24.2 20.5 26.5 Z" fill="#8E4028"/>
+  <circle cx="16" cy="24.8" r="1.8" fill="#B85C38"/>
+
+  <!-- 水墨主茎（挺拔、自下而上有书写顿挫感） -->
+  <path d="M 14.8 25 C 14.5 20.5 14.2 16 15.6 11.5 C 16.5 11.5 17.2 16 17 25 Z" fill="#2A241D"/>
+
+  <!-- 左侧嫩叶：丰满、外展微垂、水墨绿韵 -->
+  <path d="M 15.2 18.5 C 11.2 19.8 6.5 17 5.5 12.5 C 8.2 11 13 12.8 15.2 15 Z" fill="url(#leafLeft)" stroke="#2A241D" stroke-width="0.8" stroke-linejoin="round"/>
+  <!-- 左叶内侧主脉 -->
+  <path d="M 15 17.8 C 11.8 16.8 8.8 14.5 7 13" stroke="#2A241D" stroke-width="0.7" stroke-linecap="round" fill="none"/>
+
+  <!-- 右侧舒展新芽：昂扬、迎光伸展、苔藓嫩绿 -->
+  <path d="M 15.6 15.2 C 18.8 12.5 23.5 9 26.5 7 C 26.8 10.8 22.8 15.5 16.5 16.5 Z" fill="url(#leafRight)" stroke="#2A241D" stroke-width="0.8" stroke-linejoin="round"/>
+  <!-- 右叶内侧主脉 -->
+  <path d="M 16 15 C 20 12.8 23.5 10.2 25.5 8" stroke="#2A241D" stroke-width="0.7" stroke-linecap="round" fill="none"/>
+
+  <!-- 顶心微绽第三小芽（初生生机点） -->
+  <path d="M 15.2 12 C 15 9.5 16.2 7.8 17.2 6.5 C 17.8 8.2 17.2 10.5 16.2 12 Z" fill="#6F8856" stroke="#2A241D" stroke-width="0.6"/>
+</svg>
